@@ -1,136 +1,93 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Award, Calendar, Building } from "lucide-react"
+import { ExternalLink, Award, Building } from "lucide-react"
+
+const courseraCerts = [
+  { title: "Start the UX Design Process: Empathize, Define, and Ideate", filename: "Coursera TTTHDXS9S7WW.pdf", image: "Coursera TTTHDXS9S7WW.png" },
+  { title: "What is Data Science?", filename: "Coursera P6IG4BHZO88H.pdf", image: "Coursera P6IG4BHZO88H.png" },
+  { title: "Introduction to Java", filename: "Coursera KX83SA2BG6DX.pdf", image: "Coursera KX83SA2BG6DX.png" },
+  { title: "Introduction to Hardware and Operating Systems", filename: "Coursera HGWLFOYUKPGA.pdf", image: "Coursera HGWLFOYUKPGA.png" },
+  { title: "Beginning Custom Projects with Raspberry Pi", filename: "Coursera CYG4C3YCPCVZ.pdf", image: "Coursera CYG4C3YCPCVZ.png" },
+  { title: "Data Structures", filename: "Coursera 5TS9KY8VYU4E.pdf", image: "Coursera 5TS9KY8VYU4E.png" },
+  { title: "Advanced Algorithms and Complexity", filename: "Coursera 2LYHG9CWSKFE.pdf", image: "Coursera 2LYHG9CWSKFE.png" },
+]
+
+const linkedinCerts = [
+  { title: "Understanding the Impact of a Merger for IT Teams", filename: "CertificateOfCompletion_Understanding the Impact of a Merger for IT Teams.pdf", image: "CertificateOfCompletion_Understanding the Impact of a Merger for IT Teams.png" },
+  { title: "SQL Essential Training", filename: "CertificateOfCompletion_SQL Essential Training.pdf", image: "CertificateOfCompletion_SQL Essential Training.png" },
+  { title: "TensorFlow Working with NLP", filename: "CertificateOfCompletion_TensorFlow Working with NLP.pdf", image: "CertificateOfCompletion_TensorFlow Working with NLP.png" },
+  { title: "SQL Essential Training 2014", filename: "CertificateOfCompletion_SQL Essential Training 2014.pdf", image: "CertificateOfCompletion_SQL Essential Training 2014.png" },
+  { title: "Object-Oriented Programming with C", filename: "CertificateOfCompletion_ObjectOriented Programming with C.pdf", image: "CertificateOfCompletion_ObjectOriented Programming with C.png" },
+  { title: "Programming Foundations: Databases", filename: "CertificateOfCompletion_Programming Foundations Databases.pdf", image: "CertificateOfCompletion_Programming Foundations Databases.png" },
+  { title: "Large Language Models: Text Classification for NLP using BERT", filename: "CertificateOfCompletion_Large Language Models Text Classification for NLP using BERT.pdf", image: "CertificateOfCompletion_Large Language Models Text Classification for NLP using BERT.png" },
+  { title: "Networking Foundations: Local Area Networks (LANs) 2015", filename: "CertificateOfCompletion_Networking Foundations Local Area Networks LANs 2015.pdf", image: "CertificateOfCompletion_Networking Foundations Local Area Networks LANs 2015.png" },
+  { title: "Introduction to Generative AI with GPT", filename: "CertificateOfCompletion_Introduction to Generative AI with GPT.pdf", image: "CertificateOfCompletion_Introduction to Generative AI with GPT.png" },
+  { title: "Introduction to Network Routing", filename: "CertificateOfCompletion_Introduction to Network Routing.pdf", image: "CertificateOfCompletion_Introduction to Network Routing.png" },
+  { title: "GPT-4 Foundations: Building AI-Powered Apps", filename: "CertificateOfCompletion_GPT4 Foundations Building AIPowered Apps.pdf", image: "CertificateOfCompletion_GPT4 Foundations Building AIPowered Apps.png" },
+  { title: "Generative AI: Introduction to Large Language Models", filename: "CertificateOfCompletion_Generative AI Introduction to Large Language Models.pdf", image: "CertificateOfCompletion_Generative AI Introduction to Large Language Models.png" },
+  { title: "Applied AI: Building NLP Apps with Hugging Face Transformers", filename: "CertificateOfCompletion_Applied AI Building NLP Apps with Hugging Face Transformers.pdf", image: "CertificateOfCompletion_Applied AI Building NLP Apps with Hugging Face Transformers.png" },
+  { title: "Develop Your Skills with Large Language Models", filename: "CertificateOfCompletion_Develop Your Skills with Large Language Models.pdf", image: "CertificateOfCompletion_Develop Your Skills with Large Language Models.png" },
+  { title: "AI Text Summarization with Hugging Face", filename: "CertificateOfCompletion_AI Text Summarization with Hugging Face.pdf", image: "CertificateOfCompletion_AI Text Summarization with Hugging Face.png" },
+  { title: "Agile Software Development: Refactoring", filename: "CertificateOfCompletion_Agile Software Development Refactoring.pdf", image: "CertificateOfCompletion_Agile Software Development Refactoring.png" },
+  { title: "Agile Software Development: Clean Coding Practices", filename: "CertificateOfCompletion_Agile Software Development Clean Coding Practices.pdf", image: "CertificateOfCompletion_Agile Software Development Clean Coding Practices.png" },
+]
 
 const Certifications = () => {
-  const certifications = [
-    {
-      title: "AWS Certified Solutions Architect",
-      issuer: "Amazon Web Services",
-      date: "2024",
-      credentialId: "AWS-SAA-123456",
-      description: "Demonstrates expertise in designing distributed systems on AWS platform",
-      badge: "https://aws.amazon.com/verification",
-      category: "Cloud Computing"
-    },
-    {
-      title: "Google Cloud Professional Developer",
-      issuer: "Google Cloud",
-      date: "2023",
-      credentialId: "GCP-PD-789012",
-      description: "Validates ability to build scalable applications using Google Cloud Platform",
-      badge: "https://googlecloud.com/verification",
-      category: "Cloud Computing"
-    },
-    {
-      title: "Microsoft Certified: Azure Developer Associate",
-      issuer: "Microsoft",
-      date: "2023",
-      credentialId: "AZ-204-345678",
-      description: "Proves skills in developing, testing, and maintaining cloud applications",
-      badge: "https://microsoft.com/verification",
-      category: "Cloud Computing"
-    },
-    {
-      title: "Certified Kubernetes Administrator (CKA)",
-      issuer: "Cloud Native Computing Foundation",
-      date: "2023",
-      credentialId: "CKA-901234",
-      description: "Demonstrates ability to perform basic installation and configuration of Kubernetes",
-      badge: "https://cncf.io/verification",
-      category: "DevOps"
-    },
-    {
-      title: "MongoDB Certified Developer",
-      issuer: "MongoDB University",
-      date: "2022",
-      credentialId: "MDB-DEV-567890",
-      description: "Validates expertise in MongoDB application development and data modeling",
-      badge: "https://university.mongodb.com/verification",
-      category: "Database"
-    },
-    {
-      title: "React Developer Certification",
-      issuer: "Meta",
-      date: "2022",
-      credentialId: "REACT-META-123789",
-      description: "Demonstrates proficiency in React development and best practices",
-      badge: "https://meta.com/verification",
-      category: "Frontend Development"
-    }
-  ]
-
-  const categories = ["All", "Cloud Computing", "DevOps", "Database", "Frontend Development"]
-
   return (
     <section id="certifications" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Certifications</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Professional certifications that validate my expertise in various technologies 
-            and demonstrate my commitment to continuous learning.
+            Coursera and LinkedIn Learning certifications earned and verified.
           </p>
         </div>
-
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certifications.map((cert, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-all duration-300">
-              <CardHeader className="pb-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg mb-2">{cert.title}</CardTitle>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                      <Building className="h-4 w-4" />
-                      {cert.issuer}
+          {[...courseraCerts, ...linkedinCerts].map((cert, index) => {
+            let imageBlock = null;
+            if (cert.image) {
+              imageBlock = (
+                <img
+                  src={`/certifications/${cert.image}`}
+                  alt={`${cert.title} preview`}
+                  className="block w-full h-40 object-cover"
+                  loading="lazy"
+                />
+              );
+            }
+            const isCoursera = cert.filename.startsWith("Coursera");
+            return (
+              <Card key={index} className="group hover:shadow-lg transition-all duration-300 rounded-lg">
+                {imageBlock}
+                <CardHeader className="pb-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg mb-2">{cert.title}</CardTitle>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                        <Building className="h-4 w-4" />
+                        {isCoursera ? "Coursera" : "LinkedIn Learning"}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Calendar className="h-4 w-4" />
-                      {cert.date}
-                    </div>
+                    <Award className="h-6 w-6 text-primary" />
                   </div>
-                  <Award className="h-6 w-6 text-primary" />
-                </div>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {cert.description}
-                </p>
-                
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">Credential ID:</span>
-                    <span className="font-mono">{cert.credentialId}</span>
-                  </div>
-                  
+                </CardHeader>
+                <CardContent className="space-y-4">
                   <Badge variant="secondary" className="text-xs">
-                    {cert.category}
+                    {isCoursera ? "Coursera" : "LinkedIn Learning"}
                   </Badge>
-                </div>
-                
-                <Button variant="outline" size="sm" asChild className="w-full">
-                  <a href={cert.badge} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Verify Certificate
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="text-center mt-12 space-y-4">
-          <p className="text-muted-foreground">
-            I'm constantly learning and adding new certifications to stay current with the latest technologies.
-          </p>
-          <Button variant="outline" size="lg" asChild>
-            <a href="https://linkedin.com/in/djsanch/details/certifications" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-5 w-5 mr-2" />
-              View All on LinkedIn
-            </a>
-          </Button>
+                  <Button variant="outline" size="sm" asChild className="w-full">
+                    <a href={`/certifications/${cert.filename}`} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      View Certificate (PDF)
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
       </div>
     </section>

@@ -6,12 +6,12 @@ import { ExternalLink, Github, Globe } from "lucide-react"
 const Projects = () => {
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "A full-stack e-commerce platform built with Next.js, TypeScript, and Stripe integration. Features include user authentication, product management, and payment processing.",
-      technologies: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
-      image: "/projects/ecommerce.jpg",
-      github: "https://github.com/djsanch/ecommerce-platform",
-      live: "https://ecommerce-demo.com",
+      title: "Inventory Management System",
+      description: "A robust inventory management system for tracking stock, sales, and suppliers. Features include real-time inventory updates, reporting, and user roles.",
+      technologies: ["React", "Next.js", "Python", "SQLite", "Tailwind CSS"],
+      image: "/projects/Inventory.png",
+      github: "https://github.com/DJSanch/Inventory_Management",
+      live: "https://inventory-management-nu-gilt.vercel.app/",
       featured: true
     },
     {
@@ -75,10 +75,20 @@ const Projects = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <Card key={index} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
-              <div className="relative h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                <div className="text-4xl font-bold text-muted-foreground/30">
-                  {project.title.split(' ')[0]}
-                </div>
+              <div className="relative h-48 w-full">
+                {project.image ? (
+                  <img
+                    src={project.image.startsWith('/') ? project.image : `/projects/${project.image}`}
+                    alt={project.title}
+                    className="w-full h-48 object-cover"
+                  />
+                ) : (
+                  <div className="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                    <div className="text-4xl font-bold text-muted-foreground/30">
+                      {project.title.split(' ')[0]}
+                    </div>
+                  </div>
+                )}
                 {project.featured && (
                   <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground">
                     Featured
