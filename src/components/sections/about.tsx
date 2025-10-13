@@ -1,9 +1,13 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { GraduationCap, Briefcase, Code, Award } from "lucide-react"
+import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 const About = () => {
+  const { ref, isVisible } = useScrollAnimation()
   const education = [
     {
       degree: "Bachelor of Computer Science",
@@ -44,9 +48,9 @@ const About = () => {
   ]
 
   return (
-    <section id="about" className="py-20 bg-muted/30">
+    <section id="about" className="py-20 bg-muted/30" ref={ref as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-animate ${isVisible ? 'animate-in' : ''}`}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             I&apos;m a passionate developer with a strong foundation in both frontend and backend technologies. 
@@ -56,7 +60,7 @@ const About = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
           {/* Left Column - Story */}
-          <div className="space-y-6">
+          <div className={`space-y-6 scroll-animate-left ${isVisible ? 'animate-in delay-200' : ''}`}>
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -102,7 +106,7 @@ const About = () => {
           </div>
 
           {/* Right Column - Experience & Education */}
-          <div className="space-y-8">
+          <div className={`space-y-8 scroll-animate-right ${isVisible ? 'animate-in delay-300' : ''}`}>
             {/* Education */}
             <Card>
               <CardHeader>

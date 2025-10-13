@@ -1,9 +1,13 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Github, Globe } from "lucide-react"
+import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 const Projects = () => {
+  const { ref, isVisible } = useScrollAnimation()
   const projects = [
     {
       title: "Inventory Management System",
@@ -62,9 +66,9 @@ const Projects = () => {
   ]
 
   return (
-    <section id="projects" className="py-20">
+    <section id="projects" className="py-20" ref={ref as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-animate ${isVisible ? 'animate-in' : ''}`}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">My Projects</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Here are some of the projects I&apos;ve worked on. Each project represents a unique challenge 
@@ -74,7 +78,7 @@ const Projects = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
+            <Card key={index} className={`group hover:shadow-lg transition-all duration-300 overflow-hidden scroll-animate-scale ${isVisible ? 'animate-in' : ''}`} style={{animationDelay: `${(index % 3) * 100 + 200}ms`}}>
               <div className="relative h-48 w-full">
                 {project.image ? (
                   <img

@@ -7,8 +7,10 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
+import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 const Contact = () => {
+  const { ref, isVisible } = useScrollAnimation()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -71,9 +73,9 @@ const Contact = () => {
   ]
 
   return (
-    <section id="contact" className="py-20">
+    <section id="contact" className="py-20" ref={ref as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-animate ${isVisible ? 'animate-in' : ''}`}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             I&apos;m always interested in new opportunities and exciting projects. 
@@ -83,7 +85,7 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <Card>
+          <Card className={`scroll-animate-left ${isVisible ? 'animate-in delay-200' : ''}`}>
             <CardHeader>
               <CardTitle>Send me a message</CardTitle>
             </CardHeader>
@@ -170,7 +172,7 @@ const Contact = () => {
           </Card>
 
           {/* Contact Information */}
-          <div className="space-y-8">
+          <div className={`space-y-8 scroll-animate-right ${isVisible ? 'animate-in delay-300' : ''}`}>
             <Card>
               <CardHeader>
                 <CardTitle>Contact Information</CardTitle>

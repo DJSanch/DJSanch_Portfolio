@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Award, Building } from "lucide-react"
+import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 const courseraCerts = [
   { title: "Start the UX Design Process: Empathize, Define, and Ideate", filename: "Coursera TTTHDXS9S7WW.pdf", image: "Coursera TTTHDXS9S7WW.png" },
@@ -36,10 +37,11 @@ const linkedinCerts = [
 ]
 
 const Certifications = () => {
+  const { ref, isVisible } = useScrollAnimation()
   return (
-    <section id="certifications" className="py-20 bg-muted/30">
+    <section id="certifications" className="py-20 bg-muted/30" ref={ref as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-animate ${isVisible ? 'animate-in' : ''}`}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Certifications</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Coursera and LinkedIn Learning certifications earned and verified.
@@ -60,7 +62,7 @@ const Certifications = () => {
             }
             const isCoursera = cert.filename.startsWith("Coursera");
             return (
-              <Card key={index} className="group hover:shadow-lg transition-all duration-300 rounded-lg">
+              <Card key={index} className={`group hover:shadow-lg transition-all duration-300 rounded-lg scroll-animate-scale ${isVisible ? 'animate-in' : ''}`} style={{animationDelay: `${(index % 3) * 100 + 200}ms`}}>
                 {imageBlock}
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between">
