@@ -26,7 +26,7 @@ const Hero = () => {
                 Welcome to my portfolio
               </Badge>
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Hi, I'm{" "}
+                Hi, I&apos;m{" "}
                 <span className="text-primary">DJSanch</span>
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground">
@@ -35,7 +35,7 @@ const Hero = () => {
             </div>
 
             <p className="text-lg text-muted-foreground leading-relaxed">
-              I'm passionate about creating innovative web applications and solving complex problems. 
+              I&apos;m passionate about creating innovative web applications and solving complex problems. 
               With expertise in modern web technologies, I build scalable and user-friendly solutions 
               that make a difference.
             </p>

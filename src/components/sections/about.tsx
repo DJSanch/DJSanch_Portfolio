@@ -49,7 +49,7 @@ const About = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            I'm a passionate developer with a strong foundation in both frontend and backend technologies. 
+            I&apos;m a passionate developer with a strong foundation in both frontend and backend technologies. 
             I love creating solutions that are not only functional but also provide an excellent user experience.
           </p>
         </div>
@@ -72,12 +72,12 @@ const About = () => {
                 </p>
                 <p className="text-muted-foreground">
                   I believe in writing clean, maintainable code and staying up-to-date with the latest 
-                  technologies. When I'm not coding, you can find me contributing to open-source projects, 
+                  technologies. When I&apos;m not coding, you can find me contributing to open-source projects, 
                   reading tech blogs, or exploring new frameworks.
                 </p>
                 <p className="text-muted-foreground">
-                  I'm always excited to take on new challenges and work on projects that push the boundaries 
-                  of what's possible on the web.
+                  I&apos;m always excited to take on new challenges and work on projects that push the boundaries 
+                  of what&apos;s possible on the web.
                 </p>
               </CardContent>
             </Card>

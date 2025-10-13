@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, Globe } from "lucide-react"
+import { Github, Globe } from "lucide-react"
 
 const Projects = () => {
   const projects = [
@@ -12,6 +12,15 @@ const Projects = () => {
       image: "/projects/Inventory.png",
       github: "https://github.com/DJSanch/Inventory_Management",
       live: "https://inventory-management-nu-gilt.vercel.app/",
+      featured: true
+    },
+    {
+      title: "Chat Application",
+      description: "A real-time chat application with user authentication and message history.",
+      technologies: ["React", "Firebase", "Socket.io", "Node.js", "Tailwind CSS"],
+      image: "/projects/chat-application.png",
+      github: "https://github.com/DJSanch/Chat_Application",
+      live: "https://chat-application-k89h.vercel.app/",
       featured: true
     },
     {
@@ -50,15 +59,6 @@ const Projects = () => {
       live: "https://blog-platform-demo.com",
       featured: false
     },
-    {
-      title: "Chat Application",
-      description: "Real-time chat application with user authentication, message history, and file sharing capabilities.",
-      technologies: ["React", "Firebase", "Socket.io", "Material-UI"],
-      image: "/projects/chat.jpg",
-      github: "https://github.com/djsanch/chat-app",
-      live: "https://chat-app-demo.com",
-      featured: false
-    }
   ]
 
   return (
@@ -67,7 +67,7 @@ const Projects = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">My Projects</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Here are some of the projects I've worked on. Each project represents a unique challenge 
+            Here are some of the projects I&apos;ve worked on. Each project represents a unique challenge 
             and showcases different aspects of my development skills.
           </p>
         </div>
