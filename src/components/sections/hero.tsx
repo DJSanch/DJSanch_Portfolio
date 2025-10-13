@@ -3,6 +3,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Download, Github, Linkedin, Mail } from "lucide-react"
+import AnimatedBackground from "@/components/animated-background"
+import GradientOrbs from "@/components/gradient-orbs"
 
 const Hero = () => {
   const skills = [
@@ -16,8 +18,15 @@ const Hero = () => {
   ]
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center py-20">
-      <div className="container mx-auto px-4">
+    <section id="home" className="relative min-h-screen flex items-center justify-center py-20 overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5">
+        <GradientOrbs />
+        <AnimatedBackground />
+      </div>
+
+      {/* Content */}
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <div className="space-y-6">
