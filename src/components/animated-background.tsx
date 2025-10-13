@@ -142,7 +142,7 @@ const AnimatedBackground = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ opacity: 0.7 }}
+      style={{ opacity: 0.9 }}
     />
   )
 }
