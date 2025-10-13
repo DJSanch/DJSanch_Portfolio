@@ -34,16 +34,16 @@ const Hero = () => {
               <Badge variant="secondary" className="text-sm">
                 Welcome to my portfolio
               </Badge>
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight text-foreground drop-shadow-lg">
                 Hi, I&apos;m{" "}
-                <span className="text-primary">DJSanch</span>
+                <span className="text-primary drop-shadow-lg">DJSanch</span>
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground">
+              <p className="text-xl md:text-2xl text-foreground drop-shadow-md">
                 Full Stack Developer & Software Engineer
               </p>
             </div>
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-foreground drop-shadow-md leading-relaxed">
               I&apos;m passionate about creating innovative web applications and solving complex problems. 
               With expertise in modern web technologies, I build scalable and user-friendly solutions 
               that make a difference.
