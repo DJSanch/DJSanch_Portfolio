@@ -36,7 +36,7 @@ const Hero = () => {
               </Badge>
               <h1 className="text-4xl md:text-6xl font-bold leading-tight text-white drop-shadow-lg">
                 Hi, I&apos;m{" "}
-                <span className="text-white drop-shadow-lg">DJSanch</span>
+                <span className="text-white drop-shadow-lg">Daniel Sanchez</span>
               </h1>
               <p className="text-xl md:text-2xl text-white drop-shadow-md">
                 Full Stack Developer & Software Engineer
