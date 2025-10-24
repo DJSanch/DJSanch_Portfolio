@@ -32,7 +32,7 @@ const Projects = () => {
       description: "A modern e-commerce website for JS Aromatoc, featuring product listings, shopping cart functionality, and secure checkout process.",
       technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe", "MongoDB"],
       image: "/projects/js-aromatoc.jpg",
-      github: "https://github.com/djsanch/js-aromatoc",
+      github: "https://github.com/DJSanch/JS_Aromatoc",
       live: "https://jsaromatoc.net.ph/",
       featured: true
     },
