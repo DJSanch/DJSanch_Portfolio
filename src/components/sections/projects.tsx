@@ -31,7 +31,7 @@ const Projects = () => {
       title: "JS Aromatoc",
       description: "A modern e-commerce website for JS Aromatoc, featuring product listings, shopping cart functionality, and secure checkout process.",
       technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe", "MongoDB"],
-      image: "/projects/js-aromatoc.jpg",
+      image: "/projects/js-aromatoc.png",
       github: "https://github.com/DJSanch/JS_Aromatoc",
       live: "https://jsaromatoc.net.ph/",
       featured: true
