@@ -92,7 +92,7 @@ const Hero = () => {
                   </Avatar>
                   
                   <div className="space-y-2">
-                    <h3 className="text-2xl font-semibold">DJSanch</h3>
+                    <h3 className="text-2xl font-semibold">Daniel Sanchez</h3>
                     <p className="text-muted-foreground">Full Stack Developer</p>
                   </div>
 
