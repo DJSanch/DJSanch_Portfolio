@@ -28,12 +28,12 @@ const Projects = () => {
       featured: true
     },
     {
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Express"],
-      image: "/projects/task-app.jpg",
-      github: "https://github.com/djsanch/task-manager",
-      live: "https://task-manager-demo.com",
+      title: "JS Aromatoc",
+      description: "A modern e-commerce website for JS Aromatoc, featuring product listings, shopping cart functionality, and secure checkout process.",
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe", "MongoDB"],
+      image: "/projects/js-aromatoc.jpg",
+      github: "https://github.com/djsanch/js-aromatoc",
+      live: "https://jsaromatoc.net.ph/",
       featured: true
     },
     {
