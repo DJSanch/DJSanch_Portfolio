@@ -11,29 +11,29 @@ const About = () => {
   const education = [
     {
       degree: "Bachelor of Computer Science",
-      school: "University of Technology",
-      year: "2020-2024",
+      school: "Mapua Malayan Colleges of Mindanao",
+      year: "2020-2026",
       description: "Specialized in Software Engineering and Web Development"
     }
   ]
 
   const experience = [
     {
-      role: "Senior Full Stack Developer",
-      company: "TechCorp Inc.",
-      period: "2022 - Present",
+      role: "Backend Developer",
+      company: "Goldenville",
+      period: "2025 - Present",
       description: "Leading development of enterprise web applications using React, Node.js, and AWS"
     },
     {
       role: "Frontend Developer",
-      company: "StartupXYZ",
-      period: "2021 - 2022",
+      company: "JS Aromatoc",
+      period: "2024 - Present",
       description: "Built responsive user interfaces and implemented modern design systems"
     },
     {
-      role: "Junior Developer",
-      company: "Digital Solutions",
-      period: "2020 - 2021",
+      role: "Backend Developer",
+      company: "Envirotech",
+      period: "2024 - 2025",
       description: "Developed and maintained web applications using JavaScript and Python"
     }
   ]
