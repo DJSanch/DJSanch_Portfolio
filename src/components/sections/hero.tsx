@@ -59,9 +59,11 @@ const Hero = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="flex items-center gap-2">
-                  <Download className="h-4 w-4" />
-                  Download Resume
+                <Button size="lg" className="flex items-center gap-2" asChild>
+                  <a href="/Daniel_Sanchez_Resume.pdf" download="Daniel_Sanchez_Resume.pdf">
+                    <Download className="h-4 w-4" />
+                    Download Resume
+                  </a>
                 </Button>
                 <div className="flex gap-2">
                   {socialLinks.map((social) => (
