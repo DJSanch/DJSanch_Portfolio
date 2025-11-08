@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, MapPin, Users, ExternalLink } from "lucide-react"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
-import Image from "next/image"
+import ImageCarousel from "@/components/image-carousel"
 
 const Events = () => {
   const { ref, isVisible } = useScrollAnimation()
@@ -23,7 +23,12 @@ const Events = () => {
         "Latest trends in technology and engineering",
         "Cross-cultural collaboration"
       ],
-      image: "/events/icste-2025.jpg",
+      images: [
+        "/events/icste-2025-1.jpg",
+        "/events/icste-2025-2.jpg",
+        "/events/icste-2025-3.jpg",
+        "/events/icste-2025-4.jpg"
+      ],
       website: "https://icste.org/",
       featured: true
     }
@@ -49,18 +54,13 @@ const Events = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Image Section */}
                 <div className="relative h-64 md:h-auto bg-muted">
-                  <Image
-                    src={event.image}
+                  <ImageCarousel 
+                    images={event.images}
                     alt={event.title}
-                    fill
-                    className="object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
+                    interval={3000}
                   />
                   {event.featured && (
-                    <Badge className="absolute top-4 left-4 bg-primary">
+                    <Badge className="absolute top-4 left-4 bg-primary z-10">
                       Featured Event
                     </Badge>
                   )}
