@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   authors: [{ name: "DJSanch" }],
   creator: "DJSanch",
   openGraph: {
-    title: "DJSanch - Full Stack Developer Portfolio",
+    title: "Daniel Sanchez - Portfolio",
     description: "Professional portfolio showcasing projects, skills, and experience in modern web development.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "DJSanch - Full Stack Developer Portfolio",
+    title: "Daniel Sanchez - Portfolio",
     description: "Professional portfolio showcasing projects, skills, and experience in modern web development.",
   },
 };
