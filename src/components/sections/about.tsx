@@ -12,7 +12,7 @@ const About = () => {
     {
       degree: "Bachelor of Computer Science",
       school: "Mapua Malayan Colleges of Mindanao",
-      year: "2020-2026",
+      year: "2022-2026",
       description: "Specialized in Software Engineering and Web Development"
     }
   ]
