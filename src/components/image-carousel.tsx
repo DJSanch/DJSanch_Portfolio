@@ -9,7 +9,7 @@ interface ImageCarouselProps {
   interval?: number
 }
 
-const ImageCarousel = ({ images, alt, interval = 3000 }: ImageCarouselProps) => {
+const ImageCarousel = ({ images, alt, interval = 5000 }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
