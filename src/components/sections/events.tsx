@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Calendar, MapPin, Users, ExternalLink, FileText } from "lucide-react"
+import { Calendar, MapPin, Users, ExternalLink, FileText, Eye } from "lucide-react"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 import ImageCarousel from "@/components/image-carousel"
 
@@ -31,6 +31,7 @@ const Events = () => {
       ],
       website: "https://icste.org/",
       researchPaper: "/events/ICSTE_2025_Research_Paper.pdf",
+      presentationLink: "https://www.canva.com/design/DAG0Q6Sp4yM/BnFsZtyB-rVU0MIhsmPcBA/edit?utm_content=DAG0Q6Sp4yM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
       featured: true
     }
   ]
@@ -107,23 +108,33 @@ const Events = () => {
                     </CardContent>
                   </div>
 
-                  <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                  <div className="mt-6 flex flex-col gap-3">
                     {event.researchPaper && (
-                      <Button variant="default" className="w-full sm:w-auto" asChild>
+                      <Button variant="default" className="w-full" asChild>
                         <a href={event.researchPaper} download="ICSTE_2025_Research_Paper.pdf">
                           <FileText className="h-4 w-4 mr-2" />
                           Download Research Paper
                         </a>
                       </Button>
                     )}
-                    {event.website && (
-                      <Button variant="outline" className="w-full sm:w-auto" asChild>
-                        <a href={event.website} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          Visit Conference Website
-                        </a>
-                      </Button>
-                    )}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      {event.presentationLink && (
+                        <Button variant="outline" className="w-full sm:w-auto flex-1" asChild>
+                          <a href={event.presentationLink} target="_blank" rel="noopener noreferrer">
+                            <Eye className="h-4 w-4 mr-2" />
+                            View Presentation
+                          </a>
+                        </Button>
+                      )}
+                      {event.website && (
+                        <Button variant="outline" className="w-full sm:w-auto flex-1" asChild>
+                          <a href={event.website} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-4 w-4 mr-2" />
+                            Visit Conference Website
+                          </a>
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
