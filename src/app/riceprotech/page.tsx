@@ -1,11 +1,33 @@
+"use client"
+
 import Layout from "@/components/layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Github, ArrowLeft, Smartphone, Database, Brain, Code } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
 
 export default function RiceProTechPage() {
+  const [showFallback, setShowFallback] = useState(false)
+
+  // Video configuration - Update this with your video path
+  // Option 1: Local video file (add your video to /public/projects/riceprotech-demo.mp4)
+  const videoSrc = "/projects/riceprotech-demo.mp4"
+  
+  // Option 2: YouTube embed (replace videoSrc with YouTube embed URL)
+  // const videoSrc = "https://www.youtube.com/embed/YOUR_VIDEO_ID"
+  
+  // Option 3: Vimeo embed (replace videoSrc with Vimeo embed URL)
+  // const videoSrc = "https://player.vimeo.com/video/YOUR_VIDEO_ID"
+
+  const handleVideoError = () => {
+    setShowFallback(true)
+  }
+
+  // Check if it's an embed URL (YouTube or Vimeo)
+  const isEmbed = videoSrc.includes('youtube.com/embed') || videoSrc.includes('vimeo.com/video')
+
   return (
     <Layout>
       {/* Background Section with Rice Field Effects */}
@@ -141,14 +163,47 @@ export default function RiceProTechPage() {
           </div>
         </div>
 
-        {/* Project Image */}
+        {/* Project Video Demo */}
         <div className="mb-16">
           <Card className="overflow-hidden">
-            <div className="relative h-96 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-              <div className="text-center">
-                <Smartphone className="h-24 w-24 mx-auto mb-4 text-primary/50" />
-                <p className="text-muted-foreground">Project Image Coming Soon</p>
-              </div>
+            <div className="relative w-full">
+              {!showFallback && isEmbed ? (
+                <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
+                  <iframe
+                    className="w-full h-full"
+                    src={videoSrc}
+                    title="RiceProTech Demo Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : !showFallback ? (
+                <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
+                  <video
+                    className="w-full h-full object-contain"
+                    controls
+                    preload="metadata"
+                    poster="/projects/riceprotech-poster.jpg"
+                    onError={handleVideoError}
+                  >
+                    <source src={videoSrc} type="video/mp4" />
+                    <source src={videoSrc.replace('.mp4', '.webm')} type="video/webm" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ) : (
+                <div className="relative aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center rounded-lg">
+                  <div className="text-center">
+                    <Smartphone className="h-24 w-24 mx-auto mb-4 text-primary/50" />
+                    <p className="text-muted-foreground mb-2">Video Demo Coming Soon</p>
+                    <p className="text-sm text-muted-foreground/70 max-w-md mx-auto">
+                      Add your video to /public/projects/riceprotech-demo.mp4
+                      <br />
+                      Or use a YouTube/Vimeo embed URL
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </Card>
         </div>
