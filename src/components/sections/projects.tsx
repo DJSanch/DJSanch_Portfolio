@@ -41,7 +41,7 @@ const Projects = () => {
       title: "RiceProTech",
       description: "A Rice Leaf Disease Classification Mobile App using React Native.",
       technologies: ["React Native", "Python", "SQLite", "Google Colab", "TensorFlow"],
-      image: "/projects/weather.jpg",
+      image: "/projects/riceprotech.png",
       github: "https://github.com/DJSanch/RiceProTech",
       viewProject: "/riceprotech",
       featured: false
