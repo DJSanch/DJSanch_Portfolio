@@ -6,10 +6,21 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Github, ArrowLeft, Smartphone, Database, Brain, Code } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function RiceProTechPage() {
   const [showFallback, setShowFallback] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    // Trigger fade-in animation after component mounts
+    // Small delay ensures smooth transition
+    const timer = setTimeout(() => {
+      setIsLoaded(true)
+    }, 50)
+    
+    return () => clearTimeout(timer)
+  }, [])
 
   // Video configuration - Update this with your video path
   // Option 1: Local video file (add your video to /public/projects/riceprotech-demo.mp4)
@@ -138,7 +149,7 @@ export default function RiceProTechPage() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 py-20">
+        <div className={`relative z-10 container mx-auto px-4 py-20 page-fade-in ${isLoaded ? 'fade-in-active' : ''}`}>
         {/* Back Button */}
         <Link href="/#projects">
           <Button variant="ghost" className="mb-8">
