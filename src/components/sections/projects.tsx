@@ -3,8 +3,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Github, Globe } from "lucide-react"
+import { Github, Globe, Eye } from "lucide-react"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
+import Link from "next/link"
 
 const Projects = () => {
   const { ref, isVisible } = useScrollAnimation()
@@ -37,12 +38,12 @@ const Projects = () => {
       featured: true
     },
     {
-      title: "Weather Dashboard",
-      description: "A weather application that displays current weather conditions and forecasts using OpenWeatherMap API with beautiful data visualization.",
-      technologies: ["React", "Chart.js", "OpenWeatherMap API", "CSS3"],
+      title: "RiceProTech",
+      description: "A Rice Leaf Disease Classification Mobile App using React Native.",
+      technologies: ["React Native", "Python", "SQLite", "Google Colab", "TensorFlow"],
       image: "/projects/weather.jpg",
       github: "https://github.com/djsanch/weather-dashboard",
-      live: "https://weather-dashboard-demo.com",
+      viewProject: "/riceprotech",
       featured: false
     },
     {
@@ -124,12 +125,21 @@ const Projects = () => {
                       Code
                     </a>
                   </Button>
-                  <Button variant="outline" size="sm" asChild className="flex-1">
-                    <a href={project.live} target="_blank" rel="noopener noreferrer">
-                      <Globe className="h-4 w-4 mr-2" />
-                      Live
-                    </a>
-                  </Button>
+                  {project.viewProject ? (
+                    <Button variant="outline" size="sm" asChild className="flex-1">
+                      <Link href={project.viewProject}>
+                        <Eye className="h-4 w-4 mr-2" />
+                        View Project
+                      </Link>
+                    </Button>
+                  ) : project.live ? (
+                    <Button variant="outline" size="sm" asChild className="flex-1">
+                      <a href={project.live} target="_blank" rel="noopener noreferrer">
+                        <Globe className="h-4 w-4 mr-2" />
+                        Live
+                      </a>
+                    </Button>
+                  ) : null}
                 </div>
               </CardContent>
             </Card>
