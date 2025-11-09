@@ -155,7 +155,7 @@ export default function RiceProTechPage() {
           </p>
           <div className="flex justify-center gap-4">
             <Button variant="outline" asChild>
-              <a href="https://github.com/djsanch/weather-dashboard" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/DJSanch/RiceProTech" target="_blank" rel="noopener noreferrer">
                 <Github className="h-4 w-4 mr-2" />
                 View Code
               </a>
