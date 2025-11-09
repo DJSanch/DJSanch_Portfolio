@@ -8,7 +8,33 @@ import Link from "next/link"
 export default function RiceProTechPage() {
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-20">
+      {/* Background Section */}
+      <div className="relative min-h-screen">
+        {/* Rice Field Background */}
+        <div className="fixed inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-green-900/40 via-green-800/30 to-green-700/40">
+            {/* Fallback gradient background */}
+          </div>
+          {/* Background Image - Add your rice field image to /public/projects/rice-field.jpg */}
+          <div className="absolute inset-0 opacity-30">
+            {/* Using img tag for better error handling with background images */}
+            <img
+              src="/projects/rice-field.jpg"
+              alt="Rice Field Background"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                // Hide image if it doesn't exist, fallback to gradient
+                const target = e.target as HTMLImageElement
+                target.style.display = "none"
+              }}
+            />
+          </div>
+          {/* Overlay for better text readability */}
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 py-20">
         {/* Back Button */}
         <Link href="/#projects">
           <Button variant="ghost" className="mb-8">
@@ -146,6 +172,7 @@ export default function RiceProTechPage() {
             </p>
           </CardContent>
         </Card>
+        </div>
       </div>
     </Layout>
   )
