@@ -8,29 +8,29 @@ import Link from "next/link"
 export default function RiceProTechPage() {
   return (
     <Layout>
-      {/* Background Section */}
-      <div className="relative min-h-screen">
-        {/* Rice Field Background */}
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-green-900/40 via-green-800/30 to-green-700/40">
-            {/* Fallback gradient background */}
+      {/* Background Section with Rice Field Effects */}
+      <div className="relative min-h-screen overflow-hidden">
+        {/* Rice Field Background Effects */}
+        <div className="fixed inset-0 z-0 rice-field-bg">
+          {/* Sky gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-sky-200/20 via-blue-100/10 to-transparent" />
+          
+          {/* Rice field layers with animated waves */}
+          <div className="absolute bottom-0 left-0 right-0 h-3/4">
+            {/* Water/Field base */}
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-100/30 via-green-200/40 to-green-300/50" />
+            
+            {/* Animated rice plant waves */}
+            <div className="absolute inset-0 rice-wave-1" />
+            <div className="absolute inset-0 rice-wave-2" />
+            <div className="absolute inset-0 rice-wave-3" />
+            
+            {/* Rice field texture pattern */}
+            <div className="absolute inset-0 rice-texture" />
           </div>
-          {/* Background Image - Add your rice field image to /public/projects/rice-field.jpg */}
-          <div className="absolute inset-0 opacity-30">
-            {/* Using img tag for better error handling with background images */}
-            <img
-              src="/projects/rice-field.jpg"
-              alt="Rice Field Background"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                // Hide image if it doesn't exist, fallback to gradient
-                const target = e.target as HTMLImageElement
-                target.style.display = "none"
-              }}
-            />
-          </div>
+          
           {/* Overlay for better text readability */}
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-background/70 backdrop-blur-[1px]" />
         </div>
 
         {/* Content */}
