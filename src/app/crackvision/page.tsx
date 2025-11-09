@@ -23,7 +23,7 @@ export default function CrackVisionPage() {
   return (
     <Layout>
       {/* Background Section */}
-      <div className="relative min-h-screen overflow-hidden">
+      <div className="relative min-h-screen overflow-hidden crack-page-container">
         {/* Background with gradient */}
         <div className="fixed inset-0 z-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
           {/* Overlay pattern for texture */}
@@ -37,8 +37,30 @@ export default function CrackVisionPage() {
           <div className="absolute inset-0 bg-background/70 backdrop-blur-[1px] z-[1]" />
         </div>
 
+        {/* Crack Effects Layer */}
+        <div className="fixed inset-0 z-[2] pointer-events-none overflow-hidden">
+          {/* Crack 1 */}
+          <div className="absolute crack-1" style={{ top: '15%', left: '10%', width: '200px', height: '3px' }} />
+          {/* Crack 2 */}
+          <div className="absolute crack-2" style={{ top: '25%', left: '30%', width: '150px', height: '2px' }} />
+          {/* Crack 3 */}
+          <div className="absolute crack-3" style={{ top: '40%', left: '5%', width: '180px', height: '2.5px' }} />
+          {/* Crack 4 */}
+          <div className="absolute crack-4" style={{ top: '55%', left: '50%', width: '220px', height: '3px' }} />
+          {/* Crack 5 */}
+          <div className="absolute crack-5" style={{ top: '70%', left: '20%', width: '160px', height: '2px' }} />
+          {/* Crack 6 */}
+          <div className="absolute crack-6" style={{ top: '80%', left: '60%', width: '190px', height: '2.5px' }} />
+          {/* Vertical Crack 1 */}
+          <div className="absolute crack-vertical-1" style={{ top: '10%', left: '25%', width: '3px', height: '200px' }} />
+          {/* Vertical Crack 2 */}
+          <div className="absolute crack-vertical-2" style={{ top: '30%', left: '70%', width: '2.5px', height: '180px' }} />
+          {/* Vertical Crack 3 */}
+          <div className="absolute crack-vertical-3" style={{ top: '50%', left: '45%', width: '2px', height: '150px' }} />
+        </div>
+
         {/* Content */}
-        <div className={`relative z-10 container mx-auto px-4 py-20 page-fade-in ${isLoaded ? 'fade-in-active' : ''}`}>
+        <div className={`relative z-10 container mx-auto px-4 py-20 page-fade-in ${isLoaded ? 'fade-in-active earthquake-shake' : ''}`}>
           {/* Back Button */}
           <Link href="/#projects">
             <Button variant="ghost" className="mb-8">
