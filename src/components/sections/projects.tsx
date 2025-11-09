@@ -42,7 +42,7 @@ const Projects = () => {
       description: "A Rice Leaf Disease Classification Mobile App using React Native.",
       technologies: ["React Native", "Python", "SQLite", "Google Colab", "TensorFlow"],
       image: "/projects/weather.jpg",
-      github: "https://github.com/djsanch/weather-dashboard",
+      github: "https://github.com/DJSanch/RiceProTech",
       viewProject: "/riceprotech",
       featured: false
     },
