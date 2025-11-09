@@ -17,10 +17,10 @@ export default function RiceProTechPage() {
           
           {/* Rice field layers with animated waves */}
           <div className="absolute bottom-0 left-0 right-0 h-3/4">
-            {/* Water/Field base - darker colors */}
-            <div className="absolute inset-0 bg-gradient-to-b from-green-800/50 via-green-900/60 to-green-950/70" />
+            {/* Water/Field base - natural rice field colors */}
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-100/40 via-green-200/50 to-green-300/60" />
             
-            {/* Animated rice plant waves - darker */}
+            {/* Animated rice plant waves */}
             <div className="absolute inset-0 rice-wave-1" />
             <div className="absolute inset-0 rice-wave-2" />
             <div className="absolute inset-0 rice-wave-3" />
@@ -30,32 +30,88 @@ export default function RiceProTechPage() {
           </div>
           
           {/* Overlay for better text readability */}
-          <div className="absolute inset-0 bg-background/60 backdrop-blur-[0.5px] z-[1]" />
+          <div className="absolute inset-0 bg-background/55 backdrop-blur-[0.5px] z-[1]" />
           
           {/* Swaying rice leaves - above overlay */}
           <div className="absolute bottom-0 left-0 right-0 h-3/4 rice-leaves-container z-[2]">
-            <div className="rice-leaf" style={{ left: '5%', animationDelay: '0s' }} />
-            <div className="rice-leaf" style={{ left: '12%', animationDelay: '0.5s' }} />
-            <div className="rice-leaf" style={{ left: '20%', animationDelay: '1s' }} />
-            <div className="rice-leaf" style={{ left: '28%', animationDelay: '1.5s' }} />
-            <div className="rice-leaf" style={{ left: '35%', animationDelay: '0.2s' }} />
-            <div className="rice-leaf" style={{ left: '42%', animationDelay: '0.7s' }} />
-            <div className="rice-leaf" style={{ left: '50%', animationDelay: '1.2s' }} />
-            <div className="rice-leaf" style={{ left: '58%', animationDelay: '1.7s' }} />
-            <div className="rice-leaf" style={{ left: '65%', animationDelay: '0.3s' }} />
-            <div className="rice-leaf" style={{ left: '72%', animationDelay: '0.8s' }} />
-            <div className="rice-leaf" style={{ left: '80%', animationDelay: '1.3s' }} />
-            <div className="rice-leaf" style={{ left: '88%', animationDelay: '1.8s' }} />
-            <div className="rice-leaf" style={{ left: '95%', animationDelay: '0.4s' }} />
-            <div className="rice-leaf" style={{ left: '8%', animationDelay: '0.9s', bottom: '10%' }} />
-            <div className="rice-leaf" style={{ left: '15%', animationDelay: '1.4s', bottom: '8%' }} />
-            <div className="rice-leaf" style={{ left: '25%', animationDelay: '1.9s', bottom: '12%' }} />
-            <div className="rice-leaf" style={{ left: '38%', animationDelay: '0.6s', bottom: '10%' }} />
-            <div className="rice-leaf" style={{ left: '48%', animationDelay: '1.1s', bottom: '9%' }} />
-            <div className="rice-leaf" style={{ left: '62%', animationDelay: '1.6s', bottom: '11%' }} />
-            <div className="rice-leaf" style={{ left: '75%', animationDelay: '0.1s', bottom: '10%' }} />
-            <div className="rice-leaf" style={{ left: '85%', animationDelay: '0.6s', bottom: '8%' }} />
-            <div className="rice-leaf" style={{ left: '92%', animationDelay: '1.1s', bottom: '12%' }} />
+            {/* Row 1 - Front layer */}
+            <div className="rice-leaf" style={{ left: '2%', animationDelay: '0s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '6%', animationDelay: '0.3s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '10%', animationDelay: '0.6s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '14%', animationDelay: '0.9s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '18%', animationDelay: '1.2s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '22%', animationDelay: '1.5s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '26%', animationDelay: '1.8s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '30%', animationDelay: '0.2s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '34%', animationDelay: '0.5s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '38%', animationDelay: '0.8s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '42%', animationDelay: '1.1s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '46%', animationDelay: '1.4s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '50%', animationDelay: '1.7s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '54%', animationDelay: '0.1s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '58%', animationDelay: '0.4s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '62%', animationDelay: '0.7s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '66%', animationDelay: '1s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '70%', animationDelay: '1.3s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '74%', animationDelay: '1.6s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '78%', animationDelay: '1.9s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '82%', animationDelay: '0.2s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '86%', animationDelay: '0.5s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '90%', animationDelay: '0.8s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '94%', animationDelay: '1.1s', bottom: '0%' }} />
+            <div className="rice-leaf" style={{ left: '98%', animationDelay: '1.4s', bottom: '0%' }} />
+            
+            {/* Row 2 - Middle layer */}
+            <div className="rice-leaf" style={{ left: '4%', animationDelay: '0.7s', bottom: '8%' }} />
+            <div className="rice-leaf" style={{ left: '8%', animationDelay: '1s', bottom: '10%' }} />
+            <div className="rice-leaf" style={{ left: '12%', animationDelay: '1.3s', bottom: '9%' }} />
+            <div className="rice-leaf" style={{ left: '16%', animationDelay: '1.6s', bottom: '11%' }} />
+            <div className="rice-leaf" style={{ left: '20%', animationDelay: '1.9s', bottom: '8%' }} />
+            <div className="rice-leaf" style={{ left: '24%', animationDelay: '0.2s', bottom: '10%' }} />
+            <div className="rice-leaf" style={{ left: '28%', animationDelay: '0.5s', bottom: '9%' }} />
+            <div className="rice-leaf" style={{ left: '32%', animationDelay: '0.8s', bottom: '12%' }} />
+            <div className="rice-leaf" style={{ left: '36%', animationDelay: '1.1s', bottom: '8%' }} />
+            <div className="rice-leaf" style={{ left: '40%', animationDelay: '1.4s', bottom: '10%' }} />
+            <div className="rice-leaf" style={{ left: '44%', animationDelay: '1.7s', bottom: '9%' }} />
+            <div className="rice-leaf" style={{ left: '48%', animationDelay: '0.1s', bottom: '11%' }} />
+            <div className="rice-leaf" style={{ left: '52%', animationDelay: '0.4s', bottom: '8%' }} />
+            <div className="rice-leaf" style={{ left: '56%', animationDelay: '0.7s', bottom: '10%' }} />
+            <div className="rice-leaf" style={{ left: '60%', animationDelay: '1s', bottom: '9%' }} />
+            <div className="rice-leaf" style={{ left: '64%', animationDelay: '1.3s', bottom: '12%' }} />
+            <div className="rice-leaf" style={{ left: '68%', animationDelay: '1.6s', bottom: '8%' }} />
+            <div className="rice-leaf" style={{ left: '72%', animationDelay: '1.9s', bottom: '10%' }} />
+            <div className="rice-leaf" style={{ left: '76%', animationDelay: '0.2s', bottom: '9%' }} />
+            <div className="rice-leaf" style={{ left: '80%', animationDelay: '0.5s', bottom: '11%' }} />
+            <div className="rice-leaf" style={{ left: '84%', animationDelay: '0.8s', bottom: '8%' }} />
+            <div className="rice-leaf" style={{ left: '88%', animationDelay: '1.1s', bottom: '10%' }} />
+            <div className="rice-leaf" style={{ left: '92%', animationDelay: '1.4s', bottom: '9%' }} />
+            <div className="rice-leaf" style={{ left: '96%', animationDelay: '1.7s', bottom: '12%' }} />
+            
+            {/* Row 3 - Back layer */}
+            <div className="rice-leaf" style={{ left: '3%', animationDelay: '1.2s', bottom: '15%' }} />
+            <div className="rice-leaf" style={{ left: '7%', animationDelay: '1.5s', bottom: '17%' }} />
+            <div className="rice-leaf" style={{ left: '11%', animationDelay: '1.8s', bottom: '16%' }} />
+            <div className="rice-leaf" style={{ left: '15%', animationDelay: '0.1s', bottom: '18%' }} />
+            <div className="rice-leaf" style={{ left: '19%', animationDelay: '0.4s', bottom: '15%' }} />
+            <div className="rice-leaf" style={{ left: '23%', animationDelay: '0.7s', bottom: '17%' }} />
+            <div className="rice-leaf" style={{ left: '27%', animationDelay: '1s', bottom: '16%' }} />
+            <div className="rice-leaf" style={{ left: '31%', animationDelay: '1.3s', bottom: '19%' }} />
+            <div className="rice-leaf" style={{ left: '35%', animationDelay: '1.6s', bottom: '15%' }} />
+            <div className="rice-leaf" style={{ left: '39%', animationDelay: '1.9s', bottom: '17%' }} />
+            <div className="rice-leaf" style={{ left: '43%', animationDelay: '0.2s', bottom: '16%' }} />
+            <div className="rice-leaf" style={{ left: '47%', animationDelay: '0.5s', bottom: '18%' }} />
+            <div className="rice-leaf" style={{ left: '51%', animationDelay: '0.8s', bottom: '15%' }} />
+            <div className="rice-leaf" style={{ left: '55%', animationDelay: '1.1s', bottom: '17%' }} />
+            <div className="rice-leaf" style={{ left: '59%', animationDelay: '1.4s', bottom: '16%' }} />
+            <div className="rice-leaf" style={{ left: '63%', animationDelay: '1.7s', bottom: '19%' }} />
+            <div className="rice-leaf" style={{ left: '67%', animationDelay: '0.1s', bottom: '15%' }} />
+            <div className="rice-leaf" style={{ left: '71%', animationDelay: '0.4s', bottom: '17%' }} />
+            <div className="rice-leaf" style={{ left: '75%', animationDelay: '0.7s', bottom: '16%' }} />
+            <div className="rice-leaf" style={{ left: '79%', animationDelay: '1s', bottom: '18%' }} />
+            <div className="rice-leaf" style={{ left: '83%', animationDelay: '1.3s', bottom: '15%' }} />
+            <div className="rice-leaf" style={{ left: '87%', animationDelay: '1.6s', bottom: '17%' }} />
+            <div className="rice-leaf" style={{ left: '91%', animationDelay: '1.9s', bottom: '16%' }} />
+            <div className="rice-leaf" style={{ left: '95%', animationDelay: '0.2s', bottom: '18%' }} />
           </div>
         </div>
 
