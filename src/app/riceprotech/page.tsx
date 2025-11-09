@@ -182,7 +182,11 @@ export default function RiceProTechPage() {
                   <video
                     className="w-full h-full object-contain"
                     controls
-                    preload="metadata"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
                     poster="/projects/riceprotech-poster.jpg"
                     onError={handleVideoError}
                   >
