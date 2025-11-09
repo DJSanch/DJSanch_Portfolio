@@ -47,12 +47,12 @@ const Projects = () => {
       featured: false
     },
     {
-      title: "Portfolio Website",
-      description: "A modern, responsive portfolio website built with Next.js and Shadcn UI, featuring smooth animations and optimal performance.",
-      technologies: ["Next.js", "TypeScript", "Shadcn UI", "Tailwind CSS"],
-      image: "/projects/portfolio.jpg",
-      github: "https://github.com/djsanch/portfolio",
-      live: "https://djsanch-portfolio.com",
+      title: "CrackVision",
+      description: "A multiclass image classification model that can classify the severity of concrete crack images.",
+      technologies: ["Python", "TensorFlow", "Next.js", "TypeScript", "Machine Learning"],
+      image: "/projects/crackvision.jpg",
+      github: "https://github.com/DJSanch/CrackVision",
+      viewProject: "/crackvision",
       featured: false
     },
     {
