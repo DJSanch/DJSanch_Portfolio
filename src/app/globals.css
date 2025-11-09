@@ -336,10 +336,10 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(34, 197, 94, 0.2) 30%,
-    rgba(22, 163, 74, 0.3) 50%,
-    rgba(21, 128, 61, 0.4) 70%,
-    rgba(20, 83, 45, 0.3) 100%
+    rgba(20, 83, 45, 0.4) 30%,
+    rgba(21, 128, 61, 0.5) 50%,
+    rgba(22, 163, 74, 0.6) 70%,
+    rgba(20, 83, 45, 0.5) 100%
   );
   animation: rice-wave 8s ease-in-out infinite;
   clip-path: polygon(0 40%, 100% 35%, 100% 100%, 0% 100%);
@@ -349,10 +349,10 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(74, 222, 128, 0.15) 25%,
-    rgba(34, 197, 94, 0.25) 45%,
-    rgba(22, 163, 74, 0.35) 65%,
-    rgba(21, 128, 61, 0.25) 100%
+    rgba(21, 128, 61, 0.35) 25%,
+    rgba(22, 163, 74, 0.45) 45%,
+    rgba(20, 83, 45, 0.55) 65%,
+    rgba(21, 128, 61, 0.45) 100%
   );
   animation: rice-wave-reverse 10s ease-in-out infinite;
   clip-path: polygon(0 45%, 100% 40%, 100% 100%, 0% 100%);
@@ -363,10 +363,10 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(134, 239, 172, 0.1) 20%,
-    rgba(74, 222, 128, 0.2) 40%,
-    rgba(34, 197, 94, 0.3) 60%,
-    rgba(22, 163, 74, 0.2) 100%
+    rgba(22, 163, 74, 0.3) 20%,
+    rgba(21, 128, 61, 0.4) 40%,
+    rgba(20, 83, 45, 0.5) 60%,
+    rgba(22, 163, 74, 0.4) 100%
   );
   animation: rice-wave 12s ease-in-out infinite;
   clip-path: polygon(0 50%, 100% 45%, 100% 100%, 0% 100%);
@@ -380,17 +380,110 @@
       90deg,
       transparent,
       transparent 2px,
-      rgba(34, 197, 94, 0.03) 2px,
-      rgba(34, 197, 94, 0.03) 4px
+      rgba(20, 83, 45, 0.05) 2px,
+      rgba(20, 83, 45, 0.05) 4px
     ),
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 20px,
-      rgba(22, 163, 74, 0.05) 20px,
-      rgba(22, 163, 74, 0.05) 40px
+      rgba(21, 128, 61, 0.08) 20px,
+      rgba(21, 128, 61, 0.08) 40px
     );
-  opacity: 0.4;
+  opacity: 0.5;
+}
+
+/* Rice leaves container and leaves */
+.rice-leaves-container {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rice-leaf {
+  position: absolute;
+  bottom: 0;
+  width: 3px;
+  height: 120px;
+  background: linear-gradient(
+    to top,
+    rgba(20, 83, 45, 0.9) 0%,
+    rgba(22, 163, 74, 0.8) 30%,
+    rgba(34, 197, 94, 0.7) 60%,
+    rgba(74, 222, 128, 0.6) 100%
+  );
+  border-radius: 2px;
+  transform-origin: bottom center;
+  animation: sway 3s ease-in-out infinite;
+  box-shadow: 
+    -1px 0 2px rgba(20, 83, 45, 0.5),
+    1px 0 2px rgba(22, 163, 74, 0.5);
+}
+
+.rice-leaf::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 25px;
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.8) 0%,
+    rgba(22, 163, 74, 0.9) 50%,
+    rgba(20, 83, 45, 0.8) 100%
+  );
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+  animation: leaf-sway 2.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.rice-leaf::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 60%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.7) 0%,
+    rgba(22, 163, 74, 0.8) 50%,
+    rgba(20, 83, 45, 0.7) 100%
+  );
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+  animation: leaf-sway-reverse 2.8s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes leaf-sway {
+  0%, 100% {
+    transform: translateX(-50%) rotate(-15deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(15deg);
+  }
+}
+
+@keyframes leaf-sway-reverse {
+  0%, 100% {
+    transform: translateX(-50%) rotate(12deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(-12deg);
+  }
 }
 
 /* Dark mode adjustments for rice field */
@@ -410,10 +503,10 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(34, 197, 94, 0.15) 30%,
-    rgba(22, 163, 74, 0.25) 50%,
-    rgba(21, 128, 61, 0.35) 70%,
-    rgba(20, 83, 45, 0.25) 100%
+    rgba(20, 83, 45, 0.5) 30%,
+    rgba(21, 128, 61, 0.6) 50%,
+    rgba(22, 163, 74, 0.7) 70%,
+    rgba(20, 83, 45, 0.6) 100%
   );
 }
 
@@ -421,10 +514,10 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(74, 222, 128, 0.1) 25%,
-    rgba(34, 197, 94, 0.2) 45%,
-    rgba(22, 163, 74, 0.3) 65%,
-    rgba(21, 128, 61, 0.2) 100%
+    rgba(21, 128, 61, 0.45) 25%,
+    rgba(22, 163, 74, 0.55) 45%,
+    rgba(20, 83, 45, 0.65) 65%,
+    rgba(21, 128, 61, 0.55) 100%
   );
 }
 
@@ -432,10 +525,41 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(134, 239, 172, 0.08) 20%,
-    rgba(74, 222, 128, 0.15) 40%,
-    rgba(34, 197, 94, 0.25) 60%,
-    rgba(22, 163, 74, 0.15) 100%
+    rgba(22, 163, 74, 0.4) 20%,
+    rgba(21, 128, 61, 0.5) 40%,
+    rgba(20, 83, 45, 0.6) 60%,
+    rgba(22, 163, 74, 0.5) 100%
+  );
+}
+
+.dark .rice-leaf {
+  background: linear-gradient(
+    to top,
+    rgba(20, 83, 45, 0.95) 0%,
+    rgba(22, 163, 74, 0.85) 30%,
+    rgba(34, 197, 94, 0.75) 60%,
+    rgba(74, 222, 128, 0.65) 100%
+  );
+  box-shadow: 
+    -1px 0 3px rgba(20, 83, 45, 0.6),
+    1px 0 3px rgba(22, 163, 74, 0.6);
+}
+
+.dark .rice-leaf::before {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.85) 0%,
+    rgba(22, 163, 74, 0.95) 50%,
+    rgba(20, 83, 45, 0.85) 100%
+  );
+}
+
+.dark .rice-leaf::after {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.75) 0%,
+    rgba(22, 163, 74, 0.85) 50%,
+    rgba(20, 83, 45, 0.75) 100%
   );
 }
 
