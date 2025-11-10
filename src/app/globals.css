@@ -337,25 +337,18 @@
 @keyframes crack-appear {
   0% {
     opacity: 0;
-    transform: scaleX(0);
+    transform: scaleX(0) rotate(var(--crack-rotate, 0deg));
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.6;
   }
   100% {
-    opacity: 0.8;
-    transform: scaleX(1);
+    opacity: 0.9;
+    transform: scaleX(1) rotate(var(--crack-rotate, 0deg));
   }
 }
 
-@keyframes crack-glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(255, 100, 100, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(255, 100, 100, 0.6), 0 0 25px rgba(255, 150, 150, 0.4);
-  }
-}
+/* Remove glow effect for rigid black cracks */
 
 .earthquake-shake {
   animation: earthquake-shake 0.5s ease-in-out infinite;
@@ -399,44 +392,72 @@
   animation: earthquake-strong 8s ease-in-out infinite;
 }
 
-/* Crack lines */
+/* Crack lines - Updated to be black and rigid */
+.crack-1,
+.crack-2,
+.crack-3,
+.crack-4,
+.crack-5,
+.crack-6,
+.crack-vertical-1,
+.crack-vertical-2,
+.crack-vertical-3,
+.crack-new {
+  background: #000;
+  border-radius: 1px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  animation: crack-appear 1s ease-out forwards;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 10;
+}
+
+/* Horizontal cracks */
 .crack-1,
 .crack-2,
 .crack-3,
 .crack-4,
 .crack-5,
 .crack-6 {
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(139, 69, 19, 0.6) 20%,
-    rgba(160, 82, 45, 0.8) 50%,
-    rgba(139, 69, 19, 0.6) 80%,
-    transparent 100%
-  );
-  border-radius: 2px;
-  animation: crack-appear 2s ease-out forwards, crack-glow 3s ease-in-out infinite;
-  animation-delay: 0.5s, 2.5s;
+  height: 2px;
   transform-origin: left center;
-  opacity: 0;
 }
 
+/* Vertical cracks */
 .crack-vertical-1,
 .crack-vertical-2,
 .crack-vertical-3 {
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(139, 69, 19, 0.6) 20%,
-    rgba(160, 82, 45, 0.8) 50%,
-    rgba(139, 69, 19, 0.6) 80%,
-    transparent 100%
-  );
-  border-radius: 2px;
-  animation: crack-appear 2s ease-out forwards, crack-glow 3s ease-in-out infinite;
-  animation-delay: 1s, 3s;
+  width: 2px;
   transform-origin: top center;
-  opacity: 0;
+}
+
+/* New crack animation */
+@keyframes new-crack {
+  0% {
+    opacity: 0;
+    transform: scaleX(0) rotate(var(--crack-rotate, 0deg));
+  }
+  100% {
+    opacity: 0.9;
+    transform: scaleX(1) rotate(var(--crack-rotate, 0deg));
+  }
+}
+
+.crack-new {
+  animation: new-crack 0.8s ease-out forwards;
+  background: #000;
+  height: 2px;
+  width: 100px;
+  transform-origin: left center;
+  --crack-rotate: 0deg;
+}
+
+.crack-new.vertical {
+  width: 2px;
+  height: 100px;
+  transform-origin: top center;
+  --crack-rotate: 0deg;
 }
 
 .crack-1 {
