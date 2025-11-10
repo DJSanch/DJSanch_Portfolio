@@ -13,7 +13,7 @@ const Hero = () => {
 
   const socialLinks = [
     { icon: Github, href: "https://github.com/djsanch", label: "GitHub" },
-    { icon: Linkedin, href: "www.linkedin.com/in/daniel-sanchez-8110b2252", label: "LinkedIn" },
+    { icon: Linkedin, href: "https://linkedin.com/in/daniel-sanchez-8110b2252", label: "LinkedIn" },
     { icon: Mail, href: "mailto:contact@djsanch.com", label: "Email" },
   ]
 
