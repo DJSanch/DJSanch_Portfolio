@@ -68,7 +68,7 @@ const Contact = () => {
 
   const socialLinks = [
     { icon: Github, href: "https://github.com/djsanch", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com/in/djsanch", label: "LinkedIn" },
+    { icon: Linkedin, href: "www.linkedin.com/in/daniel-sanchez-8110b2252", label: "LinkedIn" },
     { icon: Twitter, href: "https://twitter.com/djsanch", label: "Twitter" }
   ]
 
