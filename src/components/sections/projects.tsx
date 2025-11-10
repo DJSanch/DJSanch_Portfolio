@@ -50,7 +50,7 @@ const Projects = () => {
       title: "CrackVision",
       description: "A multiclass image classification model that can classify the severity of concrete crack images.",
       technologies: ["Python", "TensorFlow", "Next.js", "TypeScript", "Machine Learning"],
-      image: "/projects/crackvision.jpg",
+      image: "/projects/crackvision.png",
       github: "https://github.com/DJSanch/CrackVision",
       viewProject: "/crackvision",
       featured: false
