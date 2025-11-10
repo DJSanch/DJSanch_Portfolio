@@ -392,7 +392,7 @@
   animation: earthquake-strong 8s ease-in-out infinite;
 }
 
-/* Realistic crack styles */
+/* Crack lines - Updated to be black and rigid */
 .crack-1,
 .crack-2,
 .crack-3,
@@ -403,58 +403,14 @@
 .crack-vertical-2,
 .crack-vertical-3,
 .crack-new {
-  background: transparent;
+  background: #000;
+  border-radius: 1px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  animation: crack-appear 1s ease-out forwards;
+  opacity: 0;
+  pointer-events: none;
   position: absolute;
   z-index: 10;
-  pointer-events: none;
-  opacity: 0;
-  animation: crack-appear 1s ease-out forwards;
-  overflow: hidden;
-}
-
-/* Create jagged edges using pseudo-elements */
-.crack-1::before,
-.crack-2::before,
-.crack-3::before,
-.crack-4::before,
-.crack-5::before,
-.crack-6::before,
-.crack-vertical-1::before,
-.crack-vertical-2::before,
-.crack-vertical-3::before,
-.crack-new::before {
-  content: '';
-  position: absolute;
-  background: #000;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-  animation: crack-appear 1s ease-out forwards;
-}
-
-/* Horizontal cracks */
-.crack-1::before,
-.crack-2::before,
-.crack-3::before,
-.crack-4::before,
-.crack-5::before,
-.crack-6::before,
-.crack-new:not(.vertical)::before {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    transparent 10%,
-    #1a1a1a 10%,
-    #000 50%,
-    #1a1a1a 90%,
-    transparent 90%,
-    transparent
-  );
-  mask-image: url("data:image/svg+xml,%3Csvg width='200' height='20' viewBox='0 0 200 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,10 C20,-5 40,25 60,5 C80,-15 100,15 120,0 C140,-15 160,25 180,5 C200,-15 220,15 240,0' stroke='black' fill='none' stroke-width='3' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
-  mask-size: 100% 100%;
-  mask-repeat: no-repeat;
-  transform: rotate(var(--crack-rotate, 0deg));
-  transform-origin: left center;
 }
 
 /* Horizontal cracks */
@@ -469,39 +425,11 @@
 }
 
 /* Vertical cracks */
-.crack-vertical-1::before,
-.crack-vertical-2::before,
-.crack-vertical-3::before,
-.crack-new.vertical::before {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    180deg,
-    transparent,
-    transparent 10%,
-    #1a1a1a 10%,
-    #000 50%,
-    #1a1a1a 90%,
-    transparent 90%,
-    transparent
-  );
-  mask-image: url("data:image/svg+xml,%3Csvg width='20' height='200' viewBox='0 0 20 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,0 C-5,20 25,40 5,60 C-15,80 15,100 0,120 C-15,140 25,160 5,180 C-15,200 15,220 0,240' stroke='black' fill='none' stroke-width='3' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
-  mask-size: 100% 100%;
-  mask-repeat: no-repeat;
-  transform: rotate(var(--crack-rotate, 0deg));
+.crack-vertical-1,
+.crack-vertical-2,
+.crack-vertical-3 {
+  width: 2px;
   transform-origin: top center;
-}
-
-/* New crack animation */
-@keyframes new-crack {
-  0% {
-    opacity: 0;
-    transform: scaleX(0) rotate(var(--crack-rotate, 0deg));
-  }
-  100% {
-    opacity: 0.9;
-    transform: scaleX(1) rotate(var(--crack-rotate, 0deg));
-  }
 }
 
 /* New crack animation */
@@ -518,29 +446,19 @@
 
 .crack-new {
   animation: new-crack 0.8s ease-out forwards;
-  height: 20px;
+  background: #000;
+  height: 2px;
   width: 100px;
+  transform-origin: left center;
   --crack-rotate: 0deg;
 }
 
 .crack-new.vertical {
-  width: 20px;
+  width: 2px;
   height: 100px;
+  transform-origin: top center;
   --crack-rotate: 0deg;
 }
-
-/* Add subtle random variations to cracks */
-@keyframes crack-pulse {
-  0%, 100% { opacity: 0.9; }
-  50% { opacity: 0.8; }
-}
-
-.crack-1::before { animation: crack-pulse 3s ease-in-out infinite; }
-.crack-2::before { animation: crack-pulse 3.5s ease-in-out infinite 0.5s; }
-.crack-3::before { animation: crack-pulse 4s ease-in-out infinite 1s; }
-.crack-4::before { animation: crack-pulse 3.2s ease-in-out infinite 0.3s; }
-.crack-5::before { animation: crack-pulse 3.8s ease-in-out infinite 0.7s; }
-.crack-6::before { animation: crack-pulse 3.3s ease-in-out infinite 0.2s; }
 
 .crack-1 {
   transform: rotate(15deg);
