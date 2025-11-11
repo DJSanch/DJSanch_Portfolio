@@ -7,9 +7,20 @@ import { Github, Globe, Eye } from "lucide-react"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 import Link from "next/link"
 
+interface Project {
+  title: string;
+  description: string;
+  technologies: string[];
+  image: string;
+  github: string;
+  live?: string;
+  viewProject?: string;
+  featured: boolean;
+}
+
 const Projects = () => {
   const { ref, isVisible } = useScrollAnimation()
-  const projects = [
+  const projects: Project[] = [
     {
       title: "Inventory Management System",
       description: "A robust inventory management system for tracking stock, sales, and suppliers. Features include real-time inventory updates, reporting, and user roles.",
