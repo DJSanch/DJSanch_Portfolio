@@ -4,7 +4,7 @@ import Layout from "@/components/layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Github, ArrowLeft, Brain, Code, Zap, Layers, Cpu, BarChart, Database, Server, CpuIcon, BrainCircuit } from "lucide-react"
+import { Github, ArrowLeft, Brain, Code, Zap, Layers, Cpu, BarChart, Database, Server, BrainCircuit } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
