@@ -2,15 +2,13 @@
 
 import Layout from "@/components/layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Github, ArrowLeft, Globe, Leaf, Database, Cpu, BarChart3 } from "lucide-react"
+import { Github, ArrowLeft, Leaf, Cpu, BarChart3 } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
 export default function EnvirotechPage() {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [showFallback, setShowFallback] = useState(false)
 
   useEffect(() => {
     // Trigger fade-in animation after component mounts
@@ -20,13 +18,6 @@ export default function EnvirotechPage() {
     
     return () => clearTimeout(timer)
   }, [])
-
-  // Video configuration - Update this with your video path if available
-  const videoSrc = "/projects/envirotech-demo.mp4"
-  
-  const handleVideoError = () => {
-    setShowFallback(true)
-  }
 
   return (
     <Layout>
@@ -99,21 +90,15 @@ export default function EnvirotechPage() {
           <div className="mb-16">
             <Card className="overflow-hidden border-0 shadow-lg">
               <div className="relative h-96 bg-gradient-to-br from-teal-50 to-emerald-50 flex items-center justify-center">
-                {!showFallback ? (
-                  <div className="text-center p-8">
-                    <div className="flex justify-center mb-4">
-                      <Leaf className="h-16 w-16 text-teal-400" />
-                    </div>
-                    <h3 className="text-2xl font-semibold text-teal-800 mb-2">Envirotech Platform</h3>
-                    <p className="text-teal-600 max-w-md mx-auto">
-                      Real-time environmental monitoring and data visualization platform
-                    </p>
+                <div className="text-center p-8">
+                  <div className="flex justify-center mb-4">
+                    <Leaf className="h-16 w-16 text-teal-400" />
                   </div>
-                ) : (
-                  <div className="text-center p-8">
-                    <p className="text-muted-foreground">Project visualization coming soon</p>
-                  </div>
-                )}
+                  <h3 className="text-2xl font-semibold text-teal-800 mb-2">Envirotech Platform</h3>
+                  <p className="text-teal-600 max-w-md mx-auto">
+                    Real-time environmental monitoring and data visualization platform
+                  </p>
+                </div>
               </div>
             </Card>
           </div>
