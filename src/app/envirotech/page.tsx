@@ -151,7 +151,7 @@ export default function EnvirotechPage() {
                   <div className="mt-1">
                     <div className="h-2 w-2 rounded-full bg-teal-500 mt-2" />
                   </div>
-                  <span>User Role Managemen</span>
+                  <span>User Role Management</span>
                 </div>
               </CardContent>
             </Card>
