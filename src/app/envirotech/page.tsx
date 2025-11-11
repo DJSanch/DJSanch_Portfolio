@@ -133,25 +133,25 @@ export default function EnvirotechPage() {
                   <div className="mt-1">
                     <div className="h-2 w-2 rounded-full bg-teal-500 mt-2" />
                   </div>
-                  <span>Real-time environmental data collection from IoT sensors</span>
+                  <span>Real-Time Inventory Tracking</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="mt-1">
                     <div className="h-2 w-2 rounded-full bg-teal-500 mt-2" />
                   </div>
-                  <span>Interactive dashboards with data visualization</span>
+                  <span>Automated Reordering System</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="mt-1">
                     <div className="h-2 w-2 rounded-full bg-teal-500 mt-2" />
                   </div>
-                  <span>Predictive analytics for environmental trends</span>
+                  <span>Detailed Reporting and Analytics</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="mt-1">
                     <div className="h-2 w-2 rounded-full bg-teal-500 mt-2" />
                   </div>
-                  <span>Customizable alert system for threshold violations</span>
+                  <span>User Role Managemen</span>
                 </div>
               </CardContent>
             </Card>
