@@ -56,6 +56,15 @@ const Projects = () => {
       featured: false
     },
     {
+      title: "Envirotech",
+      description: "An environmental technology solution for monitoring and analyzing environmental data.",
+      technologies: ["React", "Node.js", "MongoDB", "IoT", "Data Visualization"],
+      image: "/projects/envirotech.png",
+      github: "https://github.com/DJSanch/Envirotech",
+      viewProject: "/envirotech",
+      featured: false
+    },
+    {
       title: "Blog Platform",
       description: "A content management system for blogs with markdown support, SEO optimization, and admin dashboard.",
       technologies: ["Next.js", "MDX", "Prisma", "PostgreSQL", "Vercel"],
