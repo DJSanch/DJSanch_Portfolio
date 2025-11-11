@@ -75,15 +75,6 @@ const Projects = () => {
       viewProject: "/envirotech",
       featured: false
     },
-    {
-      title: "Blog Platform",
-      description: "A content management system for blogs with markdown support, SEO optimization, and admin dashboard.",
-      technologies: ["Next.js", "MDX", "Prisma", "PostgreSQL", "Vercel"],
-      image: "/projects/blog.jpg",
-      github: "https://github.com/djsanch/blog-platform",
-      live: "https://blog-platform-demo.com",
-      featured: false
-    },
   ]
 
   return (
