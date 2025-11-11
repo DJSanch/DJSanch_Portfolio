@@ -115,7 +115,7 @@ export default function EnvirotechPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Envirotech is a a digital platform designed to streamline the tracking, management, and reporting of environmental equipment, materials, and resources. It automates inventory processes such as stock monitoring, item issuance, and replenishment to minimize waste and ensure operational efficiency. Overall, the system enhances sustainability and accountability by providing real-time insights and reducing human error in inventory control.
+                  Envirotech is a a digital platform designed to streamline the tracking, management, and reporting of environmental equipment, materials, and resources. It automates inventory processes such as stock monitoring, item issuance, and replenishment to minimize waste and ensure operational efficiency. Overall, the system enhances sustainability and accountability by providing real-time insights and reducing human error in inventory control
                 </p>
               </CardContent>
             </Card>
