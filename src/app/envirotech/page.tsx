@@ -192,13 +192,13 @@ export default function EnvirotechPage() {
                 <div>
                   <h4 className="font-medium mb-1">Data Integration</h4>
                   <p className="text-sm text-muted-foreground">
-                    Combining data from multiple sensor types and manufacturers required developing a flexible data ingestion pipeline.
+                    Consolidating inventory data from multiple departments and suppliers was challenging due to inconsistent record formats and tracking methods.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-1">Real-time Processing</h4>
+                  <h4 className="font-medium mb-1">Real-Time Stock Monitoring</h4>
                   <p className="text-sm text-muted-foreground">
-                    Ensuring low-latency processing of sensor data while maintaining system reliability and accuracy.
+                    Maintaining accurate, up-to-date inventory levels across various storage locations required handling frequent transactions and minimizing system delays.
                   </p>
                 </div>
               </CardContent>
@@ -212,15 +212,15 @@ export default function EnvirotechPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-medium mb-1">Unified API</h4>
+                  <h4 className="font-medium mb-1">Centralized Database System</h4>
                   <p className="text-sm text-muted-foreground">
-                    Created a standardized API layer to normalize data from different sensor types into a consistent format.
+                    Implemented a unified database that synchronizes all inventory records, ensuring consistent and reliable data sharing among departments and suppliers.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-1">Edge Computing</h4>
+                  <h4 className="font-medium mb-1">Automated Inventory Tracking</h4>
                   <p className="text-sm text-muted-foreground">
-                    Implemented edge computing capabilities to process data closer to the source, reducing latency and bandwidth usage.
+                    Introduced automated monitoring and barcode/RFID-based tracking to update stock movements in real-time, improving accuracy and reducing manual errors.
                   </p>
                 </div>
               </CardContent>
