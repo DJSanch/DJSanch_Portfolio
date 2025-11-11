@@ -68,8 +68,8 @@ const Projects = () => {
     },
     {
       title: "Envirotech",
-      description: "An environmental technology solution for monitoring and analyzing environmental data.",
-      technologies: ["React", "Node.js", "MongoDB", "IoT", "Data Visualization"],
+      description: "An Inventory Management System for Envirotech.",
+      technologies: ["React", "Node.js", "MongoDB", "Data Visualization"],
       image: "/projects/envirotech.png",
       github: "https://github.com/DJSanch/Envirotech",
       viewProject: "/envirotech",
