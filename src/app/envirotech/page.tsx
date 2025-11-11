@@ -169,9 +169,6 @@ export default function EnvirotechPage() {
                 { name: 'Node.js', category: 'Backend' },
                 { name: 'MongoDB', category: 'Database' },
                 { name: 'Express', category: 'Backend' },
-                { name: 'MQTT', category: 'IoT Protocol' },
-                { name: 'Docker', category: 'Deployment' },
-                { name: 'AWS IoT Core', category: 'Cloud' },
                 { name: 'Chart.js', category: 'Visualization' },
               ].map((tech, index) => (
                 <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
