@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -93,9 +94,11 @@ const Projects = () => {
             <Card key={index} className={`group hover:shadow-lg transition-all duration-300 overflow-hidden scroll-animate-scale ${isVisible ? 'animate-in' : ''}`} style={{animationDelay: `${(index % 3) * 100 + 200}ms`}}>
               <div className="relative h-48 w-full">
                 {project.image ? (
-                  <img
+                  <Image
                     src={project.image.startsWith('/') ? project.image : `/projects/${project.image}`}
                     alt={project.title}
+                    width={400}
+                    height={192}
                     className="w-full h-48 object-cover"
                   />
                 ) : (

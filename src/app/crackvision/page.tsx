@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Github, ArrowLeft, Brain, Code, Image as ImageIcon, Zap } from "lucide-react"
 import Link from "next/link"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 
 export default function CrackVisionPage() {
   const [isLoaded, setIsLoaded] = useState(false)

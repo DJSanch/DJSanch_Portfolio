@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -52,12 +53,15 @@ const Certifications = () => {
             let imageBlock = null;
             if (cert.image) {
               imageBlock = (
-                <img
-                  src={`/certifications/${cert.image}`}
-                  alt={`${cert.title} preview`}
-                  className="block w-full h-40 object-cover"
-                  loading="lazy"
-                />
+                <div className="relative w-full h-40">
+                  <Image
+                    src={`/certifications/${cert.image}`}
+                    alt={`${cert.title} preview`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
               );
             }
             const isCoursera = cert.filename.startsWith("Coursera");
