@@ -61,7 +61,7 @@ const Contact = () => {
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
+      value: "Davao City, Philippines",
       href: "#"
     }
   ]
