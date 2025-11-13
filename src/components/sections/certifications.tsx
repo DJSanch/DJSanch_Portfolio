@@ -42,7 +42,7 @@ const Certifications = () => {
   return (
     <section id="certifications" className="py-20 bg-muted/30" ref={ref as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4">
-        <div className={`text-center mb-16 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} transition-all duration-500`}>
+        <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Certifications</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Coursera and LinkedIn Learning certifications earned and verified.
@@ -66,7 +66,7 @@ const Certifications = () => {
             }
             const isCoursera = cert.filename.startsWith("Coursera");
             return (
-              <Card key={index} className={`group hover:shadow-lg transition-all duration-300 rounded-lg ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{transition: `opacity 0.5s ease-out ${(index % 3) * 100 + 200}ms, transform 0.5s ease-out ${(index % 3) * 100 + 200}ms`}}>
+              <Card key={index} className="group hover:shadow-lg rounded-lg">
                 {imageBlock}
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between">
