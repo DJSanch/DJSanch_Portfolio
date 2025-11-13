@@ -66,7 +66,7 @@ const Certifications = () => {
             }
             const isCoursera = cert.filename.startsWith("Coursera");
             return (
-              <Card key={index} className={`group hover:shadow-lg transition-all duration-300 rounded-lg scroll-animate-scale ${isVisible ? 'animate-in' : ''}`} style={{animationDelay: `${(index % 3) * 100 + 200}ms`}}>
+              <Card key={index} className={`group hover:shadow-lg transition-shadow duration-300 rounded-lg ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} transition-all duration-500`} style={{transitionDelay: `${(index % 3) * 100 + 200}ms`}}>
                 {imageBlock}
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between">
