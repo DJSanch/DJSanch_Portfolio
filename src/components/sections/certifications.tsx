@@ -7,7 +7,13 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, Award, Building } from "lucide-react"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
-const courseraCerts = [
+interface CertificationItem {
+  title: string;
+  filename: string;
+  image?: string;
+}
+
+const courseraCerts: CertificationItem[] = [
   { title: "Start the UX Design Process: Empathize, Define, and Ideate", filename: "Coursera TTTHDXS9S7WW.pdf", image: "Coursera TTTHDXS9S7WW.png" },
   { title: "What is Data Science?", filename: "Coursera P6IG4BHZO88H.pdf", image: "Coursera P6IG4BHZO88H.png" },
   { title: "Introduction to Java", filename: "Coursera KX83SA2BG6DX.pdf", image: "Coursera KX83SA2BG6DX.png" },
@@ -17,7 +23,7 @@ const courseraCerts = [
   { title: "Advanced Algorithms and Complexity", filename: "Coursera 2LYHG9CWSKFE.pdf", image: "Coursera 2LYHG9CWSKFE.png" },
 ]
 
-const linkedinCerts = [
+const linkedinCerts: CertificationItem[] = [
   { title: "Understanding the Impact of a Merger for IT Teams", filename: "CertificateOfCompletion_Understanding the Impact of a Merger for IT Teams.pdf", image: "CertificateOfCompletion_Understanding the Impact of a Merger for IT Teams.png" },
   { title: "SQL Essential Training", filename: "CertificateOfCompletion_SQL Essential Training.pdf", image: "CertificateOfCompletion_SQL Essential Training.png" },
   { title: "TensorFlow Working with NLP", filename: "CertificateOfCompletion_TensorFlow Working with NLP.pdf", image: "CertificateOfCompletion_TensorFlow Working with NLP.png" },
@@ -38,72 +44,79 @@ const linkedinCerts = [
 ]
 
 const Certifications = () => {
-  const { ref, isVisible } = useScrollAnimation()
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation()
   return (
-    <section id="certifications" className="py-20 bg-muted/30" ref={ref as React.RefObject<HTMLElement>}>
+    <section id="certifications" className="py-20 bg-muted/30" ref={sectionRef as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4">
-        <div className={`text-center mb-16 scroll-animate ${isVisible ? 'animate-in' : ''}`}>
+        <div className={`text-center mb-16 scroll-animate ${sectionVisible ? 'animate-in' : ''}`}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Certifications</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Coursera and LinkedIn Learning certifications earned and verified.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {[...courseraCerts, ...linkedinCerts].map((cert, index) => {
-            let imageBlock = null;
-            if (cert.image) {
-              imageBlock = (
-                <div className="relative w-full h-40 overflow-hidden rounded-t-lg">
-                  <Image
-                    src={`/certifications/${cert.image}`}
-                    alt={`${cert.title} preview`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-              );
-            }
-            const isCoursera = cert.filename.startsWith("Coursera");
-            return (
-              <Card
-                key={index}
-                className={`group hover:shadow-lg rounded-lg scroll-animate-scale ${isVisible ? 'animate-in' : ''} flex flex-col`}
-                style={{ animationDelay: `${(index % 6) * 80 + 150}ms` }}
-              >
-                {imageBlock}
-                <CardHeader className="pb-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <CardTitle className="text-lg mb-2">{cert.title}</CardTitle>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                        <Building className="h-4 w-4" />
-                        {isCoursera ? "Coursera" : "LinkedIn Learning"}
-                      </div>
-                    </div>
-                    <Award className="h-6 w-6 text-primary" />
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4 flex flex-col flex-1">
-                  <Badge variant="secondary" className="text-xs">
-                    {isCoursera ? "Coursera" : "LinkedIn Learning"}
-                  </Badge>
-                  <div className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    {isCoursera ? "Coursera Professional Certificate" : "LinkedIn Learning Certificate"}
-                  </div>
-                  <Button variant="outline" size="sm" asChild className="w-full mt-auto">
-                    <a href={`/certifications/${cert.filename}`} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      View Certificate (PDF)
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-            )
-          })}
+          {[...courseraCerts, ...linkedinCerts].map((cert, index) => (
+            <CertificateCard key={`${cert.filename}-${index}`} cert={cert} index={index} />
+          ))}
         </div>
       </div>
     </section>
+  )
+}
+
+interface CertificateCardProps {
+  cert: CertificationItem;
+  index: number;
+}
+
+const CertificateCard = ({ cert, index }: CertificateCardProps) => {
+  const { ref, isVisible } = useScrollAnimation(0.2)
+  const isCoursera = cert.filename.startsWith("Coursera");
+
+  return (
+    <Card
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={`group hover:shadow-lg rounded-lg flex flex-col scroll-animate-scale ${isVisible ? 'animate-in' : ''}`}
+      style={{ animationDelay: `${(index % 4) * 120 + 120}ms` }}
+    >
+      {cert.image && (
+        <div className="relative w-full h-40 overflow-hidden rounded-t-lg">
+          <Image
+            src={`/certifications/${cert.image}`}
+            alt={`${cert.title} preview`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      )}
+      <CardHeader className="pb-4">
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            <CardTitle className="text-lg mb-2">{cert.title}</CardTitle>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+              <Building className="h-4 w-4" />
+              {isCoursera ? "Coursera" : "LinkedIn Learning"}
+            </div>
+          </div>
+          <Award className="h-6 w-6 text-primary" />
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4 flex flex-col flex-1">
+        <Badge variant="secondary" className="text-xs">
+          {isCoursera ? "Coursera" : "LinkedIn Learning"}
+        </Badge>
+        <div className="text-sm text-muted-foreground leading-relaxed flex-1">
+          {isCoursera ? "Coursera Professional Certificate" : "LinkedIn Learning Certificate"}
+        </div>
+        <Button variant="outline" size="sm" asChild className="w-full mt-auto">
+          <a href={`/certifications/${cert.filename}`} target="_blank" rel="noopener noreferrer">
+            <ExternalLink className="h-4 w-4 mr-2" />
+            View Certificate (PDF)
+          </a>
+        </Button>
+      </CardContent>
+    </Card>
   )
 }
 
