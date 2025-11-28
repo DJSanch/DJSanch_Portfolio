@@ -42,7 +42,7 @@ const Certifications = () => {
   return (
     <section id="certifications" className="py-20 bg-muted/30" ref={ref as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-animate ${isVisible ? 'animate-in' : ''}`}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Certifications</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Coursera and LinkedIn Learning certifications earned and verified.
@@ -53,7 +53,7 @@ const Certifications = () => {
             let imageBlock = null;
             if (cert.image) {
               imageBlock = (
-                <div className="relative w-full h-40">
+                <div className="relative w-full h-40 overflow-hidden rounded-t-lg">
                   <Image
                     src={`/certifications/${cert.image}`}
                     alt={`${cert.title} preview`}
@@ -66,7 +66,11 @@ const Certifications = () => {
             }
             const isCoursera = cert.filename.startsWith("Coursera");
             return (
-              <Card key={index} className="group hover:shadow-lg rounded-lg">
+              <Card
+                key={index}
+                className={`group hover:shadow-lg rounded-lg scroll-animate-scale ${isVisible ? 'animate-in' : ''} flex flex-col`}
+                style={{ animationDelay: `${(index % 6) * 80 + 150}ms` }}
+              >
                 {imageBlock}
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between">
@@ -80,11 +84,14 @@ const Certifications = () => {
                     <Award className="h-6 w-6 text-primary" />
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 flex flex-col flex-1">
                   <Badge variant="secondary" className="text-xs">
                     {isCoursera ? "Coursera" : "LinkedIn Learning"}
                   </Badge>
-                  <Button variant="outline" size="sm" asChild className="w-full">
+                  <div className="text-sm text-muted-foreground leading-relaxed flex-1">
+                    {isCoursera ? "Coursera Professional Certificate" : "LinkedIn Learning Certificate"}
+                  </div>
+                  <Button variant="outline" size="sm" asChild className="w-full mt-auto">
                     <a href={`/certifications/${cert.filename}`} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="h-4 w-4 mr-2" />
                       View Certificate (PDF)
