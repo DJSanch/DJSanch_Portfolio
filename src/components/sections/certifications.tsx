@@ -44,7 +44,7 @@ const linkedinCerts: CertificationItem[] = [
 ]
 
 const Certifications = () => {
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation()
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation(0.02)
   return (
     <section id="certifications" className="py-20 bg-muted/30" ref={sectionRef as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4">
@@ -70,7 +70,7 @@ interface CertificateCardProps {
 }
 
 const CertificateCard = ({ cert, index }: CertificateCardProps) => {
-  const { ref, isVisible } = useScrollAnimation(0.2)
+  const { ref, isVisible } = useScrollAnimation(0.1)
   const isCoursera = cert.filename.startsWith("Coursera");
 
   return (
