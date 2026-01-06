@@ -142,34 +142,34 @@ const Chatbot = () => {
       <Button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-lg transition-all duration-300 hover:scale-110",
+          "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg transition-all duration-300 hover:scale-110",
           isOpen && "hidden"
         )}
         size="icon"
       >
-        <MessageCircle className="h-6 w-6" />
+        <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
         <span className="sr-only">Open chat</span>
       </Button>
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 z-50 flex h-[600px] w-[400px] flex-col shadow-2xl border-2">
+        <Card className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 flex h-[100vh] sm:h-[600px] w-full sm:w-[400px] md:w-[450px] flex-col shadow-2xl border-2 sm:rounded-lg rounded-t-lg sm:rounded-b-lg">
           {/* Header */}
-          <div className="flex items-center justify-between border-b p-4 bg-primary/5">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <Bot className="h-5 w-5" />
+          <div className="flex items-center justify-between border-b p-3 sm:p-4 bg-primary/5">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shrink-0">
+                <Bot className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
-              <div>
-                <h3 className="font-semibold">Portfolio Assistant</h3>
-                <p className="text-xs text-muted-foreground">Ask me anything!</p>
+              <div className="min-w-0">
+                <h3 className="font-semibold text-sm sm:text-base truncate">Portfolio Assistant</h3>
+                <p className="text-xs text-muted-foreground hidden sm:block">Ask me anything!</p>
               </div>
             </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="h-8 w-8"
+              className="h-8 w-8 sm:h-8 sm:w-8 shrink-0"
             >
               <X className="h-4 w-4" />
               <span className="sr-only">Close chat</span>
@@ -177,30 +177,30 @@ const Chatbot = () => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={cn(
-                  "flex gap-3",
+                  "flex gap-2 sm:gap-3",
                   message.sender === "user" ? "justify-end" : "justify-start"
                 )}
               >
                 {message.sender === "bot" && (
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                    <Bot className="h-4 w-4" />
+                  <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </div>
                 )}
                 <div
                   className={cn(
-                    "max-w-[80%] rounded-lg px-4 py-2",
+                    "max-w-[85%] sm:max-w-[80%] rounded-lg px-3 py-2 sm:px-4 sm:py-2",
                     message.sender === "user"
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted"
                   )}
                 >
-                  <p className="text-sm whitespace-pre-line">{message.text}</p>
-                  <p className="mt-1 text-xs opacity-70">
+                  <p className="text-xs sm:text-sm whitespace-pre-line break-words">{message.text}</p>
+                  <p className="mt-1 text-[10px] sm:text-xs opacity-70">
                     {message.timestamp.toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -208,8 +208,8 @@ const Chatbot = () => {
                   </p>
                 </div>
                 {message.sender === "user" && (
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <User className="h-4 w-4" />
+                  <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-muted">
+                    <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </div>
                 )}
               </div>
@@ -218,7 +218,7 @@ const Chatbot = () => {
           </div>
 
           {/* Input */}
-          <div className="border-t p-4">
+          <div className="border-t p-3 sm:p-4 bg-background">
             <div className="flex gap-2">
               <Input
                 ref={inputRef}
@@ -226,12 +226,13 @@ const Chatbot = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1"
+                className="flex-1 text-sm sm:text-base"
               />
               <Button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim()}
                 size="icon"
+                className="h-9 w-9 sm:h-10 sm:w-10 shrink-0"
               >
                 <Send className="h-4 w-4" />
                 <span className="sr-only">Send message</span>
