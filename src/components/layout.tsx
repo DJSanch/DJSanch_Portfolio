@@ -1,4 +1,5 @@
 import Navigation from "./navigation"
+import Chatbot from "./chatbot"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -11,6 +12,7 @@ const Layout = ({ children }: LayoutProps) => {
       <main className="pt-16">
         {children}
       </main>
+      <Chatbot />
     </div>
   )
 }
