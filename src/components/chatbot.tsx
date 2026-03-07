@@ -207,7 +207,7 @@ const Chatbot = () => {
               </div>
               <div className="min-w-0">
                 <h3 className="font-semibold text-sm sm:text-base truncate">Portfolio Assistant</h3>
-                <p className="text-xs text-muted-foreground hidden sm:block">Ask about Daniel's specialties!</p>
+                <p className="text-xs text-muted-foreground hidden sm:block">Ask about Daniel&apos;s specialties!</p>
               </div>
             </div>
             <Button
