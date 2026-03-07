@@ -19,7 +19,7 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Hi! I'm here to help you learn more about Daniel's portfolio. Feel free to ask me anything!",
+      text: "Hi! You can ask me anything you want to learn about Daniel regarding his specialties!",
       sender: "bot",
       timestamp: new Date(),
     },
@@ -47,27 +47,82 @@ const Chatbot = () => {
 
     // Greetings
     if (message.match(/^(hi|hello|hey|greetings)/)) {
-      return "Hello! How can I help you learn more about Daniel's portfolio today?"
+      return "Hello! You can ask me anything you want to learn about Daniel regarding his specialties! I can help with information about his development projects, networking expertise, certifications, work experience, and more. What would you like to know?"
     }
 
-    // About Daniel
-    if (message.match(/(who|what).*(daniel|he|developer)/) || message.includes("about")) {
-      return "Daniel Sanchez is a Full Stack Developer & Software Engineer with 3+ years of experience. He specializes in React, Next.js, TypeScript, Node.js, Python, SQL, AWS, and Docker. He's passionate about creating innovative web applications and solving complex problems."
+    // Goldenville specific
+    if (message.match(/(goldenville)/)) {
+      return "Daniel works as a Backend Developer at Goldenville (2025 - Present). He leads the development of enterprise web applications using React, Node.js, and AWS. Goldenville is one of his current professional roles where he applies his full-stack development expertise to build scalable and robust web solutions."
     }
 
-    // Skills/Technologies
-    if (message.match(/(skill|technology|tech|stack|language|framework)/)) {
-      return "Daniel's key skills include: React, Next.js, TypeScript, Node.js, Python, SQL, AWS, and Docker. He has experience with 15+ technologies and has completed 20+ projects."
+    // Projects - general
+    if (message.match(/(project|projects|built|created|developed)/)) {
+      return "Daniel has worked on several impressive projects! Some of his featured projects include:\n• Inventory Management System - A robust system for tracking stock, sales, and suppliers\n• Chat Application - Real-time chat with authentication\n• JS Aromatoc - Modern e-commerce website\n• RiceProTech - Rice Leaf Disease Classification Mobile App\n• CrackVision - Concrete crack severity classification\n• Envirotech - Inventory Management System\n\nYou can view all his projects in the Projects section of this portfolio!"
     }
 
-    // Projects
-    if (message.match(/(project|work|portfolio|build|created)/)) {
-      return "Daniel has completed 20+ projects! You can check out some of his featured projects on this portfolio, including RiceProTech, EnviroTech, CrackVision, and more. Each project showcases different aspects of his full-stack development skills."
+    // Specific projects
+    if (message.match(/(inventory management|inventory system)/)) {
+      return "Daniel built an Inventory Management System - a robust system for tracking stock, sales, and suppliers. It features real-time inventory updates, reporting, and user roles. Built with React, Next.js, Python, SQLite, and Tailwind CSS. You can view it in the Projects section!"
     }
 
-    // Experience
-    if (message.match(/(experience|year|how long|background)/)) {
-      return "Daniel has 3+ years of experience in full-stack development. He's worked on various projects ranging from web applications to complex software solutions."
+    if (message.match(/(chat application|chat app)/)) {
+      return "Daniel created a real-time Chat Application with user authentication and message history. Built with React, Firebase, Socket.io, Node.js, and Tailwind CSS. You can view it in the Projects section!"
+    }
+
+    if (message.match(/(js aromatoc|aromatoc)/)) {
+      return "JS Aromatoc is a modern e-commerce website Daniel built, featuring product listings, shopping cart functionality, and secure checkout process. Built with Next.js, TypeScript, Tailwind CSS, Stripe, and MongoDB. You can view it in the Projects section!"
+    }
+
+    if (message.match(/(riceprotech|rice pro tech)/)) {
+      return "RiceProTech is a Rice Leaf Disease Classification Mobile App that Daniel developed using React Native, Python, SQLite, Google Colab, and TensorFlow. You can view more details in the Projects section!"
+    }
+
+    if (message.match(/(crackvision|crack vision)/)) {
+      return "CrackVision is a multiclass image classification model that can classify the severity of concrete crack images. Built with Python, TensorFlow, Next.js, and TypeScript. You can view more details in the Projects section!"
+    }
+
+    if (message.match(/(envirotech|enviro tech)/)) {
+      return "Envirotech is an Inventory Management System that Daniel developed for Envirotech. Built with React, Node.js, MongoDB, and includes data visualization features. You can view it in the Projects section!"
+    }
+
+    // Work experience
+    if (message.match(/(experience|job|position|role|company|employer)/)) {
+      return "Daniel has work experience at:\n• Goldenville - Backend Developer (2025 - Present) - Leading development of enterprise web applications using React, Node.js, and AWS\n• JS Aromatoc - Frontend Developer (2024 - Present) - Built responsive user interfaces and implemented modern design systems\n• Envirotech - Backend Developer (2024 - 2025) - Developed and maintained web applications using JavaScript and Python\n\nYou can view more details in the About section!"
+    }
+
+    // Development skills/technologies
+    if (message.match(/(development|developer|programming|coding|tech stack|technologies|skills|react|next.js|node.js|python|javascript|typescript)/)) {
+      return "Daniel is a Full Stack Developer with expertise in:\n• Frontend: React, Next.js, TypeScript, Tailwind CSS\n• Backend: Node.js, Python, JavaScript\n• Databases: MongoDB, SQLite\n• Cloud: AWS\n• Mobile: React Native\n• Other: Firebase, Socket.io, TensorFlow, Machine Learning\n\nHe has experience building web applications, mobile apps, and enterprise solutions!"
+    }
+
+    // Networking/Network - ALWAYS respond about CCNA (high priority)
+    if (message.match(/(network|networking)/)) {
+      return "Daniel Sanchez is a Cisco Certified Network Associate (CCNA)! This is a professional-level certification from Cisco Systems that validates his knowledge and skills in networking fundamentals, network access, IP connectivity, IP services, security fundamentals, automation, and programmability.\n\nThe CCNA certification covers:\n• Network fundamentals and architecture\n• Network access (switching, VLANs, STP)\n• IP connectivity (routing, OSPF, EIGRP)\n• IP services (NAT, DHCP, NTP, QoS)\n• Security fundamentals (ACLs, VPNs, wireless security)\n• Automation and programmability (network automation, REST APIs, JSON)\n\nYou can view his CCNA certificate in the Certifications section of this portfolio. The certificate was issued by Cisco and demonstrates his expertise in network technologies."
+    }
+
+    // CCNA specific questions
+    if (message.match(/(ccna|cisco certified network associate)/)) {
+      return "Daniel Sanchez is a Cisco Certified Network Associate (CCNA)! This is a professional-level certification from Cisco Systems that validates his knowledge and skills in networking fundamentals, network access, IP connectivity, IP services, security fundamentals, automation, and programmability.\n\nThe CCNA certification covers:\n• Network fundamentals and architecture\n• Network access (switching, VLANs, STP)\n• IP connectivity (routing, OSPF, EIGRP)\n• IP services (NAT, DHCP, NTP, QoS)\n• Security fundamentals (ACLs, VPNs, wireless security)\n• Automation and programmability (network automation, REST APIs, JSON)\n\nYou can view his CCNA certificate in the Certifications section of this portfolio. The certificate was issued by Cisco and demonstrates his expertise in network technologies."
+    }
+
+    // Cisco specific
+    if (message.match(/(cisco|cisco systems)/)) {
+      return "Daniel is certified by Cisco Systems, a leading networking technology company. He holds the CCNA (Cisco Certified Network Associate) certification, which is a professional-level certification that validates networking knowledge and skills. Cisco certifications are highly respected in the IT industry and demonstrate expertise in network infrastructure.\n\nYou can view his CCNA certificate in the Certifications section of this portfolio!"
+    }
+
+    // Certifications (general) - mention CCNA
+    if (message.match(/(certification|certificate|cert)/) && !message.match(/(ccna|cisco|network|networking)/)) {
+      return "Daniel has professional certifications! He holds the CCNA (Cisco Certified Network Associate) certification from Cisco Systems, as well as certifications from Coursera and LinkedIn Learning. You can view all his certifications in the Certifications section of this portfolio!"
+    }
+
+    // About Daniel (general)
+    if (message.match(/(who|what).*(daniel|he)/) || message.includes("about")) {
+      return "Daniel Sanchez is a Full Stack Developer and Network Engineer with expertise in both software development and networking technologies. He works as a Backend Developer at Goldenville, has built multiple projects including web applications and mobile apps, and holds the CCNA certification from Cisco Systems. You can learn more about his projects, work experience, and certifications throughout this portfolio!"
+    }
+
+    // Skills (general)
+    if (message.match(/(skill|technology|tech|expertise|knowledge)/) && !message.match(/(network|networking|ccna|cisco)/)) {
+      return "Daniel's skills span both development and networking:\n\nDevelopment:\n• React, Next.js, TypeScript, Node.js, Python\n• Frontend and Backend development\n• Mobile app development (React Native)\n• Machine Learning and AI\n\nNetworking:\n• Network fundamentals and architecture\n• Routing and switching\n• Network security\n• Cisco technologies\n\nThese skills are demonstrated through his projects and CCNA certification!"
     }
 
     // Contact
@@ -80,28 +135,18 @@ const Chatbot = () => {
       return "You can download Daniel's resume by clicking the 'Download Resume' button in the hero section at the top of the page!"
     }
 
-    // Location
-    if (message.match(/(where|location|based|live|remote)/)) {
-      return "Daniel works remotely and is available for remote opportunities worldwide."
-    }
-
-    // Certifications
-    if (message.match(/(certification|certificate|cert|qualification)/)) {
-      return "Daniel has multiple certifications! You can view them in the Certifications section of this portfolio. He has 51 certification files including PDFs and images."
-    }
-
-    // Events
-    if (message.match(/(event|conference|research|paper|presentation)/)) {
-      return "Daniel has participated in events and conferences. Check out the Events section to see his research papers and presentations, including his ICSTE 2025 Research Paper!"
+    // View certificate
+    if (message.match(/(view|see|show|display|where).*(certificate|cert)/)) {
+      return "You can view Daniel's certifications in the Certifications section of this portfolio! Look for the 'Cisco Certifications' section at the top, where you'll find his CCNA certification. You can also see his Coursera and LinkedIn Learning certifications. Click on them to view the full PDF certificates."
     }
 
     // Default responses
     if (message.match(/(help|what can you|how can you)/)) {
-      return "I can help you learn about:\n• Daniel's background and experience\n• His skills and technologies\n• His projects\n• How to contact him\n• His certifications and events\n\nJust ask me anything!"
+      return "I can help you learn about:\n• Daniel's development projects (Goldenville, JS Aromatoc, Inventory Management, Chat App, RiceProTech, CrackVision, Envirotech)\n• His work experience and roles\n• Networking expertise and CCNA certification\n• Development skills and technologies\n• How to view his projects and certificates\n• How to contact him\n\nJust ask me anything about Daniel's specialties!"
     }
 
     // Fallback
-    return "That's an interesting question! While I'm still learning, I can help you with information about Daniel's skills, projects, experience, and how to contact him. Feel free to ask about any of those topics!"
+    return "That's an interesting question! I can help you learn about Daniel's specialties including his development projects (like his work at Goldenville), networking expertise, CCNA certification, work experience, and more. Feel free to ask about any of these topics!"
   }
 
   const handleSendMessage = () => {
@@ -162,7 +207,7 @@ const Chatbot = () => {
               </div>
               <div className="min-w-0">
                 <h3 className="font-semibold text-sm sm:text-base truncate">Portfolio Assistant</h3>
-                <p className="text-xs text-muted-foreground hidden sm:block">Ask me anything!</p>
+                <p className="text-xs text-muted-foreground hidden sm:block">Ask about Daniel's specialties!</p>
               </div>
             </div>
             <Button
