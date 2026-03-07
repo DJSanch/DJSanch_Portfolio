@@ -39,7 +39,7 @@ const Hero = () => {
                 <span className="text-white drop-shadow-lg">Daniel Sanchez</span>
               </h1>
               <p className="text-xl md:text-2xl text-white drop-shadow-md">
-                Full Stack Developer & Software Engineer
+                Full Stack Developer & Network Engineer
               </p>
             </div>
 
