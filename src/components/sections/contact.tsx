@@ -19,23 +19,45 @@ const Contact = () => {
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error"
+    message: string
+  } | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setSubmitStatus(null)
     setIsSubmitting(true)
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted:", formData)
-    
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" })
-    setIsSubmitting(false)
-    
-    // Show success message (you could use a toast notification here)
-    alert("Thank you for your message! I'll get back to you soon.")
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message.")
+      }
+
+      setFormData({ name: "", email: "", subject: "", message: "" })
+      setSubmitStatus({
+        type: "success",
+        message: "Message sent successfully. Thank you for reaching out!",
+      })
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to send message."
+      setSubmitStatus({
+        type: "error",
+        message,
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -167,6 +189,16 @@ const Contact = () => {
                     </>
                   )}
                 </Button>
+
+                {submitStatus && (
+                  <p
+                    className={`text-sm ${
+                      submitStatus.type === "success" ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {submitStatus.message}
+                  </p>
+                )}
               </form>
             </CardContent>
           </Card>
