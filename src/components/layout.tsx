@@ -1,3 +1,6 @@
+"use client"
+
+import { usePathname } from "next/navigation"
 import Navigation from "./navigation"
 import Chatbot from "./chatbot"
 
@@ -6,10 +9,13 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const pathname = usePathname()
+  const isHomePage = pathname === "/"
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="pt-16">
+      <main className={isHomePage ? "" : "pt-16"}>
         {children}
       </main>
       <Chatbot />
