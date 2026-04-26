@@ -23,15 +23,6 @@ const Projects = () => {
   const { ref, isVisible } = useScrollAnimation()
   const projects: Project[] = [
     {
-      title: "Inventory Management System",
-      description: "A robust inventory management system for tracking stock, sales, and suppliers. Features include real-time inventory updates, reporting, and user roles.",
-      technologies: ["React", "Next.js", "Python", "SQLite", "Tailwind CSS"],
-      image: "/projects/Inventory.png",
-      github: "https://github.com/DJSanch/Inventory_Management",
-      live: "https://inventory-management-nu-gilt.vercel.app/",
-      featured: true
-    },
-    {
       title: "Chat Application",
       description: "A real-time chat application with user authentication and message history.",
       technologies: ["React", "Firebase", "Socket.io", "Node.js", "Tailwind CSS"],
