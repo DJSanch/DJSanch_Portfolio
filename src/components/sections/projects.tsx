@@ -53,7 +53,7 @@ const Projects = () => {
       title: "Tournament Organizer",
       description: "A badminton matchmaking bracket organizer that captures participant entries and manages tournament flow.",
       technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-      image: "",
+      image: "tournament.png",
       github: "https://github.com/DJSanch/TournamentOrganizer.git",
       live: "https://tournament-organizer-five.vercel.app/",
       featured: true
@@ -62,7 +62,7 @@ const Projects = () => {
       title: "Examiner",
       description: "An exam generator tool that lets users upload material and create questionnaires by difficulty and exam type.",
       technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-      image: "",
+      image: "Examiner.png",
       github: "https://github.com/DJSanch/Examiner.git",
       live: "https://examiner-seven.vercel.app/",
       featured: true
