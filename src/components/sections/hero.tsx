@@ -19,8 +19,11 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center py-20 overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5">
+      {/* Mobile Background */}
+      <div className="absolute inset-0 bg-black md:hidden" />
+
+      {/* Desktop Animated Background */}
+      <div className="absolute inset-0 hidden bg-gradient-to-br from-background via-background to-primary/5 md:block">
         <GradientOrbs />
         <AnimatedBackground />
       </div>
