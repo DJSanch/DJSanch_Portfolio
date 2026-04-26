@@ -50,6 +50,24 @@ const Projects = () => {
       featured: true
     },
     {
+      title: "Tournament Organizer",
+      description: "A badminton matchmaking bracket organizer that captures participant entries and manages tournament flow.",
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+      image: "",
+      github: "https://github.com/DJSanch/TournamentOrganizer.git",
+      live: "https://tournament-organizer-five.vercel.app/",
+      featured: true
+    },
+    {
+      title: "Examiner",
+      description: "An exam generator tool that lets users upload material and create questionnaires by difficulty and exam type.",
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+      image: "",
+      github: "https://github.com/DJSanch/Examiner.git",
+      live: "https://examiner-seven.vercel.app/",
+      featured: true
+    },
+    {
       title: "RiceProTech",
       description: "A Rice Leaf Disease Classification Mobile App using React Native.",
       technologies: ["React Native", "Python", "SQLite", "Google Colab", "TensorFlow"],
