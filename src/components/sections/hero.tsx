@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ChevronDown, Download, Github, Linkedin, Mail } from "lucide-react"
+import { Download, Github, Linkedin, Mail } from "lucide-react"
 import AnimatedBackground from "@/components/animated-background"
 import GradientOrbs from "@/components/gradient-orbs"
 
@@ -126,16 +126,6 @@ const Hero = () => {
         </div>
       </div>
 
-      <a
-        href="#about"
-        aria-label="Scroll to About section"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 inline-flex flex-col items-center justify-center gap-1 text-white transition-all duration-300 hover:scale-110 hover:text-white"
-      >
-        <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/100">
-          Tap
-        </span>
-        <ChevronDown className="h-8 w-8 animate-bounce drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]" />
-      </a>
     </section>
   )
 }
