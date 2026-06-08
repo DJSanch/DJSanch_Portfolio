@@ -1,11 +1,10 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { GraduationCap, Briefcase, Code, Award, ChevronLeft, ChevronRight, type LucideIcon } from "lucide-react"
-import { useHeroAboutBlend, scrollToHero } from "@/components/hero-about-scroll"
+import { useHeroAboutBlend } from "@/components/hero-about-scroll"
 
 const aboutCardClass =
   "h-full gap-2 border-0 bg-transparent py-2 text-white shadow-none backdrop-blur-none"
@@ -193,7 +192,7 @@ const About = () => {
         />
 
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 pb-6 pt-24 sm:px-6 sm:pb-8 sm:pt-28">
-          <div className="grid min-h-[calc(100dvh-7rem)] w-full grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-4 xl:gap-6">
+          <div className="grid w-full grid-cols-1 items-stretch gap-6 sm:gap-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-2 lg:gap-4 xl:gap-6">
             <div
               className="flex min-h-0 min-w-0 flex-col text-center transition-all duration-700 ease-out sm:text-left lg:max-w-xl lg:pl-8 xl:pl-12"
               style={{
@@ -233,7 +232,7 @@ const About = () => {
 
                 <div
                   ref={cardsRef}
-                  className="flex h-[min(260px,36vh)] min-w-0 flex-1 snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth sm:h-[min(280px,38vh)] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                  className="flex h-[min(240px,34vh)] min-w-0 flex-1 snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth sm:h-[min(280px,38vh)] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                 >
                   {slides.map((slide, index) => {
                     const Icon = slide.icon
@@ -265,22 +264,6 @@ const About = () => {
                 </button>
               </div>
             </div>
-
-            <button
-              type="button"
-              onClick={scrollToHero}
-              aria-label="Back to home"
-              className="relative mx-auto h-[min(52vh,420px)] w-full max-w-[320px] shrink-0 cursor-pointer border-0 bg-transparent p-0 sm:h-[min(58vh,500px)] sm:max-w-md lg:hidden"
-            >
-              <Image
-                src="/about-portrait.png"
-                alt="Daniel Sanchez"
-                fill
-                unoptimized
-                sizes="(max-width: 640px) 280px, 400px"
-                className="object-contain object-bottom"
-              />
-            </button>
 
             <div aria-hidden className="hidden lg:block" />
           </div>

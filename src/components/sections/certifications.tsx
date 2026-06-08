@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Award, ChevronLeft, ChevronRight } from "lucide-react"
+import { useIsMobile } from "@/hooks/use-media-query"
 
 interface CertificationItem {
   title: string
@@ -45,7 +46,12 @@ const certifications: CertificationItem[] = [
 ]
 
 /** Horizontal carousel — cards move left/right; neighbors show blurred on the sides */
-function getHorizontalCarouselPosition(index: number, activeIndex: number, spacing = 300) {
+function getHorizontalCarouselPosition(
+  index: number,
+  activeIndex: number,
+  spacing: number,
+  activeScale: number
+) {
   const offset = index - activeIndex
   if (Math.abs(offset) > 3) {
     return { x: 0, y: 0, scale: 0, opacity: 0, zIndex: 0, blur: 0 }
@@ -57,15 +63,19 @@ function getHorizontalCarouselPosition(index: number, activeIndex: number, spaci
   return {
     x,
     y: 0,
-    scale: depth === 0 ? 1.4 : depth === 1 ? 0.8 : Math.max(0.6, 0.88 - depth * 0.12),
-    opacity: depth === 0 ? 1 : depth === 1 ? 0.75 : Math.max(0.4, 0.65 - depth * 0.12),
-    blur: depth === 0 ? 0 : depth === 1 ? 6 : Math.min(10, 4 + depth * 2),
+    scale: depth === 0 ? activeScale : depth === 1 ? 0.78 : Math.max(0.58, 0.86 - depth * 0.12),
+    opacity: depth === 0 ? 1 : depth === 1 ? 0.72 : Math.max(0.38, 0.62 - depth * 0.12),
+    blur: depth === 0 ? 0 : depth === 1 ? 5 : Math.min(10, 4 + depth * 2),
     zIndex: 40 - depth,
   }
 }
 
 const Certifications = () => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const isMobile = useIsMobile()
+
+  const carouselSpacing = isMobile ? 150 : 300
+  const activeScale = isMobile ? 1.12 : 1.4
 
   const goTo = (direction: "prev" | "next") => {
     setActiveIndex((current) => {
@@ -105,7 +115,7 @@ const Certifications = () => {
             </div>
 
             {/* Center — horizontal certificate carousel */}
-            <div className="flex w-full max-w-5xl items-center justify-center gap-3 sm:gap-4">
+            <div className="flex w-full max-w-5xl items-center justify-center gap-2 overflow-x-clip sm:gap-4">
               <button
                 type="button"
                 onClick={() => goTo("prev")}
@@ -115,9 +125,14 @@ const Certifications = () => {
                 <ChevronLeft className="h-5 w-5" />
               </button>
 
-              <div className="relative h-[min(400px,52vh)] w-full min-w-0 flex-1 overflow-visible sm:h-[min(460px,56vh)]">
+              <div className="relative h-[min(320px,44vh)] w-full min-w-0 flex-1 overflow-visible sm:h-[min(400px,52vh)] md:h-[min(460px,56vh)]">
                 {certifications.map((cert, index) => {
-                  const pos = getHorizontalCarouselPosition(index, activeIndex)
+                  const pos = getHorizontalCarouselPosition(
+                    index,
+                    activeIndex,
+                    carouselSpacing,
+                    activeScale
+                  )
                   const isActive = index === activeIndex
                   const cardStyle = {
                     transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px)) scale(${pos.scale})`,
@@ -128,7 +143,7 @@ const Certifications = () => {
                     filter: `blur(${pos.blur}px)`,
                   }
                   const cardClassName =
-                    "absolute left-1/2 top-1/2 w-[min(320px,88vw)] origin-center sm:w-[380px] lg:w-[440px] xl:w-[480px]"
+                    "absolute left-1/2 top-1/2 w-[min(240px,72vw)] origin-center sm:w-[320px] md:w-[380px] lg:w-[440px] xl:w-[480px]"
 
                   const cardContent = (
                     <div className="overflow-hidden rounded-2xl bg-[#0a1220]/80 shadow-[0_24px_60px_rgba(0,0,0,0.5)]">

@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react"
 import { useHeroAboutBlend } from "@/components/hero-about-scroll"
 
@@ -36,10 +35,10 @@ const Hero = () => {
       />
 
       <div className="container relative z-10 mx-auto flex min-h-[100dvh] flex-col px-4 pb-0 pt-24 sm:px-6 sm:pt-28">
-        <div className="grid h-[calc(100dvh-6rem)] w-full grid-cols-1 items-end gap-6 sm:h-[calc(100dvh-7rem)] sm:gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-4 xl:gap-6">
+        <div className="grid h-[calc(100dvh-6rem)] w-full grid-cols-1 items-center gap-6 sm:h-[calc(100dvh-7rem)] sm:gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-4 xl:gap-6">
           {/* Left — typography & CTA */}
           <div
-            className="order-2 space-y-5 pb-8 text-center transition-all duration-700 ease-out sm:space-y-6 sm:pb-10 sm:text-left lg:order-1 lg:max-w-xl lg:self-center lg:space-y-8 lg:pb-0 lg:pl-8 xl:pl-12"
+            className="space-y-5 pb-8 text-center transition-all duration-700 ease-out sm:space-y-6 sm:pb-10 sm:text-left lg:order-1 lg:max-w-xl lg:self-center lg:space-y-8 lg:pb-0 lg:pl-8 xl:pl-12"
             style={{
               opacity: 1 - blend,
               transform: `translateY(${-blend * 28}px)`,
@@ -49,7 +48,7 @@ const Hero = () => {
               Full Stack Developer
             </p>
 
-            <h1 className="text-4xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+            <h1 className="text-3xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
               Daniel
               <br />
               Sanchez
@@ -98,19 +97,6 @@ const Hero = () => {
                 </a>
               ))}
             </div>
-          </div>
-
-          {/* Mobile portrait only — desktop uses fixed crossfade */}
-          <div className="relative order-1 mx-auto h-[min(52vh,420px)] w-full max-w-[320px] sm:h-[min(58vh,500px)] sm:max-w-md md:max-w-lg lg:hidden">
-            <Image
-              src="/hero-portrait.png"
-              alt="Daniel Sanchez"
-              fill
-              priority
-              unoptimized
-              sizes="(max-width: 640px) 280px, (max-width: 1024px) 400px, 50vw"
-              className="object-contain object-bottom"
-            />
           </div>
 
           {/* Desktop spacer for fixed portrait */}

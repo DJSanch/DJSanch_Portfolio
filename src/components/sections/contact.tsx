@@ -127,7 +127,7 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 lg:pl-8 xl:pl-12">
+          <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12 lg:pl-8 xl:pl-12">
             <Card className={cardClass}>
               <CardHeader className="px-0">
                 <CardTitle className="text-white">Send me a message</CardTitle>
@@ -276,15 +276,15 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent className="px-0">
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between gap-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <span className="text-sm text-white/75">Open to opportunities</span>
-                      <Badge className="border-0 bg-emerald-500/20 text-emerald-300">Available</Badge>
+                      <Badge className="w-fit border-0 bg-emerald-500/20 text-emerald-300">Available</Badge>
                     </div>
-                    <div className="flex items-center justify-between gap-4">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                       <span className="text-sm text-white/75">Response time</span>
                       <span className="text-sm text-white/55">Within 24 hours</span>
                     </div>
-                    <div className="flex items-center justify-between gap-4">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                       <span className="text-sm text-white/75">Preferred contact</span>
                       <span className="text-sm text-white/55">Email</span>
                     </div>

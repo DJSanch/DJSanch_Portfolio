@@ -65,7 +65,7 @@ export function ProjectsEventsPlane({ children }: { children: React.ReactNode })
   return (
     <div id="projects-events" className="relative h-[100dvh] scroll-mt-0">
       <div className="sticky top-0 h-[100dvh] overflow-hidden">
-        <div className="relative h-full w-full overflow-hidden">{children}</div>
+        <div className="relative h-full w-full overflow-hidden overscroll-contain">{children}</div>
       </div>
     </div>
   )

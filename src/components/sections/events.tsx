@@ -77,7 +77,7 @@ const Events = () => {
                   className="overflow-hidden border-0 bg-transparent text-white shadow-none"
                 >
                   <div className="grid gap-6 md:grid-cols-2">
-                    <div className="relative h-64 bg-[#0a1220]/60 md:h-auto md:min-h-[320px]">
+                    <div className="relative h-56 bg-[#0a1220]/60 sm:h-64 md:h-auto md:min-h-[320px]">
                       <ImageCarousel images={event.images} alt={event.title} interval={3000} />
                       {event.featured && (
                         <Badge className="absolute left-4 top-4 z-10 border-0 bg-white/10 text-white">
@@ -86,10 +86,12 @@ const Events = () => {
                       )}
                     </div>
 
-                    <div className="flex flex-col justify-between p-6">
+                    <div className="flex flex-col justify-between p-4 sm:p-6">
                       <div className="space-y-4">
                         <CardHeader className="p-0">
-                          <CardTitle className="text-xl text-white sm:text-2xl">{event.title}</CardTitle>
+                          <CardTitle className="text-left text-lg leading-snug text-white sm:text-xl md:text-2xl">
+                            {event.title}
+                          </CardTitle>
                         </CardHeader>
 
                         <div className="flex flex-wrap gap-3 text-sm text-white/60">
