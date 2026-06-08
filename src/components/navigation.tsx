@@ -4,40 +4,64 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [isHeroVisible, setIsHeroVisible] = useState(true)
+  const [isDarkSectionVisible, setIsDarkSectionVisible] = useState(true)
   const [hoveredNavItem, setHoveredNavItem] = useState<string | null>(null)
   const pathname = usePathname()
   const isHomePage = pathname === "/"
 
   useEffect(() => {
     if (!isHomePage) {
-      setIsHeroVisible(false)
+      setIsDarkSectionVisible(false)
       return
     }
 
-    const heroSection = document.getElementById("home")
-    if (!heroSection) return
+    const checkDarkNav = () => {
+      const navHeight = 72
+      const probeY = navHeight * 0.5
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsHeroVisible(entry.isIntersecting)
-      },
-      {
-        threshold: 0.2,
-      }
-    )
+      const darkPanels = [
+        document.getElementById("home"),
+        document.getElementById("about-panel"),
+        document.getElementById("projects-panel"),
+        document.getElementById("events-panel"),
+        document.getElementById("certifications-panel"),
+        document.getElementById("contact-panel"),
+        document.getElementById("footer"),
+      ].filter((panel): panel is HTMLElement => panel !== null)
 
-    observer.observe(heroSection)
+      const navOverDark = darkPanels.some((panel) => {
+        const rect = panel.getBoundingClientRect()
+        return rect.top < navHeight && rect.bottom > probeY
+      })
 
-    return () => observer.disconnect()
+      setIsDarkSectionVisible(navOverDark)
+    }
+
+    checkDarkNav()
+    window.addEventListener("scroll", checkDarkNav, { passive: true })
+    window.addEventListener("resize", checkDarkNav)
+    window.addEventListener("section-nav", checkDarkNav)
+
+    return () => {
+      window.removeEventListener("scroll", checkDarkNav)
+      window.removeEventListener("resize", checkDarkNav)
+      window.removeEventListener("section-nav", checkDarkNav)
+    }
   }, [isHomePage])
 
   const scrollToSection = (sectionId: string) => {
+    window.dispatchEvent(new CustomEvent("section-nav", { detail: sectionId }))
+
+    if (sectionId === "projects" || sectionId === "events") {
+      document.getElementById("projects-events")?.scrollIntoView({ behavior: "smooth" })
+      setIsOpen(false)
+      return
+    }
+
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
@@ -53,36 +77,20 @@ const Navigation = () => {
     { id: "contact", label: "Contact" },
   ]
 
-  const useHeroStyle = isHomePage && isHeroVisible
+  const useDarkNavStyle = isHomePage && isDarkSectionVisible
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        useHeroStyle
+        useDarkNavStyle
           ? "bg-transparent border-b border-transparent"
           : "bg-background/85 backdrop-blur-md border-b shadow-sm"
       }`}
     >
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <button 
-            onClick={() => scrollToSection("home")}
-            className={`flex items-center gap-3 hover:opacity-80 transition-colors cursor-pointer ${
-              useHeroStyle ? "text-white" : "text-foreground"
-            }`}
-          >
-            <Image 
-              src="/favicon.ico" 
-              alt="DJSanch Logo" 
-              width={40} 
-              height={40}
-              className="rounded"
-            />
-            <span className="text-xl font-bold">Daniel Sanchez</span>
-          </button>
-          
+      <div className="container relative mx-auto px-4 py-3 sm:py-4">
+        <div className="flex min-h-10 items-center justify-center sm:min-h-11">
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden items-center justify-center gap-x-3 gap-y-2 lg:flex lg:gap-x-6">
             {navItems.map((item) => (
               <Button
                 key={item.id}
@@ -92,21 +100,21 @@ const Navigation = () => {
                 onMouseLeave={() => setHoveredNavItem(null)}
                 onFocus={() => setHoveredNavItem(item.id)}
                 onBlur={() => setHoveredNavItem(null)}
-                className={`group relative transition-all duration-300 ease-out ${
+                className={`group relative px-2 text-[11px] font-medium uppercase tracking-[0.15em] transition-all duration-300 ease-out xl:px-3 xl:text-xs xl:tracking-[0.2em] ${
                   hoveredNavItem === item.id
                     ? "scale-110 opacity-100"
                     : hoveredNavItem
                       ? "scale-95 opacity-40"
                       : "scale-100 opacity-100"
                 } ${
-                  useHeroStyle
+                  useDarkNavStyle
                     ? "text-white hover:bg-transparent hover:text-white"
                     : "hover:bg-transparent"
                 }`}
               >
                 <span
                   className={`relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:transition-transform after:duration-300 after:ease-out ${
-                    useHeroStyle ? "after:bg-white" : "after:bg-foreground"
+                    useDarkNavStyle ? "after:bg-white" : "after:bg-foreground"
                   } ${
                     hoveredNavItem === item.id
                       ? "after:scale-x-100"
@@ -119,25 +127,44 @@ const Navigation = () => {
             ))}
           </div>
 
+          {/* Tablet Navigation — compact centered row */}
+          <div className="hidden flex-wrap items-center justify-center gap-x-2 gap-y-1 md:flex lg:hidden">
+            {navItems.map((item) => (
+              <Button
+                key={item.id}
+                variant="ghost"
+                onClick={() => scrollToSection(item.id)}
+                className={`px-2 text-[10px] font-medium uppercase tracking-[0.12em] ${
+                  useDarkNavStyle
+                    ? "text-white hover:bg-transparent hover:text-white"
+                    : "hover:bg-transparent"
+                }`}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </div>
+
           {/* Mobile Navigation */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className={`md:hidden ${useHeroStyle ? "text-white hover:bg-white/20 hover:text-white" : ""}`}
+                aria-label="Open navigation menu"
+                className={`absolute right-0 top-1/2 h-10 w-10 -translate-y-1/2 md:hidden ${useDarkNavStyle ? "text-white hover:bg-white/20 hover:text-white" : ""}`}
               >
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <div className="flex flex-col space-y-4 mt-8">
+            <SheetContent side="right" className="w-[min(100vw-2rem,320px)] sm:w-[360px]">
+              <div className="mt-8 flex flex-col space-y-2">
                 {navItems.map((item) => (
                   <Button
                     key={item.id}
                     variant="ghost"
                     onClick={() => scrollToSection(item.id)}
-                    className="justify-start text-lg"
+                    className="justify-start text-base uppercase tracking-[0.15em] sm:text-lg"
                   >
                     {item.label}
                   </Button>

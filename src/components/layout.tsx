@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
   const isHomePage = pathname === "/"
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className={`min-h-screen ${isHomePage ? "bg-[#0a1220]" : "bg-background"}`}>
       <Navigation />
       <main className={isHomePage ? "" : "pt-16"}>
         {children}
