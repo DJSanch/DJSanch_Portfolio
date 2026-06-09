@@ -1,10 +1,35 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react"
 import { useHeroAboutBlend } from "@/components/hero-about-scroll"
 
 const Hero = () => {
   const blend = useHeroAboutBlend()
+  const [introActive, setIntroActive] = useState(false)
+  const [veilHidden, setVeilHidden] = useState(false)
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReducedMotion) {
+      setIntroActive(true)
+      setVeilHidden(true)
+      return
+    }
+
+    const introFrame = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setIntroActive(true))
+    })
+    const veilTimer = window.setTimeout(() => setVeilHidden(true), 80)
+
+    return () => {
+      cancelAnimationFrame(introFrame)
+      window.clearTimeout(veilTimer)
+    }
+  }, [])
+
+  const intro = (base: string, delay = "") =>
+    `${base} ${introActive ? `hero-intro-active ${delay}` : ""}`.trim()
 
   const socialLinks = [
     { icon: Github, href: "https://github.com/djsanch", label: "GitHub" },
@@ -14,17 +39,24 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen min-h-[100dvh] overflow-hidden bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38]">
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 z-30 bg-[#0a1220] transition-opacity duration-[1200ms] ease-out ${
+          veilHidden ? "opacity-0" : "opacity-100"
+        }`}
+      />
+
       {/* Geometric accent shapes */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-20 top-[55%] h-[min(480px,85vw)] w-[min(480px,85vw)] -translate-y-1/2 sm:-right-16 sm:top-1/2 sm:h-[min(600px,88vw)] sm:w-[min(600px,88vw)] lg:right-[8%] lg:h-[min(620px,55vw)] lg:w-[min(620px,55vw)]"
+        className={`hero-intro-scale pointer-events-none absolute -right-20 top-[55%] h-[min(480px,85vw)] w-[min(480px,85vw)] -translate-y-1/2 sm:-right-16 sm:top-1/2 sm:h-[min(600px,88vw)] sm:w-[min(600px,88vw)] lg:right-[8%] lg:h-[min(620px,55vw)] lg:w-[min(620px,55vw)] ${introActive ? "hero-intro-active delay-100" : ""}`}
       >
         <div className="absolute inset-0 scale-110 rounded-full bg-[#3b82f6]/15 blur-3xl" />
         <div className="absolute inset-0 rounded-full bg-[#1a4480]/90 shadow-[0_0_60px_20px_rgba(59,130,246,0.12)]" />
       </div>
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-20 left-[3%] h-32 w-32 sm:-bottom-24 sm:left-[5%] sm:h-48 sm:w-48 md:-bottom-16 md:left-[12%] md:h-56 md:w-56"
+        className={`hero-intro-scale pointer-events-none absolute -bottom-20 left-[3%] h-32 w-32 sm:-bottom-24 sm:left-[5%] sm:h-48 sm:w-48 md:-bottom-16 md:left-[12%] md:h-56 md:w-56 ${introActive ? "hero-intro-active delay-300" : ""}`}
       >
         <div className="absolute inset-0 scale-125 rounded-full bg-[#60a5fa]/20 blur-2xl" />
         <div className="absolute inset-0 rounded-full bg-[#2563eb]/55 shadow-[0_0_40px_12px_rgba(37,99,235,0.15)]" />
@@ -44,23 +76,23 @@ const Hero = () => {
               transform: `translateY(${-blend * 28}px)`,
             }}
           >
-            <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em] md:text-sm">
+            <p className={intro("hero-intro-left text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em] md:text-sm", "delay-200")}>
               Full Stack Developer
             </p>
 
-            <h1 className="text-3xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+            <h1 className={intro("hero-intro-left text-3xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl", "delay-300")}>
               Daniel
               <br />
               Sanchez
             </h1>
 
-            <p className="mx-auto max-w-md text-sm leading-relaxed text-white/65 sm:mx-0 md:text-base">
+            <p className={intro("hero-intro-left mx-auto max-w-md text-sm leading-relaxed text-white/65 sm:mx-0 md:text-base", "delay-400")}>
               I build scalable web applications and solve complex engineering problems.
               Passionate about modern technologies, clean architecture, and creating
               solutions that make a real impact.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-start sm:gap-6">
+            <div className={intro("hero-intro-left flex flex-wrap items-center justify-center gap-4 sm:justify-start sm:gap-6", "delay-500")}>
               <a
                 href="#about"
                 className="group inline-flex items-center gap-3 text-white transition-opacity hover:opacity-80 sm:gap-4"
@@ -83,7 +115,7 @@ const Hero = () => {
               </a>
             </div>
 
-            <div className="flex justify-center gap-3 pt-1 sm:justify-start sm:pt-2">
+            <div className={intro("hero-intro-left flex justify-center gap-3 pt-1 sm:justify-start sm:pt-2", "delay-500")}>
               {socialLinks.map((social) => (
                 <a
                   key={social.label}

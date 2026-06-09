@@ -23,6 +23,21 @@ export { scrollToHero }
 export function HeroAboutScrollProvider({ children }: { children: React.ReactNode }) {
   const [blend, setBlend] = useState(0)
   const [showPortrait, setShowPortrait] = useState(true)
+  const [introActive, setIntroActive] = useState(false)
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReducedMotion) {
+      setIntroActive(true)
+      return
+    }
+
+    const introFrame = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setIntroActive(true))
+    })
+
+    return () => cancelAnimationFrame(introFrame)
+  }, [])
 
   useEffect(() => {
     const update = () => {
@@ -58,9 +73,11 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
 
       {/* Portrait locked to the right grid column — stays aligned with hero/about layout */}
       <div
-        className={`pointer-events-none fixed inset-x-0 bottom-0 hidden transition-opacity duration-500 lg:block ${
-          showPortrait ? "opacity-100" : "opacity-0"
-        } ${isAboutActive ? "z-20" : "z-[5]"}`}
+        className={`hero-intro-right pointer-events-none fixed inset-x-0 bottom-0 hidden lg:block ${
+          introActive ? "hero-intro-active delay-400" : ""
+        } ${showPortrait ? "" : "!opacity-0"} transition-opacity duration-500 ${
+          isAboutActive ? "z-20" : "z-[5]"
+        }`}
       >
         <div className="container mx-auto h-[calc(100dvh-5rem)] px-4 sm:px-6">
           <div className="grid h-full grid-cols-2 gap-4 xl:gap-6">

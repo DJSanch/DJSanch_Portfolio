@@ -10,8 +10,25 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isDarkSectionVisible, setIsDarkSectionVisible] = useState(true)
   const [hoveredNavItem, setHoveredNavItem] = useState<string | null>(null)
+  const [introActive, setIntroActive] = useState(false)
   const pathname = usePathname()
   const isHomePage = pathname === "/"
+
+  useEffect(() => {
+    if (!isHomePage) return
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReducedMotion) {
+      setIntroActive(true)
+      return
+    }
+
+    const introFrame = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setIntroActive(true))
+    })
+
+    return () => cancelAnimationFrame(introFrame)
+  }, [isHomePage])
 
   useEffect(() => {
     if (!isHomePage) {
@@ -82,6 +99,8 @@ const Navigation = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isHomePage ? `hero-intro-nav ${introActive ? "hero-intro-active" : ""}` : ""
+      } ${
         useDarkNavStyle
           ? "bg-transparent border-b border-transparent"
           : "bg-background/85 backdrop-blur-md border-b shadow-sm"
