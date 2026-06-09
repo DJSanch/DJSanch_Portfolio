@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import Image from "next/image"
 import { Award, ChevronLeft, ChevronRight } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-media-query"
@@ -45,49 +45,94 @@ const certifications: CertificationItem[] = [
   { title: "Agile Software Development: Clean Coding Practices", filename: "CertificateOfCompletion_Agile Software Development Clean Coding Practices.pdf", image: "CertificateOfCompletion_Agile Software Development Clean Coding Practices.png" },
 ]
 
-/** Horizontal carousel — cards move left/right; neighbors show blurred on the sides */
-function getHorizontalCarouselPosition(
-  index: number,
-  activeIndex: number,
-  spacing: number,
-  activeScale: number
-) {
-  const offset = index - activeIndex
-  if (Math.abs(offset) > 3) {
-    return { x: 0, y: 0, scale: 0, opacity: 0, zIndex: 0, blur: 0 }
-  }
+const FLIP_DURATION_MS = 850
+const FLIP_EASING = "cubic-bezier(0.45, 0.05, 0.25, 1)"
 
-  const x = offset * spacing
-  const depth = Math.abs(offset)
+type FlipDirection = "next" | "prev"
 
-  return {
-    x,
-    y: 0,
-    scale: depth === 0 ? activeScale : depth === 1 ? 0.78 : Math.max(0.58, 0.86 - depth * 0.12),
-    opacity: depth === 0 ? 1 : depth === 1 ? 0.72 : Math.max(0.38, 0.62 - depth * 0.12),
-    blur: depth === 0 ? 0 : depth === 1 ? 5 : Math.min(10, 4 + depth * 2),
-    zIndex: 40 - depth,
-  }
+function CertCardFace({ cert }: { cert: CertificationItem }) {
+  return (
+    <div className="h-full w-full overflow-hidden rounded-2xl bg-[#0a1220]/80 shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
+      {cert.image ? (
+        <div className="relative aspect-[4/3] w-full">
+          <Image
+            src={`/certifications/${cert.image}`}
+            alt={cert.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 300px, (max-width: 1024px) 480px, 560px"
+          />
+        </div>
+      ) : (
+        <div className="flex aspect-[4/3] w-full items-center justify-center bg-[#0a1220]/60">
+          <Award className="h-16 w-16 text-white/20" />
+        </div>
+      )}
+    </div>
+  )
 }
 
 const Certifications = () => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [flip, setFlip] = useState<{ to: number; angle: number } | null>(null)
+  const [rotateY, setRotateY] = useState(0)
+  const flipperRef = useRef<HTMLDivElement>(null)
   const isMobile = useIsMobile()
 
-  const carouselSpacing = isMobile ? 150 : 300
-  const activeScale = isMobile ? 1.12 : 1.4
+  const cardWidthClass = isMobile
+    ? "w-[min(300px,90vw)]"
+    : "w-[min(380px,88vw)] sm:w-[420px] md:w-[500px] lg:w-[540px] xl:w-[580px]"
 
-  const goTo = (direction: "prev" | "next") => {
-    setActiveIndex((current) => {
-      if (direction === "prev") {
-        return current === 0 ? certifications.length - 1 : current - 1
-      }
-      return current === certifications.length - 1 ? 0 : current + 1
-    })
-  }
+  const wrapIndex = useCallback((index: number) => {
+    const len = certifications.length
+    return ((index % len) + len) % len
+  }, [])
+
+  const startFlip = useCallback(
+    (direction: FlipDirection) => {
+      if (flip) return
+
+      const to =
+        direction === "next"
+          ? wrapIndex(activeIndex + 1)
+          : wrapIndex(activeIndex - 1)
+      const angle = direction === "next" ? -180 : 180
+
+      setFlip({ to, angle })
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setRotateY(angle))
+      })
+    },
+    [activeIndex, flip, wrapIndex]
+  )
+
+  const handleFlipEnd = useCallback(
+    (event: React.TransitionEvent<HTMLDivElement>) => {
+      if (event.propertyName !== "transform" || !flip || !flipperRef.current) return
+
+      const { to } = flip
+      const el = flipperRef.current
+
+      el.style.transition = "none"
+      setRotateY(0)
+      setActiveIndex(to)
+      setFlip(null)
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.style.transition = ""
+        })
+      })
+    },
+    [flip]
+  )
+
+  const frontCert = certifications[activeIndex]
+  const backCert = flip ? certifications[flip.to] : certifications[wrapIndex(activeIndex + 1)]
+  const isFlipping = flip !== null
 
   const arrowButtonClass =
-    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/70 transition-colors hover:border-white/45 hover:bg-white/5 hover:text-white sm:h-10 sm:w-10"
+    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/70 transition-colors hover:border-white/45 hover:bg-white/5 hover:text-white disabled:pointer-events-none disabled:opacity-30 sm:h-10 sm:w-10"
 
   return (
     <section id="certifications">
@@ -101,7 +146,7 @@ const Certifications = () => {
         />
 
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
-          <div className="mx-auto flex min-h-[calc(100dvh-7rem)] w-full max-w-4xl flex-col items-center justify-center text-center">
+          <div className="mx-auto flex min-h-[calc(100dvh-7rem)] w-full max-w-5xl flex-col items-center justify-center text-center">
             <div className="mb-8 shrink-0 space-y-3 sm:mb-10">
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
                 Credentials
@@ -114,92 +159,77 @@ const Certifications = () => {
               </p>
             </div>
 
-            {/* Center — horizontal certificate carousel */}
-            <div className="flex w-full max-w-5xl items-center justify-center gap-2 overflow-x-clip sm:gap-4">
+            <div className="flex w-full max-w-6xl items-center justify-center gap-2 sm:gap-4">
               <button
                 type="button"
-                onClick={() => goTo("prev")}
+                onClick={() => startFlip("prev")}
+                disabled={isFlipping}
                 aria-label="Previous certification"
                 className={arrowButtonClass}
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
 
-              <div className="relative h-[min(320px,44vh)] w-full min-w-0 flex-1 overflow-visible sm:h-[min(400px,52vh)] md:h-[min(460px,56vh)]">
-                {certifications.map((cert, index) => {
-                  const pos = getHorizontalCarouselPosition(
-                    index,
-                    activeIndex,
-                    carouselSpacing,
-                    activeScale
-                  )
-                  const isActive = index === activeIndex
-                  const cardStyle = {
-                    transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px)) scale(${pos.scale})`,
-                    opacity: pos.opacity,
-                    zIndex: pos.zIndex,
-                    transition:
-                      "transform 700ms cubic-bezier(0.4,0,0.2,1), opacity 700ms cubic-bezier(0.4,0,0.2,1), filter 700ms cubic-bezier(0.4,0,0.2,1)",
-                    filter: `blur(${pos.blur}px)`,
-                  }
-                  const cardClassName =
-                    "absolute left-1/2 top-1/2 w-[min(240px,72vw)] origin-center sm:w-[320px] md:w-[380px] lg:w-[440px] xl:w-[480px]"
-
-                  const cardContent = (
-                    <div className="overflow-hidden rounded-2xl bg-[#0a1220]/80 shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
-                      {cert.image ? (
-                        <div className="relative aspect-[4/3] w-full">
-                          <Image
-                            src={`/certifications/${cert.image}`}
-                            alt={cert.title}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 1024px) 380px, 480px"
-                          />
-                        </div>
-                      ) : (
-                        <div className="flex aspect-[4/3] w-full items-center justify-center bg-[#0a1220]/60">
-                          <Award className="h-16 w-16 text-white/20" />
-                        </div>
-                      )}
-                    </div>
-                  )
-
-                  if (isActive) {
-                    return (
+              <div
+                className="relative flex min-h-[min(380px,52vh)] w-full min-w-0 flex-1 items-center justify-center sm:min-h-[min(480px,58vh)] md:min-h-[min(540px,64vh)]"
+                style={{ perspective: isMobile ? "1200px" : "1600px" }}
+              >
+                <div
+                  className={`relative ${cardWidthClass} [transform-style:preserve-3d]`}
+                  style={{
+                    transformStyle: "preserve-3d",
+                    transform: `rotateY(${rotateY}deg)`,
+                    transition: isFlipping
+                      ? `transform ${FLIP_DURATION_MS}ms ${FLIP_EASING}`
+                      : "none",
+                  }}
+                  ref={flipperRef}
+                  onTransitionEnd={handleFlipEnd}
+                >
+                  {/* Front page */}
+                  <div
+                    className="relative [backface-visibility:hidden]"
+                    style={{ backfaceVisibility: "hidden" }}
+                  >
+                    {!isFlipping ? (
                       <a
-                        key={cert.filename}
-                        href={`/certifications/${cert.filename}`}
+                        href={`/certifications/${frontCert.filename}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`View certificate: ${cert.title}`}
-                        aria-current="true"
-                        className={`${cardClassName} block cursor-pointer`}
-                        style={cardStyle}
+                        aria-label={`View certificate: ${frontCert.title}`}
+                        className="block cursor-pointer"
                       >
-                        {cardContent}
+                        <CertCardFace cert={frontCert} />
                       </a>
-                    )
-                  }
+                    ) : (
+                      <CertCardFace cert={frontCert} />
+                    )}
+                  </div>
 
-                  return (
-                    <button
-                      key={cert.filename}
-                      type="button"
-                      onClick={() => setActiveIndex(index)}
-                      aria-label={`Select ${cert.title}`}
-                      className={cardClassName}
-                      style={cardStyle}
-                    >
-                      {cardContent}
-                    </button>
-                  )
-                })}
+                  {/* Back page — next/prev cert revealed mid-flip */}
+                  <div
+                    className="absolute inset-0 [backface-visibility:hidden]"
+                    style={{
+                      backfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                    }}
+                  >
+                    <CertCardFace cert={backCert} />
+                  </div>
+                </div>
+
+                {/* Page edge shadow during flip */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-[12%] left-1/2 w-8 -translate-x-1/2 rounded-full bg-black/25 blur-xl transition-opacity duration-300"
+                  style={{ opacity: isFlipping ? 0.7 : 0.25 }}
+                />
               </div>
 
               <button
                 type="button"
-                onClick={() => goTo("next")}
+                onClick={() => startFlip("next")}
+                disabled={isFlipping}
                 aria-label="Next certification"
                 className={arrowButtonClass}
               >

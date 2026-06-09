@@ -5,8 +5,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, Eye, Github, Globe } from "lucide-react"
+import { Eye, Github, Globe } from "lucide-react"
 import { useProjectsEventsSlide } from "@/components/projects-events-slide"
+import { ControllerVisual } from "@/components/controller-visual"
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
 
 interface Project {
@@ -138,9 +139,6 @@ const Projects = () => {
     })
   }
 
-  const arrowButtonClass =
-    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/70 transition-colors hover:border-white/45 hover:bg-white/5 hover:text-white sm:h-10 sm:w-10"
-
   const projectImageSrc = (image: string) =>
     image.startsWith("/") ? image : `/projects/${image}`
 
@@ -160,7 +158,7 @@ const Projects = () => {
         <div className="container relative z-10 mx-auto flex min-h-0 flex-col px-4 pb-8 pt-24 sm:px-6 sm:pb-10 sm:pt-28 lg:min-h-screen">
           <div className="grid w-full grid-cols-1 items-stretch gap-6 sm:gap-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-2 lg:gap-10 xl:gap-14">
             {/* Left — project content carousel */}
-            <div className="flex min-h-0 min-w-0 flex-col justify-center text-center sm:text-left lg:max-w-xl lg:pl-8 xl:pl-12">
+            <div className="flex w-full min-h-0 min-w-0 flex-col justify-center overflow-visible text-center sm:text-left lg:max-w-2xl lg:pl-8 xl:max-w-[920px] xl:pl-12">
               <div className="mb-6 shrink-0 space-y-3 sm:mb-10 lg:mb-14">
                 <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
                   Portfolio
@@ -176,25 +174,17 @@ const Projects = () => {
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 sm:gap-3">
-                <button
-                  type="button"
-                  onClick={() => goTo("prev")}
-                  aria-label="Previous project"
-                  className={arrowButtonClass}
+              <div className="relative z-0 min-w-0 overflow-hidden">
+                <div
+                  className="flex transition-transform duration-500 ease-out"
+                  style={{ transform: `translateX(-${activeIndex * 100}%)` }}
                 >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-
-                <div className="min-w-0 flex-1 overflow-hidden">
-                  <div
-                    className="flex transition-transform duration-500 ease-out"
-                    style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-                  >
-                    {projects.map((project) => (
-                      <div key={project.title} className="w-full shrink-0 space-y-4 px-1">
+                  {projects.map((project) => (
+                    <div key={project.title} className="w-full shrink-0 space-y-4 px-1">
                         <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-start sm:gap-3">
-                          <h3 className="text-left text-lg font-semibold text-white sm:text-xl md:text-2xl">{project.title}</h3>
+                          <h3 className="text-left text-lg font-semibold text-white sm:text-xl md:text-2xl">
+                            {project.title}
+                          </h3>
                           {project.featured && (
                             <Badge className="shrink-0 border-white/10 bg-white/10 text-white">
                               Featured
@@ -254,29 +244,25 @@ const Projects = () => {
                             </Button>
                           ) : null}
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => goTo("next")}
-                  aria-label="Next project"
-                  className={arrowButtonClass}
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
               </div>
 
               <p className="mt-3 text-xs uppercase tracking-[0.2em] text-white/45">
                 {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
               </p>
+
+              <ControllerVisual
+                onPrev={() => goTo("prev")}
+                onNext={() => goTo("next")}
+                className="mt-4 w-full -translate-y-3 animate-float-slow sm:mt-3 sm:-translate-y-8 md:-translate-y-10 lg:-translate-y-12"
+              />
             </div>
 
-            {/* Right — C-shaped image carousel (no scroll transition) */}
-            <div className="relative flex min-h-[min(42vh,340px)] w-full items-center justify-center overflow-x-clip sm:min-h-[min(48vh,380px)] lg:min-h-[calc(100dvh-7rem)]">
-              <div className="relative h-[min(360px,48vh)] w-full max-w-[800px] translate-x-0 sm:h-[min(420px,52vh)] lg:h-[min(640px,72vh)] lg:-translate-x-[10%]">
+            {/* Right — C-shaped image carousel (desktop only) */}
+            <div className="relative hidden min-h-[calc(100dvh-7rem)] w-full items-center justify-center overflow-x-clip lg:flex">
+              <div className="relative h-[min(640px,72vh)] w-full max-w-[800px] -translate-x-[10%]">
                 {projects.map((project, index) => {
                   const pos = getCArcPosition(index, activeIndex, arcRadius, activeScale)
                   const isActive = index === activeIndex
