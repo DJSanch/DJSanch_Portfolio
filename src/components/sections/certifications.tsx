@@ -1,9 +1,9 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useState } from "react"
 import Image from "next/image"
 import { Award, ChevronLeft, ChevronRight } from "lucide-react"
-import { useIsMobile } from "@/hooks/use-media-query"
+import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
 
 interface CertificationItem {
   title: string
@@ -45,26 +45,33 @@ const certifications: CertificationItem[] = [
   { title: "Agile Software Development: Clean Coding Practices", filename: "CertificateOfCompletion_Agile Software Development Clean Coding Practices.pdf", image: "CertificateOfCompletion_Agile Software Development Clean Coding Practices.png" },
 ]
 
-const FLIP_DURATION_MS = 850
-const FLIP_EASING = "cubic-bezier(0.45, 0.05, 0.25, 1)"
-
-type FlipDirection = "next" | "prev"
-
-function CertCardFace({ cert }: { cert: CertificationItem }) {
+function CertCardFace({ cert, isActive }: { cert: CertificationItem; isActive: boolean }) {
   return (
-    <div className="h-full w-full overflow-hidden rounded-2xl bg-[#0a1220]/80 shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
+    <div
+      className={`h-full w-full overflow-hidden rounded-2xl border bg-[#0a1220]/80 transition-[border-color,box-shadow] duration-500 ${
+        isActive
+          ? "border-white/30 shadow-[0_32px_80px_rgba(0,0,0,0.55),0_0_40px_rgba(96,165,250,0.15)]"
+          : "border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.4)]"
+      }`}
+    >
       {cert.image ? (
-        <div className="relative aspect-[4/3] w-full">
+        <div className="relative aspect-[11/8.5] w-full">
           <Image
             src={`/certifications/${cert.image}`}
             alt={cert.title}
             fill
-            className="object-cover"
+            className="object-contain"
             sizes="(max-width: 640px) 300px, (max-width: 1024px) 480px, 560px"
           />
+          {!isActive && (
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-[#0a1220]/35 transition-opacity duration-500"
+            />
+          )}
         </div>
       ) : (
-        <div className="flex aspect-[4/3] w-full items-center justify-center bg-[#0a1220]/60">
+        <div className="flex aspect-[11/8.5] w-full items-center justify-center bg-[#0a1220]/60">
           <Award className="h-16 w-16 text-white/20" />
         </div>
       )}
@@ -72,67 +79,78 @@ function CertCardFace({ cert }: { cert: CertificationItem }) {
   )
 }
 
+function getCircularOffset(index: number, activeIndex: number, total: number) {
+  let offset = index - activeIndex
+  if (offset > total / 2) offset -= total
+  if (offset < -total / 2) offset += total
+  return offset
+}
+
+/** Pokemon TCG pack-picker style — cards fan on a 3D arc with Y-rotation */
+function getPackArcPosition(
+  index: number,
+  activeIndex: number,
+  total: number,
+  radius: number,
+  activeScale: number
+) {
+  const offset = getCircularOffset(index, activeIndex, total)
+  if (Math.abs(offset) > 2) {
+    return { x: 0, y: 0, z: 0, rotateY: 0, scale: 0, opacity: 0, zIndex: 0, blur: 0 }
+  }
+
+  const stepDeg = 34
+  const theta = (offset * stepDeg * Math.PI) / 180
+  const depth = Math.abs(offset)
+
+  return {
+    x: radius * Math.sin(theta) * 2.1,
+    y: depth * 14,
+    z: depth === 0 ? 60 : -depth * 90,
+    rotateY: -offset * stepDeg,
+    scale: depth === 0 ? activeScale : Math.max(0.74, 0.9 - depth * 0.08),
+    opacity: depth === 0 ? 1 : Math.max(0.5, 0.85 - depth * 0.2),
+    blur: depth === 0 ? 0 : Math.min(5, 2 + depth * 1.5),
+    zIndex: 30 - depth,
+  }
+}
+
 const Certifications = () => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [flip, setFlip] = useState<{ to: number; angle: number } | null>(null)
-  const [rotateY, setRotateY] = useState(0)
-  const flipperRef = useRef<HTMLDivElement>(null)
   const isMobile = useIsMobile()
+  const isTablet = useIsTablet()
+
+  const total = certifications.length
+  const arcRadius = isMobile ? 120 : isTablet ? 150 : 180
+  const activeScale = isMobile ? 1 : isTablet ? 1.02 : 1.04
 
   const cardWidthClass = isMobile
-    ? "w-[min(300px,90vw)]"
-    : "w-[min(380px,88vw)] sm:w-[420px] md:w-[500px] lg:w-[540px] xl:w-[580px]"
+    ? "w-[min(240px,72vw)]"
+    : "w-[min(300px,78vw)] sm:w-[340px] md:w-[380px] lg:w-[420px] xl:w-[460px]"
 
-  const wrapIndex = useCallback((index: number) => {
-    const len = certifications.length
-    return ((index % len) + len) % len
-  }, [])
-
-  const startFlip = useCallback(
-    (direction: FlipDirection) => {
-      if (flip) return
-
-      const to =
-        direction === "next"
-          ? wrapIndex(activeIndex + 1)
-          : wrapIndex(activeIndex - 1)
-      const angle = direction === "next" ? -180 : 180
-
-      setFlip({ to, angle })
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setRotateY(angle))
-      })
-    },
-    [activeIndex, flip, wrapIndex]
+  const wrapIndex = useCallback(
+    (index: number) => ((index % total) + total) % total,
+    [total]
   )
 
-  const handleFlipEnd = useCallback(
-    (event: React.TransitionEvent<HTMLDivElement>) => {
-      if (event.propertyName !== "transform" || !flip || !flipperRef.current) return
-
-      const { to } = flip
-      const el = flipperRef.current
-
-      el.style.transition = "none"
-      setRotateY(0)
-      setActiveIndex(to)
-      setFlip(null)
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          el.style.transition = ""
-        })
-      })
+  const selectIndex = useCallback(
+    (index: number) => {
+      setActiveIndex(wrapIndex(index))
     },
-    [flip]
+    [wrapIndex]
   )
 
-  const frontCert = certifications[activeIndex]
-  const backCert = flip ? certifications[flip.to] : certifications[wrapIndex(activeIndex + 1)]
-  const isFlipping = flip !== null
+  const goTo = useCallback(
+    (direction: "prev" | "next") => {
+      setActiveIndex((current) =>
+        direction === "next" ? wrapIndex(current + 1) : wrapIndex(current - 1)
+      )
+    },
+    [wrapIndex]
+  )
 
   const arrowButtonClass =
-    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/70 transition-colors hover:border-white/45 hover:bg-white/5 hover:text-white disabled:pointer-events-none disabled:opacity-30 sm:h-10 sm:w-10"
+    "absolute top-1/2 z-40 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-[#0a1220]/70 text-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-colors hover:border-white/50 hover:bg-[#0a1220]/90 hover:text-white sm:h-12 sm:w-12"
 
   return (
     <section id="certifications">
@@ -146,7 +164,7 @@ const Certifications = () => {
         />
 
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
-          <div className="mx-auto flex min-h-[calc(100dvh-7rem)] w-full max-w-5xl flex-col items-center justify-center text-center">
+          <div className="mx-auto flex min-h-[calc(100dvh-7rem)] w-full max-w-6xl flex-col items-center justify-center text-center">
             <div className="mb-8 shrink-0 space-y-3 sm:mb-10">
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
                 Credentials
@@ -159,86 +177,89 @@ const Certifications = () => {
               </p>
             </div>
 
-            <div className="flex w-full max-w-6xl items-center justify-center gap-2 sm:gap-4">
-              <button
-                type="button"
-                onClick={() => startFlip("prev")}
-                disabled={isFlipping}
-                aria-label="Previous certification"
-                className={arrowButtonClass}
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-
+            <div className="relative w-full px-2 sm:px-4">
               <div
-                className="relative flex min-h-[min(380px,52vh)] w-full min-w-0 flex-1 items-center justify-center sm:min-h-[min(480px,58vh)] md:min-h-[min(540px,64vh)]"
-                style={{ perspective: isMobile ? "1200px" : "1600px" }}
+                className="relative min-h-[min(440px,58vh)] w-full overflow-visible py-6 sm:min-h-[min(520px,62vh)] sm:py-8 md:min-h-[min(580px,68vh)]"
+                style={{ perspective: isMobile ? "900px" : "1200px" }}
               >
-                <div
-                  className={`relative ${cardWidthClass} [transform-style:preserve-3d]`}
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transform: `rotateY(${rotateY}deg)`,
-                    transition: isFlipping
-                      ? `transform ${FLIP_DURATION_MS}ms ${FLIP_EASING}`
-                      : "none",
-                  }}
-                  ref={flipperRef}
-                  onTransitionEnd={handleFlipEnd}
-                >
-                  {/* Front page */}
-                  <div
-                    className="relative [backface-visibility:hidden]"
-                    style={{ backfaceVisibility: "hidden" }}
-                  >
-                    {!isFlipping ? (
-                      <a
-                        href={`/certifications/${frontCert.filename}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View certificate: ${frontCert.title}`}
-                        className="block cursor-pointer"
-                      >
-                        <CertCardFace cert={frontCert} />
-                      </a>
-                    ) : (
-                      <CertCardFace cert={frontCert} />
-                    )}
-                  </div>
-
-                  {/* Back page — next/prev cert revealed mid-flip */}
-                  <div
-                    className="absolute inset-0 [backface-visibility:hidden]"
-                    style={{
-                      backfaceVisibility: "hidden",
-                      transform: "rotateY(180deg)",
-                    }}
-                  >
-                    <CertCardFace cert={backCert} />
-                  </div>
-                </div>
-
-                {/* Page edge shadow during flip */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-y-[12%] left-1/2 w-8 -translate-x-1/2 rounded-full bg-black/25 blur-xl transition-opacity duration-300"
-                  style={{ opacity: isFlipping ? 0.7 : 0.25 }}
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-[min(320px,42vh)] w-[min(520px,80vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#60a5fa]/10 blur-3xl"
                 />
-              </div>
 
-              <button
-                type="button"
-                onClick={() => startFlip("next")}
-                disabled={isFlipping}
-                aria-label="Next certification"
-                className={arrowButtonClass}
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => goTo("prev")}
+                  aria-label="Previous certification"
+                  className={`${arrowButtonClass} left-1 sm:left-3 md:left-6`}
+                >
+                  <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => goTo("next")}
+                  aria-label="Next certification"
+                  className={`${arrowButtonClass} right-1 sm:right-3 md:right-6`}
+                >
+                  <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+                </button>
+
+                <div
+                  className="relative mx-auto h-full w-full min-h-[inherit]"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  {certifications.map((cert, index) => {
+                    const pos = getPackArcPosition(index, activeIndex, total, arcRadius, activeScale)
+                    const isActive = index === activeIndex
+
+                    return (
+                      <div
+                        key={cert.title}
+                        className={`absolute left-1/2 top-1/2 ${cardWidthClass}`}
+                        style={{
+                          transform: `translate(-50%, calc(-50% + ${pos.y}px)) translateX(${pos.x}px) translateZ(${pos.z}px) rotateY(${pos.rotateY}deg) scale(${pos.scale})`,
+                          transformStyle: "preserve-3d",
+                          opacity: pos.opacity,
+                          zIndex: pos.zIndex,
+                          filter: `blur(${pos.blur}px)`,
+                          transition:
+                            "transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 500ms cubic-bezier(0.22,1,0.36,1), filter 500ms cubic-bezier(0.22,1,0.36,1)",
+                          pointerEvents: pos.opacity > 0 ? "auto" : "none",
+                        }}
+                      >
+                        {isActive ? (
+                          <a
+                            href={`/certifications/${cert.filename}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`View certificate: ${cert.title}`}
+                            className="block cursor-pointer"
+                          >
+                            <CertCardFace cert={cert} isActive />
+                          </a>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => selectIndex(index)}
+                            aria-label={`Select ${cert.title}`}
+                            className="block w-full cursor-pointer text-left"
+                          >
+                            <CertCardFace cert={cert} isActive={false} />
+                          </button>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
 
-            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/45">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(certifications.length).padStart(2, "0")}
+            <p className="mt-5 text-xs uppercase tracking-[0.2em] text-white/45">
+              {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            </p>
+            <p className="mt-2 max-w-sm text-xs text-white/40">
+              {certifications[activeIndex].title}
             </p>
           </div>
         </div>

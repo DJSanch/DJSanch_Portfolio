@@ -93,14 +93,22 @@ const projects: Project[] = [
   },
 ]
 
+function getCircularOffset(index: number, activeIndex: number, total: number) {
+  let offset = index - activeIndex
+  if (offset > total / 2) offset -= total
+  if (offset < -total / 2) offset += total
+  return offset
+}
+
 /** C-shaped arc — cards slide along the path in project order (no tilt) */
 function getCArcPosition(
   index: number,
   activeIndex: number,
+  total: number,
   radius: number,
   activeScale: number
 ) {
-  const offset = index - activeIndex
+  const offset = getCircularOffset(index, activeIndex, total)
   if (Math.abs(offset) > 4) {
     return { x: 0, y: 0, scale: 0, opacity: 0, zIndex: 0, blur: 0 }
   }
@@ -264,7 +272,7 @@ const Projects = () => {
             <div className="relative hidden min-h-[calc(100dvh-7rem)] w-full items-center justify-center overflow-x-clip lg:flex">
               <div className="relative h-[min(640px,72vh)] w-full max-w-[800px] -translate-x-[10%]">
                 {projects.map((project, index) => {
-                  const pos = getCArcPosition(index, activeIndex, arcRadius, activeScale)
+                  const pos = getCArcPosition(index, activeIndex, projects.length, arcRadius, activeScale)
                   const isActive = index === activeIndex
 
                   return (
