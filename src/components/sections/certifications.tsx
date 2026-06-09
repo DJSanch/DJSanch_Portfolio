@@ -1,8 +1,8 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import Image from "next/image"
-import { Award, ChevronLeft, ChevronRight } from "lucide-react"
+import { Award } from "lucide-react"
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
 
 interface CertificationItem {
@@ -92,10 +92,11 @@ function getPackArcPosition(
   activeIndex: number,
   total: number,
   radius: number,
-  activeScale: number
+  activeScale: number,
+  dragOffset = 0
 ) {
-  const offset = getCircularOffset(index, activeIndex, total)
-  if (Math.abs(offset) > 2) {
+  const offset = getCircularOffset(index, activeIndex, total) - dragOffset
+  if (Math.abs(offset) > 2.5) {
     return { x: 0, y: 0, z: 0, rotateY: 0, scale: 0, opacity: 0, zIndex: 0, blur: 0 }
   }
 
@@ -115,14 +116,27 @@ function getPackArcPosition(
   }
 }
 
+const DRAG_CLICK_THRESHOLD_PX = 8
+const STEER_SNAP_THRESHOLD = 0.28
+const STEER_VELOCITY_THRESHOLD = 0.45
+
 const Certifications = () => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const dragStartXRef = useRef(0)
+  const dragOffsetRef = useRef(0)
+  const didDragRef = useRef(false)
+  const lastMoveXRef = useRef(0)
+  const lastMoveTimeRef = useRef(0)
+  const velocityRef = useRef(0)
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
 
   const total = certifications.length
   const arcRadius = isMobile ? 120 : isTablet ? 150 : 180
   const activeScale = isMobile ? 1 : isTablet ? 1.02 : 1.04
+  const steerThreshold = isMobile ? 95 : 130
 
   const cardWidthClass = isMobile
     ? "w-[min(240px,72vw)]"
@@ -140,17 +154,82 @@ const Certifications = () => {
     [wrapIndex]
   )
 
-  const goTo = useCallback(
-    (direction: "prev" | "next") => {
-      setActiveIndex((current) =>
-        direction === "next" ? wrapIndex(current + 1) : wrapIndex(current - 1)
-      )
+  const handlePointerDown = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0) return
+
+    didDragRef.current = false
+    dragStartXRef.current = event.clientX
+    dragOffsetRef.current = 0
+    lastMoveXRef.current = event.clientX
+    lastMoveTimeRef.current = performance.now()
+    velocityRef.current = 0
+    setDragOffset(0)
+    setIsDragging(true)
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }, [])
+
+  const handlePointerMove = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (!isDragging) return
+
+      const deltaX = event.clientX - dragStartXRef.current
+      if (Math.abs(deltaX) > DRAG_CLICK_THRESHOLD_PX) {
+        didDragRef.current = true
+      }
+
+      const progress = -deltaX / steerThreshold
+      dragOffsetRef.current = progress
+      setDragOffset(progress)
+
+      const now = performance.now()
+      const elapsed = now - lastMoveTimeRef.current
+      if (elapsed > 0) {
+        velocityRef.current = (event.clientX - lastMoveXRef.current) / elapsed
+      }
+      lastMoveXRef.current = event.clientX
+      lastMoveTimeRef.current = now
     },
-    [wrapIndex]
+    [isDragging, steerThreshold]
   )
 
-  const arrowButtonClass =
-    "absolute top-1/2 z-40 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-[#0a1220]/70 text-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-colors hover:border-white/50 hover:bg-[#0a1220]/90 hover:text-white sm:h-12 sm:w-12"
+  const finishDrag = useCallback(() => {
+    if (!isDragging) return
+
+    setIsDragging(false)
+
+    const offset = dragOffsetRef.current
+    const velocity = velocityRef.current
+    let steps = 0
+
+    if (Math.abs(velocity) > STEER_VELOCITY_THRESHOLD) {
+      steps = velocity < 0 ? 1 : -1
+    } else if (Math.abs(offset) > STEER_SNAP_THRESHOLD) {
+      steps = offset > 0 ? 1 : -1
+    }
+
+    setDragOffset(0)
+    dragOffsetRef.current = 0
+
+    if (steps !== 0) {
+      setActiveIndex((current) => wrapIndex(current + steps))
+    }
+  }, [isDragging, wrapIndex])
+
+  const handlePointerUp = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId)
+      }
+      finishDrag()
+    },
+    [finishDrag]
+  )
+
+  const handleActiveCertClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (didDragRef.current) {
+      event.preventDefault()
+    }
+  }, [])
 
   return (
     <section id="certifications">
@@ -187,31 +266,26 @@ const Certifications = () => {
                   className="pointer-events-none absolute left-1/2 top-1/2 h-[min(320px,42vh)] w-[min(520px,80vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#60a5fa]/10 blur-3xl"
                 />
 
-                <button
-                  type="button"
-                  onClick={() => goTo("prev")}
-                  aria-label="Previous certification"
-                  className={`${arrowButtonClass} left-1 sm:left-3 md:left-6`}
-                >
-                  <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => goTo("next")}
-                  aria-label="Next certification"
-                  className={`${arrowButtonClass} right-1 sm:right-3 md:right-6`}
-                >
-                  <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
-                </button>
-
                 <div
-                  className="relative mx-auto h-full w-full min-h-[inherit]"
+                  className={`relative mx-auto h-full w-full min-h-[inherit] touch-pan-y select-none ${
+                    isDragging ? "cursor-grabbing" : "cursor-grab"
+                  }`}
                   style={{ transformStyle: "preserve-3d" }}
+                  onPointerDown={handlePointerDown}
+                  onPointerMove={handlePointerMove}
+                  onPointerUp={handlePointerUp}
+                  onPointerCancel={handlePointerUp}
                 >
                   {certifications.map((cert, index) => {
-                    const pos = getPackArcPosition(index, activeIndex, total, arcRadius, activeScale)
-                    const isActive = index === activeIndex
+                    const pos = getPackArcPosition(
+                      index,
+                      activeIndex,
+                      total,
+                      arcRadius,
+                      activeScale,
+                      dragOffset
+                    )
+                    const isActive = index === activeIndex && Math.abs(dragOffset) < 0.5
 
                     return (
                       <div
@@ -223,8 +297,9 @@ const Certifications = () => {
                           opacity: pos.opacity,
                           zIndex: pos.zIndex,
                           filter: `blur(${pos.blur}px)`,
-                          transition:
-                            "transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 500ms cubic-bezier(0.22,1,0.36,1), filter 500ms cubic-bezier(0.22,1,0.36,1)",
+                          transition: isDragging
+                            ? "none"
+                            : "transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 500ms cubic-bezier(0.22,1,0.36,1), filter 500ms cubic-bezier(0.22,1,0.36,1)",
                           pointerEvents: pos.opacity > 0 ? "auto" : "none",
                         }}
                       >
@@ -234,6 +309,8 @@ const Certifications = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`View certificate: ${cert.title}`}
+                            onClick={handleActiveCertClick}
+                            draggable={false}
                             className="block cursor-pointer"
                           >
                             <CertCardFace cert={cert} isActive />
@@ -241,7 +318,9 @@ const Certifications = () => {
                         ) : (
                           <button
                             type="button"
-                            onClick={() => selectIndex(index)}
+                            onClick={() => {
+                              if (!didDragRef.current) selectIndex(index)
+                            }}
                             aria-label={`Select ${cert.title}`}
                             className="block w-full cursor-pointer text-left"
                           >
