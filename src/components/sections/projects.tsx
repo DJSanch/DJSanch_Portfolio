@@ -270,7 +270,7 @@ const Projects = () => {
 
             {/* Right — C-shaped image carousel (desktop only) */}
             <div className="relative hidden min-h-[calc(100dvh-7rem)] w-full items-center justify-center overflow-x-clip lg:flex">
-              <div className="relative h-[min(640px,72vh)] w-full max-w-[800px] -translate-x-[10%]">
+              <div className="relative h-[min(640px,72vh)] w-full max-w-[800px] -translate-x-[2%]">
                 {projects.map((project, index) => {
                   const pos = getCArcPosition(index, activeIndex, projects.length, arcRadius, activeScale)
                   const isActive = index === activeIndex
