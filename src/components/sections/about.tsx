@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { GraduationCap, Briefcase, Code, Award, ChevronLeft, ChevronRight, type LucideIcon } from "lucide-react"
-import { useHeroAboutBlend } from "@/components/hero-about-scroll"
+import { useAboutExit, useHeroAboutBlend } from "@/components/hero-about-scroll"
 
 const aboutCardClass =
   "h-full gap-2 border-0 bg-transparent py-2 text-white shadow-none backdrop-blur-none"
@@ -17,6 +17,8 @@ type AboutSlide = {
 
 const About = () => {
   const blend = useHeroAboutBlend()
+  const aboutExit = useAboutExit()
+  const contentVisibility = blend * (1 - aboutExit)
   const cardsRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
@@ -179,25 +181,35 @@ const About = () => {
       <div
         id="about-panel"
         className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38]"
+        style={{
+          opacity: 1 - aboutExit * 0.35,
+        }}
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-20 top-[55%] h-[min(480px,85vw)] w-[min(480px,85vw)] -translate-y-1/2 rounded-full bg-[#1a4480]/40 sm:-right-16 sm:top-1/2 sm:h-[min(600px,88vw)] sm:w-[min(600px,88vw)] lg:right-[8%] lg:h-[min(620px,55vw)] lg:w-[min(620px,55vw)]"
+          className="pointer-events-none absolute -right-20 top-[55%] h-[min(480px,85vw)] w-[min(480px,85vw)] -translate-y-1/2 rounded-full bg-[#1a4480]/40 transition-transform duration-700 ease-out sm:-right-16 sm:top-1/2 sm:h-[min(600px,88vw)] sm:w-[min(600px,88vw)] lg:right-[8%] lg:h-[min(620px,55vw)] lg:w-[min(620px,55vw)]"
+          style={{
+            opacity: contentVisibility,
+            transform: `translateY(calc(-50% + ${aboutExit * -40}px)) scale(${1 - aboutExit * 0.08})`,
+          }}
         >
           <div className="absolute inset-0 scale-110 rounded-full bg-[#3b82f6]/10 blur-3xl" />
         </div>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0d1e38]"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0d1e38] transition-opacity duration-700 ease-out"
+          style={{ opacity: 1 - aboutExit * 0.5 }}
         />
 
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 pb-6 pt-24 sm:px-6 sm:pb-8 sm:pt-28">
           <div className="grid w-full grid-cols-1 items-stretch gap-6 sm:gap-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-2 lg:gap-4 xl:gap-6">
             <div
-              className="flex min-h-0 min-w-0 flex-col text-center transition-all duration-700 ease-out sm:text-left lg:max-w-xl lg:pl-8 xl:pl-12"
+              className="flex min-h-0 min-w-0 flex-col text-center sm:text-left lg:max-w-xl lg:pl-8 xl:pl-12"
               style={{
-                opacity: blend,
-                transform: `translateY(${(1 - blend) * 32}px)`,
+                opacity: contentVisibility,
+                transform: `translateY(${(1 - blend) * 32 - aboutExit * 36}px) scale(${1 - aboutExit * 0.04})`,
+                filter: `blur(${aboutExit * 3}px)`,
+                pointerEvents: aboutExit > 0.85 ? "none" : "auto",
               }}
             >
               <div className="mb-4 shrink-0 space-y-3 sm:mb-5">
