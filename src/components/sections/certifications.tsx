@@ -334,12 +334,14 @@ const Certifications = () => {
               </div>
             </div>
 
-            <p className="mt-5 text-xs uppercase tracking-[0.2em] text-white/45">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-            </p>
-            <p className="mt-2 max-w-sm text-xs text-white/40">
-              {certifications[activeIndex].title}
-            </p>
+            <div className="-mt-10 sm:-mt-12">
+              <p className="text-xs uppercase tracking-[0.2em] text-white/45">
+                {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+              </p>
+              <p className="mt-2 max-w-sm text-xs text-white/40">
+                {certifications[activeIndex].title}
+              </p>
+            </div>
           </div>
         </div>
       </div>
