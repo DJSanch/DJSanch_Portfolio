@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { ArrowRight, Calendar, ExternalLink, Eye, FileText, Github, Linkedin, Mail, MapPin } from "lucide-react"
-import { useProjectsEventsSlide } from "@/components/projects-events-slide"
-
 const events = [
   {
     title: "ICSTE 2025",
@@ -40,7 +38,6 @@ const socialLinks = [
 ]
 
 const Events = () => {
-  const slide = useProjectsEventsSlide("events")
   const [activeImage, setActiveImage] = useState(0)
   const event = events[0]
 
@@ -52,16 +49,14 @@ const Events = () => {
   }, [event.images.length])
 
   return (
-    <>
-      <div id="events" className="sr-only" aria-hidden />
+    <section id="events">
       <div
         id="events-panel"
-        className={`absolute inset-0 overflow-hidden bg-[#0d1e38] ${slide.className}`}
-        style={slide.style}
+        className="relative min-h-screen overflow-hidden bg-[#0d1e38]"
       >
         {/* Left content panel — solid bg so images never bleed through */}
-        <div className="relative z-20 flex h-full w-full flex-col bg-[#0d1e38] lg:w-[52%] xl:w-[50%]">
-          <div className="container relative mx-auto flex h-full flex-col px-4 pb-36 pt-24 sm:px-6 sm:pb-40 sm:pt-28 lg:pb-12 lg:px-10 xl:px-14">
+        <div className="relative z-20 flex min-h-screen w-full flex-col bg-[#0d1e38] lg:w-[52%] xl:w-[50%]">
+          <div className="container relative mx-auto flex min-h-screen flex-col px-4 pb-8 pt-24 sm:px-6 sm:pb-10 sm:pt-28 lg:px-10 lg:pb-12 xl:px-14">
             {/* Social sidebar */}
             <div className="absolute left-3 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-5 sm:left-4 md:flex">
               <div className="h-16 w-px bg-white/20" />
@@ -80,7 +75,7 @@ const Events = () => {
               <div className="h-16 w-px bg-white/20" />
             </div>
 
-            {/* Hero copy */}
+            {/* Hero copy — vertically centered in the left column */}
             <div className="flex flex-1 flex-col justify-center pl-0 md:pl-10 lg:pl-14 xl:pl-16">
               <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
                 Community
@@ -145,7 +140,7 @@ const Events = () => {
             </div>
 
             {/* Image pagination */}
-            <div className="mt-auto flex items-center gap-2 pt-8">
+            <div className="flex shrink-0 items-center gap-2 pt-6 md:pl-10 lg:pl-14 xl:pl-16">
               {event.images.map((_, index) => (
                 <button
                   key={index}
@@ -270,7 +265,7 @@ const Events = () => {
           )}
         </div>
       </div>
-    </>
+    </section>
   )
 }
 

@@ -1,6 +1,5 @@
 import Layout from "@/components/layout"
 import { HeroAboutScrollProvider } from "@/components/hero-about-scroll"
-import { ProjectsEventsSlideProvider, ProjectsEventsPlane } from "@/components/projects-events-slide"
 import Hero from "@/components/sections/hero"
 import About from "@/components/sections/about"
 import Projects from "@/components/sections/projects"
@@ -16,12 +15,8 @@ export default function Home() {
         <Hero />
         <About />
       </HeroAboutScrollProvider>
-      <ProjectsEventsSlideProvider>
-        <ProjectsEventsPlane>
-          <Projects />
-          <Events />
-        </ProjectsEventsPlane>
-      </ProjectsEventsSlideProvider>
+      <Projects />
+      <Events />
       <Certifications />
       <Contact />
       <Footer />

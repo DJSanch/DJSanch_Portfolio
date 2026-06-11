@@ -6,7 +6,6 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Eye, Github, Globe } from "lucide-react"
-import { useProjectsEventsSlide } from "@/components/projects-events-slide"
 import { ControllerVisual } from "@/components/controller-visual"
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
 
@@ -131,7 +130,6 @@ function getCArcPosition(
 
 const Projects = () => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const slide = useProjectsEventsSlide("projects")
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
 
@@ -151,12 +149,10 @@ const Projects = () => {
     image.startsWith("/") ? image : `/projects/${image}`
 
   return (
-    <>
-      <div id="projects" className="sr-only" aria-hidden />
+    <section id="projects">
       <div
         id="projects-panel"
-        className={`absolute inset-0 overflow-x-clip overflow-y-auto bg-gradient-to-br from-[#0d1e38] via-[#0f2847] to-[#122a52] ${slide.className}`}
-        style={slide.style}
+        className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0d1e38] via-[#0f2847] to-[#122a52]"
       >
         <div
           aria-hidden
@@ -316,7 +312,7 @@ const Projects = () => {
           </div>
         </div>
       </div>
-    </>
+    </section>
   )
 }
 
