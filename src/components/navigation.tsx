@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { navigateProjectsEvents } from "@/components/projects-events-slide"
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -71,13 +72,13 @@ const Navigation = () => {
   }, [isHomePage])
 
   const scrollToSection = (sectionId: string) => {
-    window.dispatchEvent(new CustomEvent("section-nav", { detail: sectionId }))
-
     if (sectionId === "projects" || sectionId === "events") {
-      document.getElementById("projects-events")?.scrollIntoView({ behavior: "smooth" })
+      navigateProjectsEvents(sectionId)
       setIsOpen(false)
       return
     }
+
+    window.dispatchEvent(new CustomEvent("section-nav", { detail: sectionId }))
 
     const element = document.getElementById(sectionId)
     if (element) {

@@ -1,6 +1,14 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState, type CSSProperties } from "react"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react"
 
 type SlideSection = "projects" | "events"
 type SlideTarget = SlideSection | null
@@ -22,37 +30,63 @@ const SlideContext = createContext<SlideState>({
   animating: false,
 })
 
+export function navigateProjectsEvents(section: SlideSection) {
+  document.getElementById("projects-events")?.scrollIntoView({ behavior: "smooth" })
+  window.dispatchEvent(new CustomEvent("section-nav", { detail: section }))
+}
+
 export function ProjectsEventsSlideProvider({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState<SlideSection>("projects")
   const [progress, setProgress] = useState(0)
   const [target, setTarget] = useState<SlideTarget>(null)
   const [animating, setAnimating] = useState(false)
+  const activeRef = useRef(active)
+  const animatingRef = useRef(animating)
+  const timeoutRef = useRef<number | null>(null)
 
-  useEffect(() => {
-    const onNav = (event: Event) => {
-      const sectionId = (event as CustomEvent<string>).detail
-      if (sectionId !== "projects" && sectionId !== "events") return
-      if (sectionId === active && !animating) return
+  activeRef.current = active
+  animatingRef.current = animating
 
-      setTarget(sectionId as SlideSection)
-      setAnimating(true)
-      setProgress(0)
+  const animateTo = useCallback((sectionId: SlideSection) => {
+    if (sectionId === activeRef.current && !animatingRef.current) return
 
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setProgress(1))
-      })
-
-      window.setTimeout(() => {
-        setActive(sectionId as SlideSection)
-        setAnimating(false)
-        setTarget(null)
-        setProgress(0)
-      }, SLIDE_DURATION_MS + 50)
+    if (timeoutRef.current !== null) {
+      window.clearTimeout(timeoutRef.current)
     }
 
-    window.addEventListener("section-nav", onNav)
-    return () => window.removeEventListener("section-nav", onNav)
-  }, [active, animating])
+    setTarget(sectionId)
+    setAnimating(true)
+    setProgress(0)
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setProgress(1))
+    })
+
+    timeoutRef.current = window.setTimeout(() => {
+      setActive(sectionId)
+      setAnimating(false)
+      setTarget(null)
+      setProgress(0)
+      timeoutRef.current = null
+    }, SLIDE_DURATION_MS + 50)
+  }, [])
+
+  useEffect(() => {
+    const onSectionNav = (event: Event) => {
+      const sectionId = (event as CustomEvent<string>).detail
+      if (sectionId !== "projects" && sectionId !== "events") return
+      animateTo(sectionId as SlideSection)
+    }
+
+    window.addEventListener("section-nav", onSectionNav)
+
+    return () => {
+      window.removeEventListener("section-nav", onSectionNav)
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [animateTo])
 
   return (
     <SlideContext.Provider value={{ active, progress, target, animating }}>

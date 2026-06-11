@@ -191,6 +191,34 @@ body {
   animation: pulse-slow 15s ease-in-out infinite;
 }
 
+/* Controller face-button physics */
+@keyframes controller-button-spring {
+  0% {
+    transform: translateY(7%) scale(0.94);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes controller-rumble {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(0.25px);
+  }
+}
+
+.controller-button-spring {
+  animation: controller-button-spring 200ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.controller-rumble {
+  animation: controller-rumble 80ms ease-out;
+}
+
 /* Scroll animations */
 @keyframes fadeInUp {
   from {
