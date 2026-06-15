@@ -5,9 +5,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Eye, Github, Globe } from "lucide-react"
 import { ControllerVisual } from "@/components/controller-visual"
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
+import { Eye, Github, Globe } from "lucide-react"
 
 interface Project {
   title: string
@@ -99,7 +99,6 @@ function getCircularOffset(index: number, activeIndex: number, total: number) {
   return offset
 }
 
-/** C-shaped arc — cards slide along the path in project order (no tilt) */
 function getCArcPosition(
   index: number,
   activeIndex: number,
@@ -161,7 +160,6 @@ const Projects = () => {
 
         <div className="container relative z-10 mx-auto flex min-h-0 flex-col px-4 pb-8 pt-24 sm:px-6 sm:pb-10 sm:pt-28 lg:min-h-screen">
           <div className="grid w-full grid-cols-1 items-stretch gap-6 sm:gap-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-2 lg:gap-10 xl:gap-14">
-            {/* Left — project content carousel */}
             <div className="flex w-full min-h-0 min-w-0 flex-col justify-center overflow-visible text-center sm:text-left lg:max-w-2xl lg:pl-8 xl:max-w-[920px] xl:pl-12">
               <div className="mb-6 shrink-0 space-y-3 sm:mb-10 lg:mb-14">
                 <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
@@ -185,69 +183,69 @@ const Projects = () => {
                 >
                   {projects.map((project) => (
                     <div key={project.title} className="w-full shrink-0 space-y-4 px-1">
-                        <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-start sm:gap-3">
-                          <h3 className="text-left text-lg font-semibold text-white sm:text-xl md:text-2xl">
-                            {project.title}
-                          </h3>
-                          {project.featured && (
-                            <Badge className="shrink-0 border-white/10 bg-white/10 text-white">
-                              Featured
-                            </Badge>
-                          )}
-                        </div>
+                      <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-start sm:gap-3">
+                        <h3 className="text-left text-lg font-semibold text-white sm:text-xl md:text-2xl">
+                          {project.title}
+                        </h3>
+                        {project.featured && (
+                          <Badge className="shrink-0 border-white/10 bg-white/10 text-white">
+                            Featured
+                          </Badge>
+                        )}
+                      </div>
 
-                        <p className="text-sm leading-relaxed text-white/70">{project.description}</p>
+                      <p className="text-sm leading-relaxed text-white/70">{project.description}</p>
 
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech) => (
-                            <Badge
-                              key={tech}
-                              variant="outline"
-                              className="border-white/10 bg-white/[0.03] text-xs text-white/75"
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.map((tech) => (
+                          <Badge
+                            key={tech}
+                            variant="outline"
+                            className="border-white/10 bg-white/[0.03] text-xs text-white/75"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
 
-                        <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
+                      <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          asChild
+                          className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
+                        >
+                          <a href={project.github} target="_blank" rel="noopener noreferrer">
+                            <Github className="mr-2 h-4 w-4" />
+                            Code
+                          </a>
+                        </Button>
+                        {project.viewProject ? (
                           <Button
                             variant="outline"
                             size="sm"
                             asChild
                             className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
                           >
-                            <a href={project.github} target="_blank" rel="noopener noreferrer">
-                              <Github className="mr-2 h-4 w-4" />
-                              Code
+                            <Link href={project.viewProject}>
+                              <Eye className="mr-2 h-4 w-4" />
+                              View Project
+                            </Link>
+                          </Button>
+                        ) : project.live ? (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            asChild
+                            className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
+                          >
+                            <a href={project.live} target="_blank" rel="noopener noreferrer">
+                              <Globe className="mr-2 h-4 w-4" />
+                              Live
                             </a>
                           </Button>
-                          {project.viewProject ? (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              asChild
-                              className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
-                            >
-                              <Link href={project.viewProject}>
-                                <Eye className="mr-2 h-4 w-4" />
-                                View Project
-                              </Link>
-                            </Button>
-                          ) : project.live ? (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              asChild
-                              className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
-                            >
-                              <a href={project.live} target="_blank" rel="noopener noreferrer">
-                                <Globe className="mr-2 h-4 w-4" />
-                                Live
-                              </a>
-                            </Button>
-                          ) : null}
-                        </div>
+                        ) : null}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -264,11 +262,16 @@ const Projects = () => {
               />
             </div>
 
-            {/* Right — C-shaped image carousel (desktop only) */}
             <div className="relative hidden min-h-[calc(100dvh-7rem)] w-full items-center justify-center overflow-x-clip lg:flex">
               <div className="relative h-[min(640px,72vh)] w-full max-w-[800px] -translate-x-[2%]">
                 {projects.map((project, index) => {
-                  const pos = getCArcPosition(index, activeIndex, projects.length, arcRadius, activeScale)
+                  const pos = getCArcPosition(
+                    index,
+                    activeIndex,
+                    projects.length,
+                    arcRadius,
+                    activeScale
+                  )
                   const isActive = index === activeIndex
 
                   return (

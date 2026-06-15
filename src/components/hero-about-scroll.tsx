@@ -41,6 +41,8 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
   const [aboutExit, setAboutExit] = useState(0)
   const [showPortrait, setShowPortrait] = useState(true)
   const [introActive, setIntroActive] = useState(false)
+  const [cinematicFade, setCinematicFade] = useState(1)
+  const [cinematicProgress, setCinematicProgress] = useState(0)
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -60,14 +62,25 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
     const update = () => {
       const home = document.getElementById("home")
       const aboutPanel = document.getElementById("about-panel")
+      const cinematicHero = document.getElementById("cinematic-hero")
       if (!home) return
 
       const vh = window.innerHeight
-      const start = home.offsetHeight - vh * 0.55
-      const end = home.offsetHeight + vh * 0.12
-      setBlend(clamp((window.scrollY - start) / (end - start), 0, 1))
+      const cinematicScroll = cinematicHero
+        ? Number(cinematicHero.dataset.scrollLength || 0)
+        : 0
+      const cinematicProgress =
+        cinematicScroll > 0 ? clamp(window.scrollY / cinematicScroll, 0, 1) : 0
+      const cinematicFade = 1 - easeOutCubic(clamp(cinematicProgress / 0.62, 0, 1))
+      setCinematicProgress(cinematicProgress)
+      setCinematicFade(cinematicFade)
 
       if (aboutPanel) {
+        const aboutTop = aboutPanel.offsetTop
+        const start = aboutTop - vh * 1.15
+        const end = aboutTop - vh * 0.35
+        setBlend(clamp((window.scrollY - start) / (end - start), 0, 1))
+
         const panelTop = aboutPanel.offsetTop
         const panelHeight = aboutPanel.offsetHeight
         const panelBottom = panelTop + panelHeight
@@ -78,8 +91,13 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
         setAboutExit(easeOutCubic(rawExit))
         setShowPortrait(window.scrollY < panelBottom - vh * 0.2)
       } else {
+        const start = home.offsetHeight + cinematicScroll - vh * 0.55
+        const end = home.offsetHeight + cinematicScroll + vh * 0.12
+        setBlend(clamp((window.scrollY - start) / (end - start), 0, 1))
         setAboutExit(0)
+        setShowPortrait(true)
       }
+
     }
 
     update()
@@ -93,20 +111,24 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
 
   const isAboutActive = showPortrait && blend > 0.35 && aboutExit < 0.45
   const portraitOpacity = blend * (1 - aboutExit)
+  const heroPortraitOpacity = (1 - blend) * (1 - aboutExit) * cinematicFade
+  const portraitOnTop = cinematicProgress < 0.58
 
   return (
     <HeroAboutContext.Provider value={{ blend, aboutExit }}>
       {children}
 
-      {/* Portrait locked to the right grid column — stays aligned with hero/about layout */}
+      {/* Portrait locked to the right grid column — hero ↔ about crossfade */}
       <div
+        id="hero-portrait-layer"
         className={`hero-intro-right pointer-events-none fixed inset-x-0 bottom-0 hidden lg:block ${
           introActive ? "hero-intro-active delay-400" : ""
         } ${showPortrait ? "" : "!opacity-0"} ${
-          isAboutActive ? "z-20" : "z-[5]"
+          isAboutActive ? "z-20" : portraitOnTop ? "z-[25]" : "z-[5]"
         }`}
         style={{
           opacity: 1 - aboutExit,
+          transform: `translateY(${cinematicProgress * -28}px) scale(${1 - cinematicProgress * 0.06})`,
         }}
       >
         <div className="container mx-auto h-[calc(100dvh-5rem)] px-4 sm:px-6">
@@ -133,7 +155,7 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
                 unoptimized
                 sizes="(max-width: 1280px) 50vw, 580px"
                 className="pointer-events-none object-contain object-bottom"
-                style={{ opacity: (1 - blend) * (1 - aboutExit) }}
+                style={{ opacity: heroPortraitOpacity }}
               />
               <Image
                 src="/about-portrait.png"
