@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ArrowRight, Mail } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { typography } from "@/lib/typography"
 
@@ -120,37 +119,6 @@ const INJECTED_STYLES = `
           inset 0 -1px 1px rgba(0,0,0,0.5);
   }
 
-  .btn-modern-light, .btn-modern-dark {
-      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-  .btn-modern-light {
-      background: linear-gradient(180deg, #FFFFFF 0%, #e2e8f0 100%);
-      color: #0a1220;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.1), 0 12px 24px -4px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,1), inset 0 -3px 6px rgba(0,0,0,0.06);
-  }
-  .btn-modern-light:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 0 1px rgba(59,130,246,0.2), 0 6px 12px -2px rgba(59,130,246,0.2), 0 20px 32px -6px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,1), inset 0 -3px 6px rgba(0,0,0,0.06);
-  }
-  .btn-modern-light:active {
-      transform: translateY(1px);
-      background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
-  }
-  .btn-modern-dark {
-      background: linear-gradient(180deg, #1e3a5f 0%, #0a1220 100%);
-      color: #FFFFFF;
-      box-shadow: 0 0 0 1px rgba(96,165,250,0.2), 0 2px 4px rgba(0,0,0,0.6), 0 12px 24px -4px rgba(0,0,0,0.9), inset 0 1px 1px rgba(255,255,255,0.15), inset 0 -3px 6px rgba(0,0,0,0.8);
-  }
-  .btn-modern-dark:hover {
-      transform: translateY(-3px);
-      background: linear-gradient(180deg, #2563eb 0%, #1a4480 100%);
-      box-shadow: 0 0 0 1px rgba(96,165,250,0.35), 0 6px 12px -2px rgba(37,99,235,0.4), 0 20px 32px -6px rgba(0,0,0,1), inset 0 1px 1px rgba(255,255,255,0.2), inset 0 -3px 6px rgba(0,0,0,0.8);
-  }
-  .btn-modern-dark:active {
-      transform: translateY(1px);
-      background: #0a1220;
-  }
-
   .progress-ring {
       transform: rotate(-90deg);
       transform-origin: center;
@@ -168,8 +136,6 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
   cardDescription?: React.ReactNode
   metricValue?: number
   metricLabel?: string
-  ctaHeading?: string
-  ctaDescription?: string
   scrollLength?: number
 }
 
@@ -187,8 +153,6 @@ export function CinematicHero({
   ),
   metricValue = 6,
   metricLabel = "Projects Shipped",
-  ctaHeading = "Let's build something great.",
-  ctaDescription = "Need a developer who ships? From MVPs to enterprise apps — I deliver polished products on deadline.",
   scrollLength = CINEMATIC_SCROLL_LENGTH,
   className,
   ...props
@@ -250,7 +214,6 @@ export function CinematicHero({
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const isMobile = window.innerWidth < 768
 
     const ctx = gsap.context(() => {
       if (prefersReducedMotion) {
@@ -264,12 +227,10 @@ export function CinematicHero({
             ".mockup-scroll-wrapper",
             ".floating-badge",
             ".phone-widget",
-            ".cta-wrapper",
           ],
           { autoAlpha: 1, clearProps: "all" }
         )
         gsap.set(".hero-text-wrapper", { autoAlpha: 1 })
-        gsap.set(".cta-wrapper", { autoAlpha: 0 })
         return
       }
 
@@ -279,7 +240,6 @@ export function CinematicHero({
       gsap.set([".card-left-text", ".card-right-text", ".mockup-scroll-wrapper", ".floating-badge", ".phone-widget"], {
         autoAlpha: 0,
       })
-      gsap.set(".cta-wrapper", { autoAlpha: 0, scale: 0.8, filter: "blur(30px)" })
 
       const introTl = gsap.timeline({ delay: 0.3 })
       introTl
@@ -343,30 +303,12 @@ export function CinematicHero({
           "<"
         )
         .to({}, { duration: 2.5 })
-        .set(".hero-text-wrapper", { autoAlpha: 0 })
-        .set(".cta-wrapper", { autoAlpha: 1 })
-        .to({}, { duration: 1.5 })
         .to([".mockup-scroll-wrapper", ".floating-badge", ".card-left-text", ".card-right-text"], {
-          scale: 0.9,
-          y: -40,
-          z: -200,
           autoAlpha: 0,
           ease: "power3.in",
           duration: 1.2,
           stagger: 0.05,
         })
-        .to(
-          ".main-card",
-          {
-            width: isMobile ? "92vw" : "85vw",
-            height: isMobile ? "92vh" : "85vh",
-            borderRadius: isMobile ? "32px" : "40px",
-            ease: "expo.inOut",
-            duration: 1.8,
-          },
-          "pullback"
-        )
-        .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.8 }, "pullback")
         .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.5 })
     }, containerRef)
 
@@ -431,41 +373,6 @@ export function CinematicHero({
             </div>
             <div aria-hidden className="hidden lg:block" />
           </div>
-        </div>
-      </div>
-
-      <div className="cta-wrapper gsap-reveal pointer-events-auto absolute z-10 flex w-screen flex-col items-center justify-center px-4 text-center will-change-transform">
-        <h2 className="text-silver-matte mb-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-          {ctaHeading}
-        </h2>
-        <p className="mx-auto mb-12 max-w-xl text-lg font-light leading-relaxed text-white/60 md:text-xl">
-          {ctaDescription}
-        </p>
-        <div className="flex flex-col gap-6 sm:flex-row">
-          <a
-            href="#projects"
-            className="btn-modern-light group flex items-center justify-center gap-3 rounded-[1.25rem] px-8 py-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1220]"
-          >
-            <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-0.5" />
-            <div className="text-left">
-              <div className="mb-[-2px] text-[10px] font-bold uppercase tracking-wider text-neutral-500">
-                Explore
-              </div>
-              <div className="text-xl font-bold leading-none tracking-tight">View My Work</div>
-            </div>
-          </a>
-          <a
-            href="#contact"
-            className="btn-modern-dark group flex items-center justify-center gap-3 rounded-[1.25rem] px-8 py-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1220]"
-          >
-            <Mail className="h-6 w-6 transition-transform group-hover:scale-105" />
-            <div className="text-left">
-              <div className="mb-[-2px] text-[10px] font-bold uppercase tracking-wider text-blue-200/60">
-                Available for hire
-              </div>
-              <div className="text-xl font-bold leading-none tracking-tight">Start a Project</div>
-            </div>
-          </a>
         </div>
       </div>
 
