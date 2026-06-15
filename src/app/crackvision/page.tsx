@@ -2,7 +2,7 @@
 
 import Layout from "@/components/layout"
 import { PageHero } from "@/components/page-hero"
-import { ProjectCard } from "@/components/project-card"
+import { ProjectCard, projectCardClass } from "@/components/project-card"
 import { ProjectPageShell } from "@/components/project-page-shell"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,6 @@ import { Github, ArrowLeft, Brain, Code, Zap, Layers, Cpu, BarChart, Database, S
 import Link from "next/link"
 
 const outlineBtnClass = "border-white/20 bg-transparent text-white hover:bg-white/5"
-const accentIconClass = "text-[#60a5fa]"
 
 export default function CrackVisionPage() {
   return (
@@ -28,7 +27,7 @@ export default function CrackVisionPage() {
         <PageHero
           title="CrackVision"
           description="A Multiclass Image Classification Model for Concrete Crack Severity Detection"
-          icon={<Zap className={`h-8 w-8 ${accentIconClass}`} />}
+          icon={<Zap className={`h-8 w-8 ${typography.accentIcon}`} />}
         >
           <Button variant="outline" className={outlineBtnClass} asChild>
             <a href="https://github.com/DJSanch/CrackVision" target="_blank" rel="noopener noreferrer">
@@ -39,11 +38,11 @@ export default function CrackVisionPage() {
         </PageHero>
 
         <div className="mb-16">
-          <Card className="overflow-hidden border-white/10 bg-[#0d1e38]/80 shadow-lg">
+          <Card className={`overflow-hidden ${projectCardClass}`}>
             <div className="relative h-96 bg-gradient-to-br from-[#122a52] to-[#0a1220] flex items-center justify-center">
               <div className="text-center p-8">
                 <div className="flex justify-center mb-4">
-                  <Zap className={`h-16 w-16 ${accentIconClass}`} />
+                  <Zap className={`h-16 w-16 ${typography.accentIcon}`} />
                 </div>
                 <h3 className={`mb-2 ${typography.subsectionTitle}`}>CrackVision Platform</h3>
                 <p className={`max-w-md mx-auto ${typography.body}`}>
@@ -57,7 +56,7 @@ export default function CrackVisionPage() {
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <ProjectCard
             title="Project Overview"
-            icon={<BrainCircuit className={`h-5 w-5 ${accentIconClass}`} />}
+            icon={<BrainCircuit className={`h-5 w-5 ${typography.accentIcon}`} />}
             headerBorder
           >
             <p className={typography.body}>
@@ -68,7 +67,7 @@ export default function CrackVisionPage() {
             </p>
           </ProjectCard>
 
-          <ProjectCard title="Key Features" icon={<Zap className={`h-5 w-5 ${accentIconClass}`} />}>
+          <ProjectCard title="Key Features" icon={<Zap className={`h-5 w-5 ${typography.accentIcon}`} />}>
             <ul className={`space-y-2 ${typography.body}`}>
               {[
                 "Multiclass classification for crack severity levels",
@@ -78,7 +77,7 @@ export default function CrackVisionPage() {
                 "Real-time prediction with confidence scores",
               ].map((feature) => (
                 <li key={feature} className="flex items-start gap-2">
-                  <span className={accentIconClass}>•</span>
+                  <span className={typography.accentIcon}>•</span>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -111,7 +110,7 @@ export default function CrackVisionPage() {
 
         <ProjectCard
           title="Project Status"
-          icon={<Code className={`h-5 w-5 ${accentIconClass}`} />}
+          icon={<Code className={`h-5 w-5 ${typography.accentIcon}`} />}
           headerBorder
         >
           <div className="flex items-center gap-2 mb-4">

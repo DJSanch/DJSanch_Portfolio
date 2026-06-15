@@ -480,7 +480,7 @@ export function CinematicHero({
             </div>
 
             <div className="card-left-text gsap-reveal order-3 z-20 flex w-full flex-col justify-center px-4 text-center lg:order-1 lg:max-w-none lg:px-0 lg:text-left">
-              <h3 className="mb-0 text-2xl font-bold tracking-tight text-white md:text-3xl lg:mb-5 lg:text-4xl">
+              <h3 className="mb-0 text-3xl font-bold tracking-tight text-white md:text-4xl lg:mb-5 lg:text-5xl xl:text-6xl">
                 {cardHeading}
               </h3>
               <p className="mx-auto hidden max-w-sm text-sm font-normal leading-relaxed text-blue-100/70 md:block md:text-base lg:mx-0 lg:max-w-none lg:text-lg">

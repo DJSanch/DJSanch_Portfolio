@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { PortfolioPageBackground } from "@/components/portfolio-page-background"
+import { typography } from "@/lib/typography"
 import { cn } from "@/lib/utils"
 
 interface ProjectPageShellProps {
@@ -22,7 +23,8 @@ export function ProjectPageShell({ children, className }: ProjectPageShellProps)
       <PortfolioPageBackground />
       <div
         className={cn(
-          "page-fade-in relative z-10 container mx-auto px-4 py-20 sm:px-6",
+          "page-fade-in relative z-10 container mx-auto px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28",
+          typography.pageContentInset,
           isLoaded && "fade-in-active",
           className
         )}

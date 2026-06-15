@@ -2,7 +2,7 @@
 
 import Layout from "@/components/layout"
 import { PageHero } from "@/components/page-hero"
-import { ProjectCard } from "@/components/project-card"
+import { ProjectCard, projectCardClass } from "@/components/project-card"
 import { ProjectPageShell } from "@/components/project-page-shell"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -11,7 +11,6 @@ import { Github, ArrowLeft, Leaf, Cpu, BarChart3 } from "lucide-react"
 import Link from "next/link"
 
 const outlineBtnClass = "border-white/20 bg-transparent text-white hover:bg-white/5"
-const accentIconClass = "text-[#60a5fa]"
 
 export default function EnvirotechPage() {
   return (
@@ -27,7 +26,7 @@ export default function EnvirotechPage() {
         <PageHero
           title="Envirotech"
           description="Environmental Monitoring and Analysis Platform for Sustainable Solutions"
-          icon={<Leaf className={`h-8 w-8 ${accentIconClass}`} />}
+          icon={<Leaf className={`h-8 w-8 ${typography.accentIcon}`} />}
         >
           <Button variant="outline" className={outlineBtnClass} asChild>
             <a href="https://github.com/DJSanch/Envirotech" target="_blank" rel="noopener noreferrer">
@@ -38,11 +37,11 @@ export default function EnvirotechPage() {
         </PageHero>
 
         <div className="mb-16">
-          <Card className="overflow-hidden border-white/10 bg-[#0d1e38]/80 shadow-lg">
+          <Card className={`overflow-hidden ${projectCardClass}`}>
             <div className="relative h-96 bg-gradient-to-br from-[#122a52] to-[#0a1220] flex items-center justify-center">
               <div className="text-center p-8">
                 <div className="flex justify-center mb-4">
-                  <Leaf className={`h-16 w-16 ${accentIconClass}`} />
+                  <Leaf className={`h-16 w-16 ${typography.accentIcon}`} />
                 </div>
                 <h3 className={`mb-2 ${typography.subsectionTitle}`}>Envirotech Platform</h3>
                 <p className={`max-w-md mx-auto ${typography.body}`}>
@@ -54,7 +53,7 @@ export default function EnvirotechPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <ProjectCard title="Overview" icon={<Leaf className={`h-5 w-5 ${accentIconClass}`} />}>
+          <ProjectCard title="Overview" icon={<Leaf className={`h-5 w-5 ${typography.accentIcon}`} />}>
             <p className={typography.body}>
               Envirotech is a digital platform designed to streamline the tracking, management, and reporting
               of environmental equipment, materials, and resources. It automates inventory processes such as
@@ -62,7 +61,7 @@ export default function EnvirotechPage() {
             </p>
           </ProjectCard>
 
-          <ProjectCard title="Key Features" icon={<Cpu className={`h-5 w-5 ${accentIconClass}`} />}>
+          <ProjectCard title="Key Features" icon={<Cpu className={`h-5 w-5 ${typography.accentIcon}`} />}>
             <div className={`space-y-2 ${typography.body}`}>
               {[
                 "Real-Time Inventory Tracking",
@@ -81,7 +80,7 @@ export default function EnvirotechPage() {
 
         <div className="mb-16">
           <h2 className={`mb-6 flex items-center gap-2 ${typography.cardTitleWithIcon}`}>
-            <Cpu className={`h-5 w-5 ${accentIconClass}`} />
+            <Cpu className={`h-5 w-5 ${typography.accentIcon}`} />
             Technology Stack
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -94,7 +93,7 @@ export default function EnvirotechPage() {
             ].map((tech) => (
               <div
                 key={tech.name}
-                className="rounded-lg border border-white/10 bg-[#0d1e38]/60 p-4 transition-colors hover:bg-[#122a52]/80"
+                className="rounded-lg border border-white/10 bg-white/[0.03] p-4 transition-colors hover:bg-white/[0.06]"
               >
                 <div className={typography.cardTitle}>{tech.name}</div>
                 <div className={typography.meta}>{tech.category}</div>
@@ -104,7 +103,7 @@ export default function EnvirotechPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <ProjectCard title="Challenges" icon={<BarChart3 className={`h-5 w-5 ${accentIconClass}`} />}>
+          <ProjectCard title="Challenges" icon={<BarChart3 className={`h-5 w-5 ${typography.accentIcon}`} />}>
             <div className={`space-y-4 ${typography.body}`}>
               <div>
                 <h4 className={`mb-1 ${typography.cardTitle}`}>Data Integration</h4>
@@ -123,7 +122,7 @@ export default function EnvirotechPage() {
             </div>
           </ProjectCard>
 
-          <ProjectCard title="Solutions" icon={<Leaf className={`h-5 w-5 ${accentIconClass}`} />}>
+          <ProjectCard title="Solutions" icon={<Leaf className={`h-5 w-5 ${typography.accentIcon}`} />}>
             <div className={`space-y-4 ${typography.body}`}>
               <div>
                 <h4 className={`mb-1 ${typography.cardTitle}`}>Centralized Database System</h4>

@@ -38,6 +38,7 @@ export default function RiceProTechPage() {
         <PageHero
           title="RiceProTech"
           description="A Rice Leaf Disease Classification Mobile App using React Native"
+          icon={<Smartphone className={`h-8 w-8 ${typography.accentIcon}`} />}
         >
           <Button variant="outline" className={outlineBtnClass} asChild>
             <a href="https://github.com/DJSanch/RiceProTech" target="_blank" rel="noopener noreferrer">
@@ -79,9 +80,9 @@ export default function RiceProTechPage() {
                   </video>
                 </div>
               ) : (
-                <div className="relative aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center rounded-lg">
+                <div className="relative aspect-video flex items-center justify-center rounded-lg bg-gradient-to-br from-[#122a52] to-[#0a1220]">
                   <div className="text-center">
-                    <Smartphone className="h-24 w-24 mx-auto mb-4 text-primary/50" />
+                    <Smartphone className={`mx-auto mb-4 h-24 w-24 ${typography.accentIcon}`} />
                     <p className={`mb-2 ${typography.body}`}>Video Demo Coming Soon</p>
                     <p className={`${typography.bodySmall} max-w-md mx-auto`}>
                       Add your video to /public/projects/riceprotech-demo.mp4
@@ -96,7 +97,7 @@ export default function RiceProTechPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <ProjectCard title="Overview" icon={<Code className="h-5 w-5" />}>
+          <ProjectCard title="Overview" icon={<Code className={`h-5 w-5 ${typography.accentIcon}`} />}>
             <p className={typography.body}>
               RiceProTech is a mobile application designed to help farmers identify and classify rice leaf diseases
               using advanced machine learning technology. Built with React Native, the app provides an intuitive
@@ -104,7 +105,7 @@ export default function RiceProTechPage() {
             </p>
           </ProjectCard>
 
-          <ProjectCard title="Key Features" icon={<Smartphone className="h-5 w-5" />}>
+          <ProjectCard title="Key Features" icon={<Smartphone className={`h-5 w-5 ${typography.accentIcon}`} />}>
             <ul className={`space-y-2 ${typography.body}`}>
               {[
                 "Real-time disease classification using TensorFlow models",
@@ -114,7 +115,7 @@ export default function RiceProTechPage() {
                 "Disease information and recommendations",
               ].map((feature) => (
                 <li key={feature} className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
+                  <span className={typography.accentIcon}>•</span>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -141,7 +142,7 @@ export default function RiceProTechPage() {
 
         <ProjectCard title="Project Status">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="text-sm">
+            <Badge className="border-white/10 bg-[#1a4480] text-white hover:bg-[#2563eb]">
               In Development
             </Badge>
           </div>

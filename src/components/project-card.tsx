@@ -2,7 +2,8 @@ import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { typography } from "@/lib/typography"
 
-const projectCardClass = "border-white/10 bg-[#0d1e38]/80 text-white shadow-none"
+const projectCardClass =
+  "border border-white/10 bg-white/[0.03] text-white shadow-none backdrop-blur-sm"
 
 interface ProjectCardProps {
   title: string
