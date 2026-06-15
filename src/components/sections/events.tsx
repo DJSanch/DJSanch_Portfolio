@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { ArrowRight, Calendar, ExternalLink, Eye, FileText, Github, Linkedin, Mail, MapPin } from "lucide-react"
+import { typography } from "@/lib/typography"
 const events = [
   {
     title: "ICSTE 2025",
@@ -77,21 +78,21 @@ const Events = () => {
 
             {/* Hero copy — vertically centered in the left column */}
             <div className="flex flex-1 flex-col justify-center pl-0 md:pl-10 lg:pl-14 xl:pl-16">
-              <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
+              <p className={`mb-4 ${typography.eyebrow}`}>
                 Community
               </p>
 
-              <h2 className="max-w-xl text-3xl font-bold uppercase leading-[1.05] text-white sm:text-4xl md:text-5xl lg:text-[2.75rem] xl:text-6xl">
+              <h2 className={`max-w-xl ${typography.sectionTitle}`}>
                 Events &
                 <br />
                 Conferences
               </h2>
 
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:mt-6 md:text-base">
+              <p className={`mt-5 max-w-md md:mt-6 ${typography.sectionDescription}`}>
                 {event.description}
               </p>
 
-              <div className="mt-4 flex flex-wrap gap-4 text-xs text-white/55 sm:text-sm">
+              <div className={`mt-4 flex flex-wrap gap-4 ${typography.meta} sm:text-sm`}>
                 <span className="inline-flex items-center gap-1.5">
                   <Calendar className="h-3.5 w-3.5" />
                   {event.date}
@@ -107,7 +108,7 @@ const Events = () => {
                   <a
                     href={event.researchPaper}
                     download="ICSTE_2025_Research_Paper.pdf"
-                    className="group inline-flex items-center gap-3 rounded-full border border-white/25 bg-white/5 px-6 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition-colors hover:border-white/40 hover:bg-white/10 sm:text-sm"
+                    className={`group inline-flex items-center gap-3 rounded-full border border-white/25 bg-white/5 px-6 py-3 ${typography.eyebrow} text-white transition-colors hover:border-white/40 hover:bg-white/10 sm:text-sm`}
                   >
                     Learn More
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -119,7 +120,7 @@ const Events = () => {
                     href={event.presentationLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.12em] text-white/55 transition-colors hover:text-white sm:text-sm"
+                    className={`inline-flex items-center gap-2 ${typography.caption} transition-colors hover:text-white sm:text-sm`}
                   >
                     <Eye className="h-4 w-4" />
                     View Presentation
@@ -131,7 +132,7 @@ const Events = () => {
                 {event.highlights.map((highlight) => (
                   <span
                     key={highlight}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10px] uppercase tracking-wider text-white/60 sm:text-xs"
+                    className={`rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 ${typography.eyebrow} text-white/60 sm:text-xs`}
                   >
                     {highlight}
                   </span>
@@ -221,15 +222,15 @@ const Events = () => {
 
         {/* Event detail strip — mobile */}
         <div className="pointer-events-auto absolute bottom-0 left-0 right-0 z-30 border-t border-white/10 bg-[#0a1220]/90 p-4 backdrop-blur-sm lg:hidden">
-          <p className="text-sm font-semibold text-white">{event.title}</p>
-          <p className="mt-1 text-xs text-white/55">{event.subtitle}</p>
+          <p className={typography.cardTitle}>{event.title}</p>
+          <p className={`mt-1 ${typography.meta}`}>{event.subtitle}</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {event.website && (
               <a
                 href={event.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-[10px] uppercase tracking-wider text-white/75"
+                className={`inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 ${typography.badge}`}
               >
                 <ExternalLink className="h-3 w-3" />
                 Website
@@ -239,7 +240,7 @@ const Events = () => {
               <a
                 href={event.researchPaper}
                 download="ICSTE_2025_Research_Paper.pdf"
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-[10px] uppercase tracking-wider text-white/75"
+                className={`inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 ${typography.badge}`}
               >
                 <FileText className="h-3 w-3" />
                 Paper
@@ -250,14 +251,14 @@ const Events = () => {
 
         {/* Desktop event meta overlay */}
         <div className="pointer-events-auto absolute bottom-10 right-8 z-30 hidden max-w-xs text-right lg:block xl:bottom-14 xl:right-14">
-          <p className="text-lg font-semibold text-white">{event.title}</p>
-          <p className="mt-1 text-sm text-white/55">{event.subtitle}</p>
+          <p className={typography.itemTitle}>{event.title}</p>
+          <p className={`mt-1 ${typography.body}`}>{event.subtitle}</p>
           {event.website && (
             <a
               href={event.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-white/60 transition-colors hover:text-white"
+              className={`mt-4 inline-flex items-center gap-2 ${typography.caption} transition-colors hover:text-white`}
             >
               <ExternalLink className="h-3.5 w-3.5" />
               Visit Conference Website

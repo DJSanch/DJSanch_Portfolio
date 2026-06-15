@@ -13,14 +13,12 @@ const Layout = ({ children }: LayoutProps) => {
   const isHomePage = pathname === "/"
 
   return (
-    <div className={`min-h-screen ${isHomePage ? "bg-[#0a1220]" : "bg-background"}`}>
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38] text-white">
       <Navigation />
-      <main className={isHomePage ? "" : "pt-16"}>
-        {children}
-      </main>
+      <main className={isHomePage ? "" : "pt-16"}>{children}</main>
       <Chatbot />
     </div>
   )
 }
 
-export default Layout 
+export default Layout

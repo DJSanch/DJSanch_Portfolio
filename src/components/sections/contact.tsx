@@ -7,9 +7,10 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
+import { typography } from "@/lib/typography"
 
 const cardClass = "gap-4 border-0 bg-transparent py-0 text-white shadow-none backdrop-blur-none"
-const labelClass = "text-sm font-medium text-white/70"
+const labelClass = typography.label
 const inputClass =
   "border-0 border-b border-white/15 rounded-none bg-transparent text-white shadow-none placeholder:text-white/35 focus-visible:border-white/30 focus-visible:ring-0"
 
@@ -113,15 +114,15 @@ const Contact = () => {
 
         <div className="container relative z-10 mx-auto px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
           <div className="mb-12 text-center sm:mb-16 sm:text-left lg:pl-8 xl:pl-12">
-            <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
+            <p className={`mb-2 ${typography.eyebrow}`}>
               Let&apos;s Connect
             </p>
-            <h2 className="mb-4 text-3xl font-bold uppercase leading-tight text-white sm:text-4xl md:text-5xl">
+            <h2 className={`mb-4 ${typography.sectionTitle}`}>
               Get In
               <br />
               Touch
             </h2>
-            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/65 sm:mx-0 md:text-base">
+            <p className={`mx-auto max-w-2xl sm:mx-0 ${typography.sectionDescription}`}>
               I&apos;m always interested in new opportunities and exciting projects. Feel free to
               reach out if you&apos;d like to collaborate or just say hello!
             </p>
@@ -130,7 +131,7 @@ const Contact = () => {
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12 lg:pl-8 xl:pl-12">
             <Card className={cardClass}>
               <CardHeader className="px-0">
-                <CardTitle className="text-white">Send me a message</CardTitle>
+                <CardTitle className={typography.cardTitle}>Send me a message</CardTitle>
               </CardHeader>
               <CardContent className="px-0">
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -231,7 +232,7 @@ const Contact = () => {
             <div className="space-y-6">
               <Card className={cardClass}>
                 <CardHeader className="px-0">
-                  <CardTitle className="text-white">Contact Information</CardTitle>
+                  <CardTitle className={typography.cardTitle}>Contact Information</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 px-0">
                   {contactInfo.map((info) => (
@@ -240,10 +241,10 @@ const Contact = () => {
                         <info.icon className="h-5 w-5 text-white/80" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-white">{info.label}</p>
+                        <p className={`text-sm font-medium text-white`}>{info.label}</p>
                         <a
                           href={info.href}
-                          className="text-sm text-white/60 transition-colors hover:text-white"
+                          className={`${typography.meta} transition-colors hover:text-white`}
                         >
                           {info.value}
                         </a>
@@ -255,7 +256,7 @@ const Contact = () => {
 
               <Card className={cardClass}>
                 <CardHeader className="px-0">
-                  <CardTitle className="text-white">Connect with me</CardTitle>
+                  <CardTitle className={typography.cardTitle}>Connect with me</CardTitle>
                 </CardHeader>
                 <CardContent className="px-0">
                   <div className="flex gap-3">
@@ -272,21 +273,21 @@ const Contact = () => {
 
               <Card className={cardClass}>
                 <CardHeader className="px-0">
-                  <CardTitle className="text-white">Availability</CardTitle>
+                  <CardTitle className={typography.cardTitle}>Availability</CardTitle>
                 </CardHeader>
                 <CardContent className="px-0">
                   <div className="space-y-3">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                      <span className="text-sm text-white/75">Open to opportunities</span>
+                      <span className={typography.body}>Open to opportunities</span>
                       <Badge className="w-fit border-0 bg-emerald-500/20 text-emerald-300">Available</Badge>
                     </div>
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                      <span className="text-sm text-white/75">Response time</span>
-                      <span className="text-sm text-white/55">Within 24 hours</span>
+                      <span className={typography.body}>Response time</span>
+                      <span className={typography.meta}>Within 24 hours</span>
                     </div>
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                      <span className="text-sm text-white/75">Preferred contact</span>
-                      <span className="text-sm text-white/55">Email</span>
+                      <span className={typography.body}>Preferred contact</span>
+                      <span className={typography.meta}>Email</span>
                     </div>
                   </div>
                 </CardContent>

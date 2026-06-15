@@ -5,6 +5,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ArrowRight, Mail } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { typography } from "@/lib/typography"
 
 export const CINEMATIC_SCROLL_LENGTH = 7000
 
@@ -413,9 +414,11 @@ export function CinematicHero({
           <div className="grid grid-cols-1 items-center lg:grid-cols-2 lg:gap-4 xl:gap-6">
             <div className="space-y-3 text-center sm:text-left lg:max-w-xl lg:pl-8 xl:pl-12">
               <p
-                className={`hero-intro-left text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em] md:text-sm ${
+                className={cn(
+                  "hero-intro-left md:text-sm",
+                  typography.eyebrow,
                   introActive ? "hero-intro-active delay-200" : ""
-                }`}
+                )}
               >
                 Full Stack Developer
               </p>

@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from "react"
 import Image from "next/image"
 import { Award } from "lucide-react"
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
+import { typography } from "@/lib/typography"
 
 interface CertificationItem {
   title: string
@@ -245,13 +246,13 @@ const Certifications = () => {
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
           <div className="mx-auto flex min-h-[calc(100dvh-7rem)] w-full max-w-6xl flex-col items-center justify-center text-center">
             <div className="mb-8 shrink-0 space-y-3 sm:mb-10">
-              <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
+              <p className={typography.eyebrow}>
                 Credentials
               </p>
-              <h2 className="text-3xl font-bold uppercase leading-tight text-white sm:text-4xl md:text-5xl">
+              <h2 className={typography.sectionTitle}>
                 Certifications
               </h2>
-              <p className="mx-auto max-w-md text-sm leading-relaxed text-white/65 md:text-base">
+              <p className={`mx-auto max-w-md ${typography.sectionDescription}`}>
                 Professional certifications from Cisco, Coursera, and LinkedIn Learning.
               </p>
             </div>
@@ -335,10 +336,10 @@ const Certifications = () => {
             </div>
 
             <div className="-mt-10 sm:-mt-12">
-              <p className="text-xs uppercase tracking-[0.2em] text-white/45">
+              <p className={typography.caption}>
                 {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
               </p>
-              <p className="mt-2 max-w-sm text-xs text-white/40">
+              <p className={`mt-2 max-w-sm ${typography.meta}`}>
                 {certifications[activeIndex].title}
               </p>
             </div>

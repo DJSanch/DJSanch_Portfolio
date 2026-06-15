@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { ControllerVisual } from "@/components/controller-visual"
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
 import { Eye, Github, Globe } from "lucide-react"
+import { typography } from "@/lib/typography"
 
 interface Project {
   title: string
@@ -162,15 +163,15 @@ const Projects = () => {
           <div className="grid w-full grid-cols-1 items-stretch gap-6 sm:gap-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-2 lg:gap-10 xl:gap-14">
             <div className="flex w-full min-h-0 min-w-0 flex-col justify-center overflow-visible text-center sm:text-left lg:max-w-2xl lg:pl-8 xl:max-w-[920px] xl:pl-12">
               <div className="mb-6 shrink-0 space-y-3 sm:mb-10 lg:mb-14">
-                <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
+                <p className={typography.eyebrow}>
                   Portfolio
                 </p>
-                <h2 className="text-3xl font-bold uppercase leading-tight text-white sm:text-4xl md:text-5xl">
+                <h2 className={typography.sectionTitle}>
                   My
                   <br />
                   Projects
                 </h2>
-                <p className="mx-auto max-w-md text-sm leading-relaxed text-white/65 sm:mx-0 md:text-base">
+                <p className={`mx-auto max-w-md sm:mx-0 ${typography.sectionDescription}`}>
                   Selected work spanning full-stack web apps, mobile tools, and machine learning
                   projects — each built to solve a real problem.
                 </p>
@@ -184,7 +185,7 @@ const Projects = () => {
                   {projects.map((project) => (
                     <div key={project.title} className="w-full shrink-0 space-y-4 px-1">
                       <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-start sm:gap-3">
-                        <h3 className="text-left text-lg font-semibold text-white sm:text-xl md:text-2xl">
+                        <h3 className={`text-left ${typography.itemTitle}`}>
                           {project.title}
                         </h3>
                         {project.featured && (
@@ -194,14 +195,14 @@ const Projects = () => {
                         )}
                       </div>
 
-                      <p className="text-sm leading-relaxed text-white/70">{project.description}</p>
+                      <p className={typography.body}>{project.description}</p>
 
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.map((tech) => (
                           <Badge
                             key={tech}
                             variant="outline"
-                            className="border-white/10 bg-white/[0.03] text-xs text-white/75"
+                            className={typography.badge}
                           >
                             {tech}
                           </Badge>

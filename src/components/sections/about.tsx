@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { GraduationCap, Briefcase, Code, Award, ChevronLeft, ChevronRight, type LucideIcon } from "lucide-react"
 import { useAboutExit, useHeroAboutBlend } from "@/components/hero-about-scroll"
+import { typography } from "@/lib/typography"
 
 const aboutCardClass =
   "h-full gap-2 border-0 bg-transparent py-2 text-white shadow-none backdrop-blur-none"
@@ -67,7 +68,7 @@ const About = () => {
       title: "My Journey",
       icon: Code,
       content: (
-        <p className="text-sm leading-relaxed text-white/70">
+        <p className={typography.body}>
           My journey began with curiosity about how websites work. From simple HTML pages
           to full-stack applications, I focus on clean code, modern tools, and building
           solutions that scale and make an impact.
@@ -83,7 +84,7 @@ const About = () => {
             <Badge
               key={interest}
               variant="outline"
-              className="border-white/10 bg-white/[0.03] text-xs text-white/75"
+              className={typography.badge}
             >
               {interest}
             </Badge>
@@ -100,14 +101,14 @@ const About = () => {
             <div key={edu.degree} className="space-y-1.5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h4 className="text-sm font-semibold text-white">{edu.degree}</h4>
-                  <p className="text-xs text-white/60">{edu.school}</p>
+                  <h4 className={`text-sm font-semibold text-white`}>{edu.degree}</h4>
+                  <p className={typography.meta}>{edu.school}</p>
                 </div>
-                <Badge variant="outline" className="shrink-0 border-white/10 bg-transparent text-[10px] text-white/55">
+                <Badge variant="outline" className={`shrink-0 border-white/10 bg-transparent ${typography.caption}`}>
                   {edu.year}
                 </Badge>
               </div>
-              <p className="text-xs text-white/70">{edu.description}</p>
+              <p className={typography.bodySmall}>{edu.description}</p>
             </div>
           ))}
         </>
@@ -126,13 +127,13 @@ const About = () => {
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <h4 className="text-sm font-semibold text-white">{exp.role}</h4>
-                  <p className="text-xs text-white/60">{exp.company}</p>
+                  <p className={typography.meta}>{exp.company}</p>
                 </div>
-                <Badge variant="outline" className="shrink-0 border-white/10 bg-transparent text-[10px] text-white/55">
+                <Badge variant="outline" className={`shrink-0 border-white/10 bg-transparent ${typography.caption}`}>
                   {exp.period}
                 </Badge>
               </div>
-              <p className="mt-1 text-xs leading-snug text-white/70">{exp.description}</p>
+              <p className={`mt-1 ${typography.bodySmall}`}>{exp.description}</p>
             </div>
           ))}
         </div>
@@ -214,17 +215,17 @@ const About = () => {
             >
               <div className="mb-4 shrink-0 space-y-3 sm:mb-5">
                 <div>
-                  <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.28em] text-white/60 sm:text-xs sm:tracking-[0.35em]">
+                  <p className={`mb-2 ${typography.eyebrow}`}>
                     About Me
                   </p>
-                  <h2 className="text-3xl font-bold uppercase leading-tight text-white sm:text-4xl md:text-5xl">
+                  <h2 className={typography.sectionTitle}>
                     Building With
                     <br />
                     Purpose
                   </h2>
                 </div>
 
-                <p className="mx-auto max-w-md text-sm leading-relaxed text-white/65 sm:mx-0 md:text-base">
+                <p className={`mx-auto max-w-md sm:mx-0 ${typography.sectionDescription}`}>
                   I&apos;m a passionate developer with a strong foundation in both frontend and backend
                   technologies. I love creating solutions that are not only functional but also
                   provide an excellent user experience.
@@ -254,7 +255,7 @@ const About = () => {
                         className={`${aboutCardClass} min-w-full max-w-full shrink-0 snap-center snap-always`}
                       >
                         <CardHeader className="px-0 pb-1 pt-0">
-                          <CardTitle className="flex items-center gap-2 text-base text-white sm:text-lg">
+                          <CardTitle className={typography.cardTitleWithIcon}>
                             <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                             {slide.title}
                           </CardTitle>

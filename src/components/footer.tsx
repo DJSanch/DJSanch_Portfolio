@@ -1,4 +1,5 @@
 import { Github, Linkedin, Twitter, Mail } from "lucide-react"
+import { typography } from "@/lib/typography"
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -15,8 +16,8 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="text-center md:text-left">
-            <p className="text-sm text-white/55">© {currentYear} DJSanch. All rights reserved.</p>
-            <p className="mt-1 text-xs text-white/40">Built with Next.js and Shadcn UI</p>
+            <p className={typography.body}>© {currentYear} DJSanch. All rights reserved.</p>
+            <p className={`mt-1 ${typography.meta}`}>Built with Next.js and Shadcn UI</p>
           </div>
 
           <div className="flex items-center gap-4">

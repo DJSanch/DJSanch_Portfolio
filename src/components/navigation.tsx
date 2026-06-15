@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { typography } from "@/lib/typography"
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,7 +33,7 @@ const Navigation = () => {
 
   useEffect(() => {
     if (!isHomePage) {
-      setIsDarkSectionVisible(false)
+      setIsDarkSectionVisible(true)
       return
     }
 
@@ -88,16 +89,14 @@ const Navigation = () => {
     { id: "contact", label: "Contact" },
   ]
 
-  const useDarkNavStyle = isHomePage && isDarkSectionVisible
+  const useDarkNavStyle = isHomePage ? isDarkSectionVisible : true
+  const navNoHighlight =
+    "hover:bg-transparent focus-visible:bg-transparent active:bg-transparent dark:hover:bg-transparent"
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 bg-transparent border-b border-transparent transition-all duration-300 ${
         isHomePage ? `hero-intro-nav ${introActive ? "hero-intro-active" : ""}` : ""
-      } ${
-        useDarkNavStyle
-          ? "bg-transparent border-b border-transparent"
-          : "bg-background/85 backdrop-blur-md border-b shadow-sm"
       }`}
     >
       <div className="container relative mx-auto px-4 py-3 sm:py-4">
@@ -113,7 +112,7 @@ const Navigation = () => {
                 onMouseLeave={() => setHoveredNavItem(null)}
                 onFocus={() => setHoveredNavItem(item.id)}
                 onBlur={() => setHoveredNavItem(null)}
-                className={`group relative px-2 text-[11px] font-medium uppercase tracking-[0.15em] transition-all duration-300 ease-out xl:px-3 xl:text-xs xl:tracking-[0.2em] ${
+                className={`group relative px-2 ${typography.nav} transition-all duration-300 ease-out xl:px-3 ${
                   hoveredNavItem === item.id
                     ? "scale-110 opacity-100"
                     : hoveredNavItem
@@ -121,8 +120,8 @@ const Navigation = () => {
                       : "scale-100 opacity-100"
                 } ${
                   useDarkNavStyle
-                    ? "text-white hover:bg-transparent hover:text-white"
-                    : "hover:bg-transparent"
+                    ? `text-white hover:text-white ${navNoHighlight}`
+                    : navNoHighlight
                 }`}
               >
                 <span
@@ -147,10 +146,8 @@ const Navigation = () => {
                 key={item.id}
                 variant="ghost"
                 onClick={() => scrollToSection(item.id)}
-                className={`px-2 text-[10px] font-medium uppercase tracking-[0.12em] ${
-                  useDarkNavStyle
-                    ? "text-white hover:bg-transparent hover:text-white"
-                    : "hover:bg-transparent"
+                className={`px-2 ${typography.navTablet} ${navNoHighlight} ${
+                  useDarkNavStyle ? "text-white hover:text-white" : ""
                 }`}
               >
                 {item.label}
@@ -165,7 +162,7 @@ const Navigation = () => {
                 variant="ghost"
                 size="icon"
                 aria-label="Open navigation menu"
-                className={`absolute right-0 top-1/2 h-10 w-10 -translate-y-1/2 md:hidden ${useDarkNavStyle ? "text-white hover:bg-white/20 hover:text-white" : ""}`}
+                className={`absolute right-0 top-1/2 h-10 w-10 -translate-y-1/2 md:hidden ${navNoHighlight} ${useDarkNavStyle ? "text-white hover:text-white" : ""}`}
               >
                 <Menu className="h-5 w-5" />
               </Button>
@@ -177,7 +174,7 @@ const Navigation = () => {
                     key={item.id}
                     variant="ghost"
                     onClick={() => scrollToSection(item.id)}
-                    className="justify-start text-base uppercase tracking-[0.15em] sm:text-lg"
+                    className={`justify-start text-base uppercase tracking-[0.15em] sm:text-lg ${navNoHighlight}`}
                   >
                     {item.label}
                   </Button>
@@ -191,4 +188,4 @@ const Navigation = () => {
   )
 }
 
-export default Navigation 
+export default Navigation
