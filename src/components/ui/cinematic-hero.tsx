@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { cn } from "@/lib/utils"
 import { typography } from "@/lib/typography"
 
-export const CINEMATIC_SCROLL_LENGTH = 7000
+export const CINEMATIC_SCROLL_LENGTH = 9000
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -129,7 +129,6 @@ const INJECTED_STYLES = `
 `
 
 export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement> {
-  brandName?: string
   tagline1?: string
   tagline2?: string
   cardHeading?: string
@@ -140,7 +139,6 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 export function CinematicHero({
-  brandName = "DJSANCH",
   tagline1 = "Ideas into impact,",
   tagline2 = "code that ships.",
   cardHeading = "Full stack. Network-ready.",
@@ -223,7 +221,6 @@ export function CinematicHero({
             ".text-days",
             ".main-card",
             ".card-left-text",
-            ".card-right-text",
             ".mockup-scroll-wrapper",
             ".floating-badge",
             ".phone-widget",
@@ -237,7 +234,7 @@ export function CinematicHero({
       gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)", rotationX: -20 })
       gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" })
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 })
-      gsap.set([".card-left-text", ".card-right-text", ".mockup-scroll-wrapper", ".floating-badge", ".phone-widget"], {
+      gsap.set([".card-left-text", ".mockup-scroll-wrapper", ".floating-badge", ".phone-widget"], {
         autoAlpha: 0,
       })
 
@@ -260,7 +257,7 @@ export function CinematicHero({
           start: "top top",
           end: `+=${scrollLength}`,
           pin: true,
-          scrub: 1,
+          scrub: 1.35,
           anticipatePin: 1,
         },
       })
@@ -296,14 +293,8 @@ export function CinematicHero({
           "-=2.0"
         )
         .fromTo(".card-left-text", { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: "power4.out", duration: 1.5 }, "-=1.5")
-        .fromTo(
-          ".card-right-text",
-          { x: 50, autoAlpha: 0, scale: 0.8 },
-          { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 },
-          "<"
-        )
-        .to({}, { duration: 2.5 })
-        .to([".mockup-scroll-wrapper", ".floating-badge", ".card-left-text", ".card-right-text"], {
+        .to({}, { duration: 3.2 })
+        .to([".mockup-scroll-wrapper", ".floating-badge", ".card-left-text"], {
           autoAlpha: 0,
           ease: "power3.in",
           duration: 1.2,
@@ -386,13 +377,7 @@ export function CinematicHero({
         >
           <div className="card-sheen" aria-hidden="true" />
 
-          <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-evenly px-4 py-6 lg:grid lg:grid-cols-3 lg:items-center lg:gap-8 lg:px-12 lg:py-0">
-            <div className="card-right-text gsap-reveal order-1 z-20 flex w-full justify-center lg:order-3 lg:justify-end">
-              <h2 className="text-card-silver-matte text-6xl font-black uppercase tracking-tighter md:text-[6rem] lg:text-[8rem]">
-                {brandName}
-              </h2>
-            </div>
-
+          <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-evenly px-4 py-6 lg:grid lg:grid-cols-2 lg:items-center lg:gap-8 lg:px-12 lg:py-0">
             <div
               className="mockup-scroll-wrapper relative order-2 z-10 flex h-[380px] w-full items-center justify-center lg:h-[600px]"
               style={{ perspective: "1000px" }}

@@ -77,8 +77,9 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
 
       if (aboutPanel) {
         const aboutTop = aboutPanel.offsetTop
-        const start = aboutTop - vh * 1.15
-        const end = aboutTop - vh * 0.35
+        // Slow crossfade over ~1.2 viewports; reach full opacity once about is in view (not after scrolling past it).
+        const start = aboutTop - vh * 1.35
+        const end = aboutTop - vh * 0.15
         setBlend(clamp((window.scrollY - start) / (end - start), 0, 1))
 
         const panelTop = aboutPanel.offsetTop
@@ -91,8 +92,8 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
         setAboutExit(easeOutCubic(rawExit))
         setShowPortrait(window.scrollY < panelBottom - vh * 0.2)
       } else {
-        const start = home.offsetHeight + cinematicScroll - vh * 0.55
-        const end = home.offsetHeight + cinematicScroll + vh * 0.12
+        const start = home.offsetHeight + cinematicScroll - vh * 1.35
+        const end = home.offsetHeight + cinematicScroll - vh * 0.15
         setBlend(clamp((window.scrollY - start) / (end - start), 0, 1))
         setAboutExit(0)
         setShowPortrait(true)
