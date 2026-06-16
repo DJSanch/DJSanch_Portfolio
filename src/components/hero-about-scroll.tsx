@@ -2,6 +2,11 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import Image from "next/image"
+import {
+  computeSectionScrollProgress,
+  getSectionBlurScrollStyle,
+  sectionScrollBlockStyle,
+} from "@/hooks/use-section-scroll-motion"
 
 type HeroAboutScrollState = {
   blend: number
@@ -109,7 +114,8 @@ export { scrollToHero }
 export function HeroAboutScrollProvider({ children }: { children: React.ReactNode }) {
   const [blend, setBlend] = useState(0)
   const [aboutExit, setAboutExit] = useState(0)
-  const [aboutPanelProgress, setAboutPanelProgress] = useState(0)
+  const [aboutSectionEnter, setAboutSectionEnter] = useState(0)
+  const [aboutSectionExit, setAboutSectionExit] = useState(0)
   const [showPortrait, setShowPortrait] = useState(true)
   const [introActive, setIntroActive] = useState(false)
   const [cinematicFade, setCinematicFade] = useState(1)
@@ -156,8 +162,14 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
         const panelTop = aboutPanel.offsetTop
         const panelHeight = aboutPanel.offsetHeight
         const panelBottom = panelTop + panelHeight
-        const panelScrollRange = Math.max(panelHeight - vh, 1)
-        setAboutPanelProgress(clamp((window.scrollY - panelTop) / panelScrollRange, 0, 1))
+        const { enter: sectionEnter, exit: sectionExit } = computeSectionScrollProgress(
+          panelTop,
+          panelHeight,
+          window.scrollY,
+          vh
+        )
+        setAboutSectionEnter(sectionEnter)
+        setAboutSectionExit(sectionExit)
 
         const exitStart = panelTop + panelHeight * 0.38
         const exitEnd = panelTop + panelHeight * 0.88
@@ -170,7 +182,8 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
         const end = home.offsetHeight + cinematicScroll - vh * 0.15
         setBlend(clamp((window.scrollY - start) / (end - start), 0, 1))
         setAboutExit(0)
-        setAboutPanelProgress(0)
+        setAboutSectionEnter(0)
+        setAboutSectionExit(0)
         setShowPortrait(true)
       }
     }
@@ -190,12 +203,13 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
   const portraitOnTop = cinematicProgress < 0.58
   const blendT = clamp(blend, 0, 1)
   const exitT = clamp(aboutExit, 0, 1)
-  const aboutPortraitCinematic = getCinematicScrollStyle(blend, aboutExit, aboutPanelProgress, 0, "right")
+  const aboutPortraitMotion = getSectionBlurScrollStyle(aboutSectionEnter, aboutSectionExit, "right", 0.08)
+  const aboutPortraitBlock = sectionScrollBlockStyle(aboutPortraitMotion)
   const heroPortraitTravel = 80
   const heroPortraitX = heroPortraitTravel * (blendT + exitT)
 
   return (
-    <HeroAboutContext.Provider value={{ blend, aboutExit, aboutPanelProgress }}>
+    <HeroAboutContext.Provider value={{ blend, aboutExit, aboutPanelProgress: aboutSectionEnter }}>
       {children}
 
       {/* Portrait locked to the right grid column — hero ↔ about crossfade */}
@@ -207,7 +221,7 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
           isAboutActive ? "z-20" : portraitOnTop ? "z-[25]" : "z-[5]"
         }`}
         style={{
-          opacity: 1 - aboutExit,
+          opacity: 1 - aboutSectionExit,
         }}
       >
         <div className="container mx-auto h-[calc(100dvh-5rem)] px-4 sm:px-6">
@@ -231,7 +245,8 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
                 className="pointer-events-none object-contain object-bottom will-change-transform"
                 style={{
                   opacity: heroPortraitOpacity,
-                  transform: `translateX(${heroPortraitX}px)`,
+                  transform:
+                    blendT > 0 || exitT > 0 ? `translateX(${heroPortraitX}px)` : undefined,
                 }}
               />
               <Image
@@ -242,8 +257,8 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
                 sizes="(max-width: 1280px) 50vw, 580px"
                 className="pointer-events-none object-contain object-bottom will-change-transform"
                 style={{
-                  opacity: portraitOpacity,
-                  transform: `translateX(${aboutPortraitCinematic.translateX}px)`,
+                  ...aboutPortraitBlock,
+                  opacity: portraitOpacity * aboutPortraitMotion.opacity,
                 }}
               />
             </button>

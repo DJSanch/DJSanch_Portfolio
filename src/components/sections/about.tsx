@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { GraduationCap, Briefcase, Code, Award, ChevronLeft, ChevronRight, type LucideIcon } from "lucide-react"
-import { useAboutExit, useCinematicScrollStyle, useHeroAboutBlend, useStaggeredCinematicScrollStyle } from "@/components/hero-about-scroll"
+import { sectionScrollBlockStyle, useSectionScrollMotion } from "@/hooks/use-section-scroll-motion"
 import { typography } from "@/lib/typography"
 
 const aboutCardClass =
@@ -16,22 +16,8 @@ type AboutSlide = {
   content: React.ReactNode
 }
 
-const cinematicBlockStyle = (style: {
-  scale: number
-  blur: number
-  opacity: number
-  translateY: number
-  translateX: number
-}) => ({
-  opacity: style.opacity,
-  transform: `translateX(${style.translateX}px)`,
-})
-
 const About = () => {
-  const blend = useHeroAboutBlend()
-  const aboutExit = useAboutExit()
-  const cinematic = useCinematicScrollStyle("left")
-  const contentCinematic = useStaggeredCinematicScrollStyle(0.15, "left")
+  const { headerStyle, contentStyle, exit } = useSectionScrollMotion("about-panel")
   const cardsRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
@@ -195,23 +181,23 @@ const About = () => {
         id="about-panel"
         className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38]"
         style={{
-          opacity: 1 - aboutExit * 0.35,
+          opacity: 1 - exit * 0.35,
         }}
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-20 top-[55%] h-[min(480px,85vw)] w-[min(480px,85vw)] -translate-y-1/2 rounded-full bg-[#1a4480]/40 transition-transform duration-700 ease-out sm:-right-16 sm:top-1/2 sm:h-[min(600px,88vw)] sm:w-[min(600px,88vw)] lg:right-[8%] lg:h-[min(620px,55vw)] lg:w-[min(620px,55vw)]"
+          className="pointer-events-none absolute -right-20 top-[55%] h-[min(480px,85vw)] w-[min(480px,85vw)] -translate-y-1/2 rounded-full bg-[#1a4480]/40 sm:-right-16 sm:top-1/2 sm:h-[min(600px,88vw)] sm:w-[min(600px,88vw)] lg:right-[8%] lg:h-[min(620px,55vw)] lg:w-[min(620px,55vw)]"
           style={{
-            opacity: blend * (1 - aboutExit),
-            transform: `translateY(calc(-50% + ${aboutExit * -40}px)) scale(${1 - aboutExit * 0.08})`,
+            opacity: headerStyle.opacity,
+            transform: `translateY(calc(-50% + ${exit * -40}px)) scale(${1 - exit * 0.08})`,
           }}
         >
           <div className="absolute inset-0 scale-110 rounded-full bg-[#3b82f6]/10 blur-3xl" />
         </div>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0d1e38] transition-opacity duration-700 ease-out"
-          style={{ opacity: 1 - aboutExit * 0.5 }}
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0d1e38]"
+          style={{ opacity: 1 - exit * 0.5 }}
         />
 
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 pb-6 pt-24 sm:px-6 sm:pb-8 sm:pt-28">
@@ -220,21 +206,18 @@ const About = () => {
               <div
                 className="mb-4 shrink-0 space-y-3 will-change-transform sm:mb-5"
                 style={{
-                  ...cinematicBlockStyle(cinematic),
-                  pointerEvents: aboutExit > 0.85 ? "none" : "auto",
+                  ...sectionScrollBlockStyle(headerStyle),
+                  pointerEvents: exit > 0.85 ? "none" : "auto",
                 }}
               >
-                <div>
-                  <p className={`mb-2 ${typography.eyebrow}`}>
-                    About Me
-                  </p>
-                  <h2 className={typography.sectionTitle}>
-                    Building With
-                    <br />
-                    Purpose
-                  </h2>
-                </div>
-
+                <p className={`mb-2 ${typography.eyebrow}`}>
+                  About Me
+                </p>
+                <h2 className={typography.sectionTitle}>
+                  Building With
+                  <br />
+                  Purpose
+                </h2>
                 <p className={`mx-auto max-w-md sm:mx-0 ${typography.sectionDescription}`}>
                   I&apos;m a passionate developer with a strong foundation in both frontend and backend
                   technologies. I love creating solutions that are not only functional but also
@@ -245,8 +228,8 @@ const About = () => {
               <div
                 className="relative z-30 flex min-h-0 flex-1 items-center gap-2 will-change-transform sm:gap-3"
                 style={{
-                  ...cinematicBlockStyle(contentCinematic),
-                  pointerEvents: contentCinematic.opacity > 0.5 && aboutExit < 0.85 ? "auto" : "none",
+                  ...sectionScrollBlockStyle(contentStyle),
+                  pointerEvents: contentStyle.opacity > 0.5 && exit < 0.85 ? "auto" : "none",
                 }}
               >
                 <button

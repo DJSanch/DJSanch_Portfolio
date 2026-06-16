@@ -16,6 +16,23 @@ export type SectionScrollStyle = {
 
 export type SlideFrom = "left" | "right"
 
+export function computeSectionScrollProgress(
+  panelTop: number,
+  panelHeight: number,
+  scrollY: number,
+  vh: number
+) {
+  const enterStart = panelTop - vh * 1.2
+  const enterEnd = panelTop - vh * 0.12
+  const enter = clamp((scrollY - enterStart) / (enterEnd - enterStart), 0, 1)
+
+  const exitStart = panelTop + panelHeight * 0.35
+  const exitEnd = panelTop + panelHeight * 0.85
+  const exit = clamp((scrollY - exitStart) / (exitEnd - exitStart), 0, 1)
+
+  return { enter, exit }
+}
+
 export function getSectionBlurScrollStyle(
   enter: number,
   exit: number,
@@ -57,14 +74,9 @@ export function useSectionScrollMotion(panelId: string) {
       const vh = window.innerHeight
       const panelTop = panel.offsetTop
       const panelHeight = panel.offsetHeight
-
-      const enterStart = panelTop - vh * 1.2
-      const enterEnd = panelTop - vh * 0.12
-      setEnter(clamp((window.scrollY - enterStart) / (enterEnd - enterStart), 0, 1))
-
-      const exitStart = panelTop + panelHeight * 0.35
-      const exitEnd = panelTop + panelHeight * 0.85
-      setExit(clamp((window.scrollY - exitStart) / (exitEnd - exitStart), 0, 1))
+      const { enter, exit } = computeSectionScrollProgress(panelTop, panelHeight, window.scrollY, vh)
+      setEnter(enter)
+      setExit(exit)
     }
 
     update()
