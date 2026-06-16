@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ControllerVisual } from "@/components/controller-visual"
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
+import { sectionScrollBlockStyle, useSectionScrollMotion } from "@/hooks/use-section-scroll-motion"
 import { Eye, Github, Globe } from "lucide-react"
 import { typography } from "@/lib/typography"
 
@@ -132,6 +133,7 @@ const Projects = () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
+  const { headerStyle, contentStyle, visualStyle } = useSectionScrollMotion("projects-panel")
 
   const arcRadius = isMobile ? 180 : isTablet ? 260 : 340
   const activeScale = isMobile ? 1.28 : isTablet ? 1.55 : 1.95
@@ -162,7 +164,10 @@ const Projects = () => {
         <div className="container relative z-10 mx-auto flex min-h-0 flex-col px-4 pb-8 pt-24 sm:px-6 sm:pb-10 sm:pt-28 lg:min-h-screen">
           <div className="grid w-full grid-cols-1 items-stretch gap-6 sm:gap-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-2 lg:gap-10 xl:gap-14">
             <div className="flex w-full min-h-0 min-w-0 flex-col justify-center overflow-visible text-center sm:text-left lg:max-w-2xl lg:pl-8 xl:max-w-[920px] xl:pl-12">
-              <div className="mb-6 shrink-0 space-y-3 sm:mb-10 lg:mb-14">
+              <div
+                className="mb-6 shrink-0 space-y-3 will-change-transform sm:mb-10 lg:mb-14"
+                style={sectionScrollBlockStyle(headerStyle)}
+              >
                 <p className={typography.eyebrow}>
                   Portfolio
                 </p>
@@ -177,7 +182,10 @@ const Projects = () => {
                 </p>
               </div>
 
-              <div className="relative z-0 min-w-0 overflow-hidden">
+              <div
+                className="relative z-0 min-w-0 overflow-hidden will-change-transform"
+                style={sectionScrollBlockStyle(contentStyle)}
+              >
                 <div
                   className="flex transition-transform duration-500 ease-out"
                   style={{ transform: `translateX(-${activeIndex * 100}%)` }}
@@ -250,20 +258,23 @@ const Projects = () => {
                     </div>
                   ))}
                 </div>
+
+                <p className="mt-3 text-xs uppercase tracking-[0.2em] text-white/45">
+                  {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+                </p>
+
+                <ControllerVisual
+                  onPrev={() => goTo("prev")}
+                  onNext={() => goTo("next")}
+                  className="mt-4 w-full -translate-y-3 animate-float-slow sm:mt-3 sm:-translate-y-8 md:-translate-y-10 lg:-translate-y-12"
+                />
               </div>
-
-              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-white/45">
-                {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
-              </p>
-
-              <ControllerVisual
-                onPrev={() => goTo("prev")}
-                onNext={() => goTo("next")}
-                className="mt-4 w-full -translate-y-3 animate-float-slow sm:mt-3 sm:-translate-y-8 md:-translate-y-10 lg:-translate-y-12"
-              />
             </div>
 
-            <div className="relative hidden min-h-[calc(100dvh-7rem)] w-full items-center justify-center overflow-x-clip lg:flex">
+            <div
+              className="relative hidden min-h-[calc(100dvh-7rem)] w-full items-center justify-center overflow-x-clip will-change-transform lg:flex"
+              style={sectionScrollBlockStyle(visualStyle)}
+            >
               <div className="relative h-[min(640px,72vh)] w-full max-w-[800px] -translate-x-[2%]">
                 {projects.map((project, index) => {
                   const pos = getCArcPosition(

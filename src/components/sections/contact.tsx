@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
+import { sectionScrollBlockStyle, useSectionScrollMotion } from "@/hooks/use-section-scroll-motion"
 import { typography } from "@/lib/typography"
 
 const cardClass = "gap-4 border-0 bg-transparent py-0 text-white shadow-none backdrop-blur-none"
@@ -101,6 +102,8 @@ const Contact = () => {
   const socialButtonClass =
     "border-0 bg-white/5 text-white hover:bg-white/10 hover:text-white"
 
+  const { headerStyle, contentStyle, visualStyle } = useSectionScrollMotion("contact-panel")
+
   return (
     <section id="contact">
       <div
@@ -113,7 +116,10 @@ const Contact = () => {
         />
 
         <div className="container relative z-10 mx-auto px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
-          <div className="mb-12 text-center sm:mb-16 sm:text-left lg:pl-8 xl:pl-12">
+          <div
+            className="mb-12 text-center will-change-transform sm:mb-16 sm:text-left lg:pl-8 xl:pl-12"
+            style={sectionScrollBlockStyle(headerStyle)}
+          >
             <p className={`mb-2 ${typography.eyebrow}`}>
               Let&apos;s Connect
             </p>
@@ -129,7 +135,10 @@ const Contact = () => {
           </div>
 
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12 lg:pl-8 xl:pl-12">
-            <Card className={cardClass}>
+            <Card
+              className={`${cardClass} will-change-transform`}
+              style={sectionScrollBlockStyle(contentStyle)}
+            >
               <CardHeader className="px-0">
                 <CardTitle className={typography.cardTitle}>Send me a message</CardTitle>
               </CardHeader>
@@ -229,7 +238,7 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <div className="space-y-6">
+            <div className="space-y-6 will-change-transform" style={sectionScrollBlockStyle(visualStyle)}>
               <Card className={cardClass}>
                 <CardHeader className="px-0">
                   <CardTitle className={typography.cardTitle}>Contact Information</CardTitle>

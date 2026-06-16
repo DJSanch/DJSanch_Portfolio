@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { ArrowRight, Calendar, ExternalLink, Eye, FileText, Github, Linkedin, Mail, MapPin } from "lucide-react"
+import { sectionScrollBlockStyle, useSectionScrollMotion } from "@/hooks/use-section-scroll-motion"
 import { typography } from "@/lib/typography"
 const events = [
   {
@@ -41,6 +42,7 @@ const socialLinks = [
 const Events = () => {
   const [activeImage, setActiveImage] = useState(0)
   const event = events[0]
+  const { headerStyle, contentStyle, visualStyle } = useSectionScrollMotion("events-panel")
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -78,70 +80,77 @@ const Events = () => {
 
             {/* Hero copy — vertically centered in the left column */}
             <div className="flex flex-1 flex-col justify-center pl-0 md:pl-10 lg:pl-14 xl:pl-16">
-              <p className={`mb-4 ${typography.eyebrow}`}>
-                Community
-              </p>
+              <div className="will-change-transform" style={sectionScrollBlockStyle(headerStyle)}>
+                <p className={`mb-4 ${typography.eyebrow}`}>
+                  Community
+                </p>
 
-              <h2 className={`max-w-xl ${typography.sectionTitle}`}>
-                Events &
-                <br />
-                Conferences
-              </h2>
-
-              <p className={`mt-5 max-w-md md:mt-6 ${typography.sectionDescription}`}>
-                {event.description}
-              </p>
-
-              <div className={`mt-4 flex flex-wrap gap-4 ${typography.meta} sm:text-sm`}>
-                <span className="inline-flex items-center gap-1.5">
-                  <Calendar className="h-3.5 w-3.5" />
-                  {event.date}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <MapPin className="h-3.5 w-3.5" />
-                  {event.location}
-                </span>
+                <h2 className={`max-w-xl ${typography.sectionTitle}`}>
+                  Events &
+                  <br />
+                  Conferences
+                </h2>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10">
-                {event.researchPaper && (
-                  <a
-                    href={event.researchPaper}
-                    download="ICSTE_2025_Research_Paper.pdf"
-                    className={`group inline-flex items-center gap-3 rounded-full border border-white/25 bg-white/5 px-6 py-3 ${typography.eyebrow} text-white transition-colors hover:border-white/40 hover:bg-white/10 sm:text-sm`}
-                  >
-                    Learn More
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                  </a>
-                )}
+              <div className="will-change-transform" style={sectionScrollBlockStyle(contentStyle)}>
+                <p className={`mt-5 max-w-md md:mt-6 ${typography.sectionDescription}`}>
+                  {event.description}
+                </p>
 
-                {event.presentationLink && (
-                  <a
-                    href={event.presentationLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-2 ${typography.caption} transition-colors hover:text-white sm:text-sm`}
-                  >
-                    <Eye className="h-4 w-4" />
-                    View Presentation
-                  </a>
-                )}
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {event.highlights.map((highlight) => (
-                  <span
-                    key={highlight}
-                    className={`rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 ${typography.eyebrow} text-white/60 sm:text-xs`}
-                  >
-                    {highlight}
+                <div className={`mt-4 flex flex-wrap gap-4 ${typography.meta} sm:text-sm`}>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5" />
+                    {event.date}
                   </span>
-                ))}
+                  <span className="inline-flex items-center gap-1.5">
+                    <MapPin className="h-3.5 w-3.5" />
+                    {event.location}
+                  </span>
+                </div>
+
+                <div className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10">
+                  {event.researchPaper && (
+                    <a
+                      href={event.researchPaper}
+                      download="ICSTE_2025_Research_Paper.pdf"
+                      className={`group inline-flex items-center gap-3 rounded-full border border-white/25 bg-white/5 px-6 py-3 ${typography.eyebrow} text-white transition-colors hover:border-white/40 hover:bg-white/10 sm:text-sm`}
+                    >
+                      Learn More
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </a>
+                  )}
+
+                  {event.presentationLink && (
+                    <a
+                      href={event.presentationLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-2 ${typography.caption} transition-colors hover:text-white sm:text-sm`}
+                    >
+                      <Eye className="h-4 w-4" />
+                      View Presentation
+                    </a>
+                  )}
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {event.highlights.map((highlight) => (
+                    <span
+                      key={highlight}
+                      className={`rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 ${typography.eyebrow} text-white/60 sm:text-xs`}
+                    >
+                      {highlight}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Image pagination */}
-            <div className="flex shrink-0 items-center gap-2 pt-6 md:pl-10 lg:pl-14 xl:pl-16">
+            <div
+              className="flex shrink-0 items-center gap-2 pt-6 will-change-transform md:pl-10 lg:pl-14 xl:pl-16"
+              style={sectionScrollBlockStyle(contentStyle)}
+            >
               {event.images.map((_, index) => (
                 <button
                   key={index}
@@ -158,7 +167,10 @@ const Events = () => {
         </div>
 
         {/* Right chevron image panel — anchored to the right edge */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-[50%] lg:block xl:w-[52%]">
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-[50%] will-change-transform lg:block xl:w-[52%]"
+          style={sectionScrollBlockStyle(visualStyle)}
+        >
           <div className="absolute inset-0 [clip-path:polygon(34%_0%,100%_0%,100%_100%,34%_100%,16%_50%)]">
             <div className="relative h-full w-full overflow-hidden">
               {event.images.map((image, index) => (
@@ -199,7 +211,10 @@ const Events = () => {
         </div>
 
         {/* Mobile image preview — top right chevron */}
-        <div className="pointer-events-none absolute right-0 top-20 z-10 h-36 w-[44%] overflow-hidden [clip-path:polygon(32%_0%,100%_0%,100%_100%,32%_100%,14%_50%)] sm:top-24 sm:h-44 lg:hidden">
+        <div
+          className="pointer-events-none absolute right-0 top-20 z-10 h-36 w-[44%] overflow-hidden will-change-transform [clip-path:polygon(32%_0%,100%_0%,100%_100%,32%_100%,14%_50%)] sm:top-24 sm:h-44 lg:hidden"
+          style={sectionScrollBlockStyle(visualStyle)}
+        >
           <div className="relative h-full w-full">
             {event.images.map((image, index) => (
               <div
@@ -221,7 +236,10 @@ const Events = () => {
         </div>
 
         {/* Event detail strip — mobile */}
-        <div className="pointer-events-auto absolute bottom-0 left-0 right-0 z-30 border-t border-white/10 bg-[#0a1220]/90 p-4 backdrop-blur-sm lg:hidden">
+        <div
+          className="pointer-events-auto absolute bottom-0 left-0 right-0 z-30 border-t border-white/10 bg-[#0a1220]/90 p-4 backdrop-blur-sm will-change-transform lg:hidden"
+          style={sectionScrollBlockStyle(contentStyle)}
+        >
           <p className={typography.cardTitle}>{event.title}</p>
           <p className={`mt-1 ${typography.meta}`}>{event.subtitle}</p>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -250,7 +268,10 @@ const Events = () => {
         </div>
 
         {/* Desktop event meta overlay */}
-        <div className="pointer-events-auto absolute bottom-10 right-8 z-30 hidden max-w-xs text-right lg:block xl:bottom-14 xl:right-14">
+        <div
+          className="pointer-events-auto absolute bottom-10 right-8 z-30 hidden max-w-xs text-right will-change-transform lg:block xl:bottom-14 xl:right-14"
+          style={sectionScrollBlockStyle(visualStyle)}
+        >
           <p className={typography.itemTitle}>{event.title}</p>
           <p className={`mt-1 ${typography.body}`}>{event.subtitle}</p>
           {event.website && (

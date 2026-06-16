@@ -1,16 +1,26 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 
 type HeroAboutScrollState = {
   blend: number
   aboutExit: number
+  aboutPanelProgress: number
+}
+
+export type CinematicScrollStyle = {
+  scale: number
+  blur: number
+  opacity: number
+  translateY: number
+  translateX: number
 }
 
 const HeroAboutContext = createContext<HeroAboutScrollState>({
   blend: 0,
   aboutExit: 0,
+  aboutPanelProgress: 0,
 })
 
 export function useHeroAboutBlend() {
@@ -21,12 +31,72 @@ export function useAboutExit() {
   return useContext(HeroAboutContext).aboutExit
 }
 
+export function useAboutPanelProgress() {
+  return useContext(HeroAboutContext).aboutPanelProgress
+}
+
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
 }
 
 function easeOutCubic(value: number) {
   return 1 - Math.pow(1 - value, 3)
+}
+
+type SlideFrom = "left" | "right"
+
+/** Scroll-scrubbed horizontal slide — left/right content moves in from its side, reverses on scroll back */
+export function getCinematicScrollStyle(
+  blend: number,
+  aboutExit: number,
+  panelProgress = 0,
+  enterDelay = 0,
+  from: SlideFrom = "left"
+): CinematicScrollStyle {
+  const delayedBlend =
+    enterDelay > 0 ? clamp((blend - enterDelay) / (1 - enterDelay), 0, 1) : clamp(blend, 0, 1)
+  const enter = delayedBlend
+  const exit = clamp(aboutExit, 0, 1)
+  const sign = from === "left" ? -1 : 1
+  const travel = 80
+
+  return {
+    scale: 1,
+    blur: 0,
+    opacity: enter * (1 - exit * 0.92),
+    translateY: 0,
+    translateX: sign * travel * ((1 - enter) + exit),
+  }
+}
+
+/** Same cinematic enter/exit with a delayed blend for staggered content blocks */
+export function getStaggeredCinematicScrollStyle(
+  blend: number,
+  aboutExit: number,
+  panelProgress = 0,
+  enterDelay = 0.18,
+  from: SlideFrom = "left"
+): CinematicScrollStyle {
+  return getCinematicScrollStyle(blend, aboutExit, panelProgress, enterDelay, from)
+}
+
+export function useCinematicScrollStyle(from: SlideFrom = "left"): CinematicScrollStyle {
+  const { blend, aboutExit, aboutPanelProgress } = useContext(HeroAboutContext)
+  return useMemo(
+    () => getCinematicScrollStyle(blend, aboutExit, aboutPanelProgress, 0, from),
+    [blend, aboutExit, aboutPanelProgress, from]
+  )
+}
+
+export function useStaggeredCinematicScrollStyle(
+  enterDelay = 0.18,
+  from: SlideFrom = "left"
+): CinematicScrollStyle {
+  const { blend, aboutExit, aboutPanelProgress } = useContext(HeroAboutContext)
+  return useMemo(
+    () => getStaggeredCinematicScrollStyle(blend, aboutExit, aboutPanelProgress, enterDelay, from),
+    [blend, aboutExit, aboutPanelProgress, enterDelay, from]
+  )
 }
 
 function scrollToHero() {
@@ -39,6 +109,7 @@ export { scrollToHero }
 export function HeroAboutScrollProvider({ children }: { children: React.ReactNode }) {
   const [blend, setBlend] = useState(0)
   const [aboutExit, setAboutExit] = useState(0)
+  const [aboutPanelProgress, setAboutPanelProgress] = useState(0)
   const [showPortrait, setShowPortrait] = useState(true)
   const [introActive, setIntroActive] = useState(false)
   const [cinematicFade, setCinematicFade] = useState(1)
@@ -85,20 +156,23 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
         const panelTop = aboutPanel.offsetTop
         const panelHeight = aboutPanel.offsetHeight
         const panelBottom = panelTop + panelHeight
+        const panelScrollRange = Math.max(panelHeight - vh, 1)
+        setAboutPanelProgress(clamp((window.scrollY - panelTop) / panelScrollRange, 0, 1))
+
         const exitStart = panelTop + panelHeight * 0.38
         const exitEnd = panelTop + panelHeight * 0.88
 
         const rawExit = clamp((window.scrollY - exitStart) / (exitEnd - exitStart), 0, 1)
-        setAboutExit(easeOutCubic(rawExit))
+        setAboutExit(rawExit)
         setShowPortrait(window.scrollY < panelBottom - vh * 0.2)
       } else {
         const start = home.offsetHeight + cinematicScroll - vh * 1.35
         const end = home.offsetHeight + cinematicScroll - vh * 0.15
         setBlend(clamp((window.scrollY - start) / (end - start), 0, 1))
         setAboutExit(0)
+        setAboutPanelProgress(0)
         setShowPortrait(true)
       }
-
     }
 
     update()
@@ -114,9 +188,14 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
   const portraitOpacity = blend * (1 - aboutExit)
   const heroPortraitOpacity = (1 - blend) * (1 - aboutExit) * cinematicFade
   const portraitOnTop = cinematicProgress < 0.58
+  const blendT = clamp(blend, 0, 1)
+  const exitT = clamp(aboutExit, 0, 1)
+  const aboutPortraitCinematic = getCinematicScrollStyle(blend, aboutExit, aboutPanelProgress, 0, "right")
+  const heroPortraitTravel = 80
+  const heroPortraitX = heroPortraitTravel * (blendT + exitT)
 
   return (
-    <HeroAboutContext.Provider value={{ blend, aboutExit }}>
+    <HeroAboutContext.Provider value={{ blend, aboutExit, aboutPanelProgress }}>
       {children}
 
       {/* Portrait locked to the right grid column — hero ↔ about crossfade */}
@@ -129,7 +208,6 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
         }`}
         style={{
           opacity: 1 - aboutExit,
-          transform: `translateY(${cinematicProgress * -28}px) scale(${1 - cinematicProgress * 0.06})`,
         }}
       >
         <div className="container mx-auto h-[calc(100dvh-5rem)] px-4 sm:px-6">
@@ -143,11 +221,6 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
               className={`relative h-full w-full border-0 bg-transparent p-0 ${
                 isAboutActive ? "pointer-events-auto cursor-pointer" : "pointer-events-none"
               }`}
-              style={{
-                opacity: 1 - aboutExit * 0.2,
-                transform: `translateY(${aboutExit * -48}px) scale(${1 - aboutExit * 0.06})`,
-                filter: `blur(${aboutExit * 6}px)`,
-              }}
             >
               <Image
                 src="/hero-portrait.png"
@@ -155,8 +228,11 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
                 fill
                 unoptimized
                 sizes="(max-width: 1280px) 50vw, 580px"
-                className="pointer-events-none object-contain object-bottom"
-                style={{ opacity: heroPortraitOpacity }}
+                className="pointer-events-none object-contain object-bottom will-change-transform"
+                style={{
+                  opacity: heroPortraitOpacity,
+                  transform: `translateX(${heroPortraitX}px)`,
+                }}
               />
               <Image
                 src="/about-portrait.png"
@@ -164,8 +240,11 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
                 fill
                 unoptimized
                 sizes="(max-width: 1280px) 50vw, 580px"
-                className="pointer-events-none object-contain object-bottom"
-                style={{ opacity: portraitOpacity }}
+                className="pointer-events-none object-contain object-bottom will-change-transform"
+                style={{
+                  opacity: portraitOpacity,
+                  transform: `translateX(${aboutPortraitCinematic.translateX}px)`,
+                }}
               />
             </button>
           </div>

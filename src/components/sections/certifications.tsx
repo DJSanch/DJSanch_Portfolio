@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from "react"
 import Image from "next/image"
 import { Award } from "lucide-react"
 import { useIsMobile, useIsTablet } from "@/hooks/use-media-query"
+import { sectionScrollBlockStyle, useSectionScrollMotion } from "@/hooks/use-section-scroll-motion"
 import { typography } from "@/lib/typography"
 
 interface CertificationItem {
@@ -133,6 +134,7 @@ const Certifications = () => {
   const velocityRef = useRef(0)
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
+  const { headerStyle, contentStyle, visualStyle } = useSectionScrollMotion("certifications-panel")
 
   const total = certifications.length
   const arcRadius = isMobile ? 120 : isTablet ? 150 : 180
@@ -245,7 +247,10 @@ const Certifications = () => {
 
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
           <div className="mx-auto flex min-h-[calc(100dvh-7rem)] w-full max-w-6xl flex-col items-center justify-center text-center">
-            <div className="mb-8 shrink-0 space-y-3 sm:mb-10">
+            <div
+              className="mb-8 shrink-0 space-y-3 will-change-transform sm:mb-10"
+              style={sectionScrollBlockStyle(headerStyle)}
+            >
               <p className={typography.eyebrow}>
                 Credentials
               </p>
@@ -257,7 +262,7 @@ const Certifications = () => {
               </p>
             </div>
 
-            <div className="relative w-full px-2 sm:px-4">
+            <div className="relative w-full px-2 will-change-transform sm:px-4" style={sectionScrollBlockStyle(visualStyle)}>
               <div
                 className="relative min-h-[min(440px,58vh)] w-full overflow-visible py-6 sm:min-h-[min(520px,62vh)] sm:py-8 md:min-h-[min(580px,68vh)]"
                 style={{ perspective: isMobile ? "900px" : "1200px" }}
@@ -335,7 +340,7 @@ const Certifications = () => {
               </div>
             </div>
 
-            <div className="-mt-10 sm:-mt-12">
+            <div className="-mt-10 will-change-transform sm:-mt-12" style={sectionScrollBlockStyle(contentStyle)}>
               <p className={typography.caption}>
                 {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
               </p>
