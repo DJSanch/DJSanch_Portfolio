@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils"
 import { typography } from "@/lib/typography"
 
 export const CINEMATIC_SCROLL_LENGTH = 9000
+/** Tiny scroll on landing — skips the top-of-slider portrait fade state */
+const LANDING_SCROLL_NUDGE = 16
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -303,7 +305,28 @@ export function CinematicHero({
         .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.5 })
     }, containerRef)
 
-    return () => ctx.revert()
+    const nudgeLandingScroll = () => {
+      if (window.scrollY !== 0 || window.location.hash) return
+      window.scrollTo({ top: LANDING_SCROLL_NUDGE, left: 0, behavior: "instant" })
+    }
+
+    ScrollTrigger.refresh()
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh()
+        nudgeLandingScroll()
+      })
+    })
+
+    const landingNudgeTimer = window.setTimeout(() => {
+      ScrollTrigger.refresh()
+      nudgeLandingScroll()
+    }, 200)
+
+    return () => {
+      window.clearTimeout(landingNudgeTimer)
+      ctx.revert()
+    }
   }, [metricValue, scrollLength])
 
   return (
