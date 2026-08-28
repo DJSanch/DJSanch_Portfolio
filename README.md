@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website built with Next.js and Shadcn UI, showcasing my skills, projects, and experience as a Full Stack Developer.
 
-## 🚀 Features
+## Features
 
 - **Modern Design**: Clean and professional design using Shadcn UI components
 - **Responsive**: Fully responsive design that works on all devices
@@ -12,7 +12,7 @@ A modern, responsive portfolio website built with Next.js and Shadcn UI, showcas
 - **SEO Optimized**: Proper meta tags and structured data
 - **Performance**: Optimized for fast loading and smooth interactions
 
-## 📋 Sections
+## Sections
 
 1. **Home/Hero**: Introduction and overview with skills and social links
 2. **About**: Detailed background, education, work experience, and interests
@@ -20,7 +20,7 @@ A modern, responsive portfolio website built with Next.js and Shadcn UI, showcas
 4. **Certifications**: Professional certifications and achievements
 5. **Contact**: Contact form and contact information
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: Next.js 14 with App Router
 - **Language**: TypeScript
@@ -29,7 +29,7 @@ A modern, responsive portfolio website built with Next.js and Shadcn UI, showcas
 - **Icons**: Lucide React
 - **Deployment**: Vercel (recommended)
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -56,7 +56,7 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 DJSanch_Portfolio/
@@ -85,7 +85,7 @@ DJSanch_Portfolio/
 └── README.md
 ```
 
-## 🎨 Customization
+## Customization
 
 ### Personal Information
 
@@ -110,7 +110,7 @@ Update the following files with your information:
 2. Add the section to the navigation in `src/components/navigation.tsx`
 3. Import and add the section to `src/app/page.tsx`
 
-## 📱 Responsive Design
+## Responsive Design
 
 The portfolio is fully responsive and includes:
 
@@ -120,25 +120,18 @@ The portfolio is fully responsive and includes:
 - Touch-friendly interactions
 - Optimized typography for all screen sizes
 
-## 🚀 Deployment
+## Deployment
 
-### Vercel (Recommended) - Deploy Ready! ✅
+### Vercel (Recommended) - Deploy Ready! 
 
 This project is **fully configured and optimized** for Vercel deployment.
 
 **Quick Deploy:**
 1. Push your code to GitHub
 2. Import to Vercel (auto-detects Next.js)
-3. Click Deploy - Done! 🎉
+3. Click Deploy - Done! 
 
-**Included Optimizations:**
-- ✅ `vercel.json` with security headers
-- ✅ Optimized `next.config.ts`
-- ✅ Production build tested and working
-- ✅ Image optimization configured
-- ✅ Standalone output for faster deployments
-
-📖 **[View Detailed Deployment Guide](./DEPLOYMENT.md)**
+**[View Detailed Deployment Guide](./DEPLOYMENT.md)**
 
 ### Other Platforms
 
@@ -149,20 +142,17 @@ The portfolio can be deployed to any platform that supports Next.js:
 - DigitalOcean App Platform
 - AWS Amplify
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📞 Contact
+## Contact
 
 - **Email**: contact@djsanch.com
 - **GitHub**: [@djsanch](https://github.com/djsanch)
 - **LinkedIn**: [DJSanch](https://linkedin.com/in/djsanch)
 
----
-
-Built with ❤️ using Next.js and Shadcn UI
