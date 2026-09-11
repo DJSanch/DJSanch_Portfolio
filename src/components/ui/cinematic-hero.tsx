@@ -335,7 +335,8 @@ export function CinematicHero({
       ref={containerRef}
       data-scroll-length={scrollLength}
       className={cn(
-        "relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38] font-sans text-white antialiased",
+        "hero-page-fade relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38] font-sans text-white antialiased",
+        introActive && "hero-page-fade-active",
         className
       )}
       style={{ perspective: "1500px" }}
