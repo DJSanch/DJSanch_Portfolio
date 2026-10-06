@@ -44,13 +44,13 @@ const projects: Project[] = [
     featured: true,
   },
   {
-    title: "Tournament Organizer",
+    title: "Cards Bros",
     description:
-      "A badminton matchmaking bracket organizer that manages participant entries and tournament flow.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-    image: "/projects/tournament.png",
-    github: "https://github.com/DJSanch/TournamentOrganizer.git",
-    live: "https://tournament-organizer-five.vercel.app/",
+      "A polished trading-card storefront with a premium storefront, product browsing, and a clean collector-focused shopping experience.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "E-commerce", "UI Design"],
+    image: "/projects/cards-bros.png",
+    github: "https://cards-bros2-0.vercel.app/",
+    live: "https://cards-bros2-0.vercel.app/",
     featured: true,
   },
   {
