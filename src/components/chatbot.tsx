@@ -57,7 +57,7 @@ const Chatbot = () => {
 
     // Projects - general
     if (message.match(/(project|projects|built|created|developed)/)) {
-      return "Daniel has worked on several impressive projects! Some of his featured projects include:\n• Inventory Management System - A robust system for tracking stock, sales, and suppliers\n• Chat Application - Real-time chat with authentication\n• JS Aromatoc - Modern e-commerce website\n• RiceProTech - Rice Leaf Disease Classification Mobile App\n• CrackVision - Concrete crack severity classification\n• Envirotech - Inventory Management System\n\nYou can view all his projects in the Projects section of this portfolio!"
+      return "Daniel has worked on several impressive projects! Some of his featured projects include:\n• Big Bros Hawaiian Grill - Restaurant website\n• JS Aromatoc - Modern e-commerce website\n• RiceProTech - Rice Leaf Disease Classification Mobile App\n• CrackVision - Concrete crack severity classification\n• Envirotech - Inventory Management System\n\nYou can view all his projects in the Projects section of this portfolio!"
     }
 
     // Specific projects
@@ -65,9 +65,6 @@ const Chatbot = () => {
       return "Daniel built an Inventory Management System - a robust system for tracking stock, sales, and suppliers. It features real-time inventory updates, reporting, and user roles. Built with React, Next.js, Python, SQLite, and Tailwind CSS. You can view it in the Projects section!"
     }
 
-    if (message.match(/(chat application|chat app)/)) {
-      return "Daniel created a real-time Chat Application with user authentication and message history. Built with React, Firebase, Socket.io, Node.js, and Tailwind CSS. You can view it in the Projects section!"
-    }
 
     if (message.match(/(js aromatoc|aromatoc)/)) {
       return "JS Aromatoc is a modern e-commerce website Daniel built, featuring product listings, shopping cart functionality, and secure checkout process. Built with Next.js, TypeScript, Tailwind CSS, Stripe, and MongoDB. You can view it in the Projects section!"
@@ -142,7 +139,7 @@ const Chatbot = () => {
 
     // Default responses
     if (message.match(/(help|what can you|how can you)/)) {
-      return "I can help you learn about:\n• Daniel's development projects (Goldenville, JS Aromatoc, Inventory Management, Chat App, RiceProTech, CrackVision, Envirotech)\n• His work experience and roles\n• Networking expertise and CCNA certification\n• Development skills and technologies\n• How to view his projects and certificates\n• How to contact him\n\nJust ask me anything about Daniel's specialties!"
+      return "I can help you learn about:\n• Daniel's development projects (Big Bros Hawaiian Grill, JS Aromatoc, Inventory Management, RiceProTech, CrackVision, Envirotech)\n• His work experience and roles\n• Networking expertise and CCNA certification\n• Development skills and technologies\n• How to view his projects and certificates\n• How to contact him\n\nJust ask me anything about Daniel's specialties!"
     }
 
     // Fallback

@@ -122,17 +122,18 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
   const [cinematicProgress, setCinematicProgress] = useState(0)
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (prefersReducedMotion) {
-      setIntroActive(true)
-      return
+    const activateIntro = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setIntroActive(true))
+      })
     }
 
-    const introFrame = requestAnimationFrame(() => {
-      requestAnimationFrame(() => setIntroActive(true))
-    })
+    window.addEventListener("portfolio:ready", activateIntro, { once: true })
+    if (document.documentElement.dataset.portfolioReady === "true") {
+      activateIntro()
+    }
 
-    return () => cancelAnimationFrame(introFrame)
+    return () => window.removeEventListener("portfolio:ready", activateIntro)
   }, [])
 
   useEffect(() => {
@@ -216,12 +217,12 @@ export function HeroAboutScrollProvider({ children }: { children: React.ReactNod
       <div
         id="hero-portrait-layer"
         className={`hero-intro-right pointer-events-none fixed inset-x-0 bottom-0 hidden lg:block ${
-          introActive ? "hero-intro-active delay-400" : ""
+          introActive ? "hero-intro-active" : ""
         } ${showPortrait ? "" : "!opacity-0"} ${
           isAboutActive ? "z-20" : portraitOnTop ? "z-[25]" : "z-[5]"
         }`}
         style={{
-          opacity: 1 - aboutSectionExit,
+          opacity: introActive ? 1 - aboutSectionExit : 0,
         }}
       >
         <div className="container mx-auto h-[calc(100dvh-5rem)] px-4 sm:px-6">

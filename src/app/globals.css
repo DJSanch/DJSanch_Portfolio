@@ -206,21 +206,8 @@ body {
   animation: portfolio-fade-in 600ms ease-out forwards;
 }
 
-@keyframes hero-page-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.hero-page-fade {
-  opacity: 0;
-}
-
-.hero-page-fade-active {
-  animation: hero-page-fade-in 900ms ease-out forwards;
+.portfolio-content-ready-home {
+  opacity: 1;
 }
 
 .animate-float {
@@ -407,20 +394,54 @@ body {
   }
 }
 
+@keyframes heroSlideLeft {
+  from {
+    transform: translateX(-40px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 .hero-intro {
   opacity: 0;
+  transition: opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hero-intro.hero-intro-active {
-  animation: fadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 1;
 }
 
 .hero-intro-left.hero-intro-active {
-  animation: fadeInLeft 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: heroSlideLeft 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.intro-delay-100 { transition-delay: 50ms; }
+.intro-delay-200 { transition-delay: 150ms; }
+.intro-delay-300 { transition-delay: 250ms; }
+
+@keyframes typing-caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.typing-caret {
+  display: inline-block;
+  width: 0.075em;
+  height: 0.82em;
+  margin-left: 0.08em;
+  vertical-align: -0.04em;
+  background: #60a5fa;
+  animation: typing-caret-blink 900ms steps(1, end) infinite;
+}
+
+.hero-intro-right {
+  will-change: opacity;
+  transition: opacity 1400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hero-intro-right.hero-intro-active {
-  animation: fadeInRight 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transition-delay: 50ms;
 }
 
 .hero-intro-scale.hero-intro-active {
@@ -431,10 +452,17 @@ body {
   animation: heroFadeDown 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+.hero-circle-fade {
+  opacity: 0;
+  transition: opacity 1.2s ease-out;
+}
+
+.hero-circle-fade.hero-intro-active {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .hero-intro,
   .hero-intro-left,
-  .hero-intro-right,
   .hero-intro-scale,
   .hero-intro-nav {
     opacity: 1;

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
 
 interface PortfolioLoaderProps {
   children?: React.ReactNode
@@ -34,10 +35,12 @@ function LoadingScreen({ percentage, isFadingOut }: { percentage: number; isFadi
 }
 
 export default function PortfolioLoader({ children }: PortfolioLoaderProps) {
+  const pathname = usePathname()
   const [percentage, setPercentage] = useState(0)
   const [isFadingOut, setIsFadingOut] = useState(false)
   const [isReady, setIsReady] = useState(false)
   const hasChildren = Boolean(children)
+  const isHomePage = pathname === "/"
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -60,7 +63,11 @@ export default function PortfolioLoader({ children }: PortfolioLoaderProps) {
     }
 
     const fadeTimer = window.setTimeout(() => setIsFadingOut(true), 100)
-    const revealTimer = window.setTimeout(() => setIsReady(true), 600)
+    const revealTimer = window.setTimeout(() => {
+      document.documentElement.dataset.portfolioReady = "true"
+      setIsReady(true)
+      window.dispatchEvent(new Event("portfolio:ready"))
+    }, 600)
 
     return () => {
       window.clearTimeout(fadeTimer)
@@ -71,7 +78,11 @@ export default function PortfolioLoader({ children }: PortfolioLoaderProps) {
   if (children) {
     return (
       <>
-        <div className={`portfolio-content ${isReady ? "portfolio-content-ready" : ""}`}>
+        <div
+          className={`portfolio-content ${
+            isReady ? (isHomePage ? "portfolio-content-ready-home" : "portfolio-content-ready") : ""
+          }`}
+        >
           {children}
         </div>
         {!isReady && <LoadingScreen percentage={percentage} isFadingOut={isFadingOut} />}

@@ -16,7 +16,7 @@ interface Project {
   description: string
   technologies: string[]
   image: string
-  github: string
+  github?: string
   live?: string
   viewProject?: string
   featured: boolean
@@ -24,13 +24,12 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Chat Application",
+    title: "Big Bros Hawaiian Grill",
     description:
-      "A real-time chat application with user authentication and message history.",
-    technologies: ["React", "Firebase", "Socket.io", "Node.js", "Tailwind CSS"],
-    image: "/projects/chat-application.png",
-    github: "https://github.com/DJSanch/Chat_Application",
-    live: "https://chat-application-k89h.vercel.app/",
+      "A restaurant website for Big Bros Hawaiian Grill, featuring its menu and dining experience.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Web Design"],
+    image: "/projects/big-bros.png",
+    live: "https://big-bros-hawaiian-grill.vercel.app/",
     featured: true,
   },
   {
@@ -218,7 +217,7 @@ const Projects = () => {
                       </div>
 
                       <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
-                        <Button
+                        {project.github && <Button
                           variant="outline"
                           size="sm"
                           asChild
@@ -228,7 +227,7 @@ const Projects = () => {
                             <Github className="mr-2 h-4 w-4" />
                             Code
                           </a>
-                        </Button>
+                        </Button>}
                         {project.viewProject ? (
                           <Button
                             variant="outline"

@@ -162,20 +162,58 @@ export function CinematicHero({
   const mockupRef = useRef<HTMLDivElement>(null)
   const requestRef = useRef<number>(0)
   const [introActive, setIntroActive] = useState(false)
+  const [typedTagline1, setTypedTagline1] = useState("")
+  const [typedTagline2, setTypedTagline2] = useState("")
+  const [typingLine, setTypingLine] = useState<0 | 1 | null>(null)
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (prefersReducedMotion) {
-      setIntroActive(true)
-      return
+    const activateIntro = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setIntroActive(true))
+      })
     }
 
-    const introFrame = requestAnimationFrame(() => {
-      requestAnimationFrame(() => setIntroActive(true))
-    })
+    window.addEventListener("portfolio:ready", activateIntro, { once: true })
+    if (document.documentElement.dataset.portfolioReady === "true") {
+      activateIntro()
+    }
 
-    return () => cancelAnimationFrame(introFrame)
+    return () => window.removeEventListener("portfolio:ready", activateIntro)
   }, [])
+
+  useEffect(() => {
+    if (!introActive) return
+
+    const lines = [tagline1, tagline2]
+    const setters = [setTypedTagline1, setTypedTagline2]
+    let lineIndex = 0
+    let characterIndex = 0
+    let typingTimer: number
+    setTypingLine(0)
+
+    const typeNextCharacter = () => {
+      const currentLine = lines[lineIndex]
+      characterIndex += 1
+      setters[lineIndex](currentLine.slice(0, characterIndex))
+
+      if (characterIndex >= currentLine.length) {
+        lineIndex += 1
+        characterIndex = 0
+        if (lineIndex >= lines.length) return
+        setTypingLine(lineIndex as 0 | 1)
+        typingTimer = window.setTimeout(typeNextCharacter, 280)
+        return
+      }
+
+      const typedCharacter = currentLine[characterIndex - 1]
+      const pause = /[,.!?]/.test(typedCharacter) ? 320 : 72
+      typingTimer = window.setTimeout(typeNextCharacter, pause)
+    }
+
+    typingTimer = window.setTimeout(typeNextCharacter, 100)
+
+    return () => window.clearTimeout(typingTimer)
+  }, [introActive, tagline1, tagline2])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -213,14 +251,14 @@ export function CinematicHero({
   }, [])
 
   useEffect(() => {
+    if (!introActive) return
+
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
     const ctx = gsap.context(() => {
       if (prefersReducedMotion) {
         gsap.set(
           [
-            ".text-track",
-            ".text-days",
             ".main-card",
             ".card-left-text",
             ".mockup-scroll-wrapper",
@@ -233,25 +271,10 @@ export function CinematicHero({
         return
       }
 
-      gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)", rotationX: -20 })
-      gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" })
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 })
       gsap.set([".card-left-text", ".mockup-scroll-wrapper", ".floating-badge", ".phone-widget"], {
         autoAlpha: 0,
       })
-
-      const introTl = gsap.timeline({ delay: 0.3 })
-      introTl
-        .to(".text-track", {
-          duration: 1.8,
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          rotationX: 0,
-          ease: "expo.out",
-        })
-        .to(".text-days", { duration: 1.4, clipPath: "inset(0 0% 0 0)", ease: "power4.inOut" }, "-=1.0")
 
       const scrollTl = gsap.timeline({
         scrollTrigger: {
@@ -327,7 +350,7 @@ export function CinematicHero({
       window.clearTimeout(landingNudgeTimer)
       ctx.revert()
     }
-  }, [metricValue, scrollLength])
+  }, [introActive, metricValue, scrollLength])
 
   return (
     <div
@@ -335,8 +358,7 @@ export function CinematicHero({
       ref={containerRef}
       data-scroll-length={scrollLength}
       className={cn(
-        "hero-page-fade relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38] font-sans text-white antialiased",
-        introActive && "hero-page-fade-active",
+        "relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38] font-sans text-white antialiased",
         className
       )}
       style={{ perspective: "1500px" }}
@@ -349,8 +371,8 @@ export function CinematicHero({
       {/* Geometric accents — matches original hero */}
       <div
         aria-hidden
-        className={`hero-intro-scale pointer-events-none absolute -right-20 top-[55%] z-[1] h-[min(480px,85vw)] w-[min(480px,85vw)] -translate-y-1/2 sm:-right-16 sm:top-1/2 sm:h-[min(600px,88vw)] sm:w-[min(600px,88vw)] lg:right-[8%] lg:h-[min(620px,55vw)] lg:w-[min(620px,55vw)] ${
-          introActive ? "hero-intro-active delay-100" : ""
+        className={`hero-circle-fade pointer-events-none absolute -right-20 top-[55%] z-[1] h-[min(480px,85vw)] w-[min(480px,85vw)] -translate-y-1/2 sm:-right-16 sm:top-1/2 sm:h-[min(600px,88vw)] sm:w-[min(600px,88vw)] lg:right-[8%] lg:h-[min(620px,55vw)] lg:w-[min(620px,55vw)] ${
+          introActive ? "hero-intro-active intro-delay-100" : ""
         }`}
       >
         <div className="absolute inset-0 scale-110 rounded-full bg-[#3b82f6]/15 blur-3xl" />
@@ -358,8 +380,8 @@ export function CinematicHero({
       </div>
       <div
         aria-hidden
-        className={`hero-intro-scale pointer-events-none absolute -bottom-20 left-[3%] z-[1] h-32 w-32 sm:-bottom-24 sm:left-[5%] sm:h-48 sm:w-48 md:-bottom-16 md:left-[12%] md:h-56 md:w-56 ${
-          introActive ? "hero-intro-active delay-300" : ""
+        className={`hero-circle-fade pointer-events-none absolute -bottom-20 left-[3%] z-[1] h-32 w-32 sm:-bottom-24 sm:left-[5%] sm:h-48 sm:w-48 md:-bottom-16 md:left-[12%] md:h-56 md:w-56 ${
+          introActive ? "hero-intro-active intro-delay-300" : ""
         }`}
       >
         <div className="absolute inset-0 scale-125 rounded-full bg-[#60a5fa]/20 blur-2xl" />
@@ -372,18 +394,36 @@ export function CinematicHero({
             <div className="space-y-3 text-center sm:text-left lg:max-w-xl lg:pl-8 xl:pl-12">
               <p
                 className={cn(
-                  "hero-intro-left md:text-sm",
+                  "hero-intro relative md:text-sm",
                   typography.eyebrow,
-                  introActive ? "hero-intro-active delay-200" : ""
+                  introActive && "hero-intro-active intro-delay-100"
                 )}
               >
                 Full Stack Developer
               </p>
-              <h1 className="text-track gsap-reveal text-3d-matte text-3xl font-bold uppercase leading-[0.95] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-                {tagline1}
+              <h1
+                aria-label={tagline1}
+                className={cn(
+                  "hero-intro relative text-3d-matte text-3xl font-bold uppercase leading-[0.95] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl",
+                  introActive && "hero-intro-active intro-delay-200"
+                )}
+              >
+                <span className="invisible" aria-hidden="true">{tagline1}</span>
+                <span className="absolute inset-0" aria-hidden="true">
+                  {typedTagline1}{typingLine === 0 && <span className="typing-caret" />}
+                </span>
               </h1>
-              <h1 className="text-days gsap-reveal text-silver-matte text-3xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-                {tagline2}
+              <h1
+                aria-label={tagline2}
+                className={cn(
+                  "hero-intro relative text-3xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl",
+                  introActive && "hero-intro-active intro-delay-300"
+                )}
+              >
+                <span className="invisible" aria-hidden="true">{tagline2}</span>
+                <span className="absolute inset-0 text-silver-matte" aria-hidden="true">
+                  {typedTagline2}{typingLine === 1 && <span className="typing-caret" />}
+                </span>
               </h1>
             </div>
             <div aria-hidden className="hidden lg:block" />
