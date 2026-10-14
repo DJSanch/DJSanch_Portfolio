@@ -163,7 +163,6 @@ export function CinematicHero({
   const requestRef = useRef<number>(0)
   const [introActive, setIntroActive] = useState(false)
   const [typedTagline1, setTypedTagline1] = useState("")
-  const [typedTagline2, setTypedTagline2] = useState("")
   const [typingLine, setTypingLine] = useState<0 | 1 | null>(null)
 
   useEffect(() => {
@@ -184,36 +183,27 @@ export function CinematicHero({
   useEffect(() => {
     if (!introActive) return
 
-    const lines = [tagline1, tagline2]
-    const setters = [setTypedTagline1, setTypedTagline2]
-    let lineIndex = 0
     let characterIndex = 0
     let typingTimer: number
     setTypingLine(0)
 
     const typeNextCharacter = () => {
-      const currentLine = lines[lineIndex]
       characterIndex += 1
-      setters[lineIndex](currentLine.slice(0, characterIndex))
+      setTypedTagline1(tagline1.slice(0, characterIndex))
 
-      if (characterIndex >= currentLine.length) {
-        lineIndex += 1
-        characterIndex = 0
-        if (lineIndex >= lines.length) return
-        setTypingLine(lineIndex as 0 | 1)
-        typingTimer = window.setTimeout(typeNextCharacter, 280)
+      if (characterIndex >= tagline1.length) {
+        typingTimer = window.setTimeout(() => setTypingLine(1), 280)
         return
       }
 
-      const typedCharacter = currentLine[characterIndex - 1]
+      const typedCharacter = tagline1[characterIndex - 1]
       const pause = /[,.!?]/.test(typedCharacter) ? 320 : 72
       typingTimer = window.setTimeout(typeNextCharacter, pause)
     }
 
     typingTimer = window.setTimeout(typeNextCharacter, 100)
-
     return () => window.clearTimeout(typingTimer)
-  }, [introActive, tagline1, tagline2])
+  }, [introActive, tagline1])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -421,8 +411,14 @@ export function CinematicHero({
                 )}
               >
                 <span className="invisible" aria-hidden="true">{tagline2}</span>
-                <span className="absolute inset-0 text-silver-matte" aria-hidden="true">
-                  {typedTagline2}{typingLine === 1 && <span className="typing-caret" />}
+                <span
+                  className={cn(
+                    "absolute inset-0 text-silver-matte",
+                    typingLine === 1 ? "type-fade-in" : "opacity-0"
+                  )}
+                  aria-hidden="true"
+                >
+                  {tagline2}
                 </span>
               </h1>
             </div>
