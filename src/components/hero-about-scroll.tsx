@@ -54,7 +54,6 @@ type SlideFrom = "left" | "right"
 export function getCinematicScrollStyle(
   blend: number,
   aboutExit: number,
-  panelProgress = 0,
   enterDelay = 0,
   from: SlideFrom = "left"
 ): CinematicScrollStyle {
@@ -78,18 +77,17 @@ export function getCinematicScrollStyle(
 export function getStaggeredCinematicScrollStyle(
   blend: number,
   aboutExit: number,
-  panelProgress = 0,
   enterDelay = 0.18,
   from: SlideFrom = "left"
 ): CinematicScrollStyle {
-  return getCinematicScrollStyle(blend, aboutExit, panelProgress, enterDelay, from)
+  return getCinematicScrollStyle(blend, aboutExit, enterDelay, from)
 }
 
 export function useCinematicScrollStyle(from: SlideFrom = "left"): CinematicScrollStyle {
-  const { blend, aboutExit, aboutPanelProgress } = useContext(HeroAboutContext)
+  const { blend, aboutExit } = useContext(HeroAboutContext)
   return useMemo(
-    () => getCinematicScrollStyle(blend, aboutExit, aboutPanelProgress, 0, from),
-    [blend, aboutExit, aboutPanelProgress, from]
+    () => getCinematicScrollStyle(blend, aboutExit, 0, from),
+    [blend, aboutExit, from]
   )
 }
 
@@ -97,10 +95,10 @@ export function useStaggeredCinematicScrollStyle(
   enterDelay = 0.18,
   from: SlideFrom = "left"
 ): CinematicScrollStyle {
-  const { blend, aboutExit, aboutPanelProgress } = useContext(HeroAboutContext)
+  const { blend, aboutExit } = useContext(HeroAboutContext)
   return useMemo(
-    () => getStaggeredCinematicScrollStyle(blend, aboutExit, aboutPanelProgress, enterDelay, from),
-    [blend, aboutExit, aboutPanelProgress, enterDelay, from]
+    () => getStaggeredCinematicScrollStyle(blend, aboutExit, enterDelay, from),
+    [blend, aboutExit, enterDelay, from]
   )
 }
 

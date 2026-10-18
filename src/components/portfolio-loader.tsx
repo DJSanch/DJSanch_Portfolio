@@ -10,25 +10,17 @@ interface PortfolioLoaderProps {
 function LoadingScreen({ percentage, isFadingOut }: { percentage: number; isFadingOut: boolean }) {
   return (
     <main
-      className={`fixed inset-0 z-[100] flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0a1220] via-[#0b1528] to-[#0d1e38] text-white transition-opacity duration-500 ease-out ${isFadingOut ? "pointer-events-none opacity-0" : "opacity-100"}`}
+      className={`portfolio-loader-screen ${isFadingOut ? "is-fading" : ""}`}
       aria-busy="true"
       aria-label={`Loading portfolio: ${percentage}%`}
     >
-      <div className="skeleton-shimmer pointer-events-none fixed inset-0 opacity-20" />
-      <div className="relative px-6 text-center" aria-live="polite">
-        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-300/10 bg-blue-400/5 shadow-[0_0_100px_rgba(59,130,246,0.12)] sm:h-96 sm:w-96" />
-        <p className="relative font-mono text-7xl font-medium tracking-[0.08em] text-white sm:text-9xl">
-          {percentage}%
-        </p>
-        <div className="relative mx-auto mt-6 h-px w-52 overflow-hidden bg-white/15 sm:w-64">
-          <div
-            className="h-full bg-blue-300 transition-[width] duration-75"
-            style={{ width: `${percentage}%` }}
-          />
+      <div className="portfolio-loader-inner" aria-live="polite">
+        <div className="portfolio-loader-number">
+          {String(percentage).padStart(2, "0")}<span>%</span>
         </div>
-        <p className="relative mt-5 text-xs uppercase tracking-[0.3em] text-blue-200/60">
-          Loading portfolio
-        </p>
+        <div className="portfolio-loader-track" role="progressbar" aria-label="Loading portfolio" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percentage}>
+          <span style={{ height: `${percentage}%` }} />
+        </div>
       </div>
     </main>
   )

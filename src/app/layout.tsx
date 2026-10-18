@@ -16,6 +16,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Daniel Sanchez - Portfolio",
   description: "Professional portfolio of DJSanch, a Full Stack Developer specializing in React, Next.js, TypeScript, and modern web technologies.",
+  icons: {
+    icon: "/DAN%20SANCHEZ.svg",
+    shortcut: "/DAN%20SANCHEZ.svg",
+  },
   keywords: ["Full Stack Developer", "React", "Next.js", "TypeScript", "Web Development", "Portfolio"],
   authors: [{ name: "DJSanch" }],
   creator: "DJSanch",
