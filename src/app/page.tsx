@@ -2,6 +2,8 @@ import Image from "next/image"
 import { ArrowDownRight, ArrowUpRight, BrainCircuit, BriefcaseBusiness, CodeXml, GraduationCap, Github, Linkedin, Mail, MoveUpRight } from "lucide-react"
 import ScrollReveal from "@/components/scroll-reveal"
 import { FloatingSideNav } from "@/components/floating-side-nav"
+import { TechStackSection } from "@/components/tech-stack-section"
+import { siteUrl } from "@/lib/site"
 import { ProjectFolderCatalog } from "@/components/ui/project-folder-catalog"
 import { ServiceSlideshow } from "@/components/ui/animated-slideshow"
 
@@ -15,8 +17,6 @@ const projects = [
   { name: "Envirotech", type: "Operations · Data visualization", image: "/projects/envirotech.png", href: "/envirotech", number: "07", description: "An inventory management system with clear operational data visualizations." },
 ]
 
-const skills = ["Next.js", "React", "TypeScript", "Node.js", "Python", "React Native", "Machine learning", "Network engineering"]
-
 const services = [
   { title: "Full-stack web development", description: "Responsive web products built from interface through backend, with a focus on real-world usability.", image: "/service-panels/web-development.jpg", alt: "Web application dashboard and source code" },
   { title: "E-commerce experiences", description: "Product browsing, storefronts, carts, and checkout flows designed to make buying feel simple.", image: "/service-panels/ecommerce.jpg", alt: "Online shopping storefront and checkout experience" },
@@ -26,8 +26,36 @@ const services = [
 ]
 
 export default function Home() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${siteUrl}/#person`,
+        name: "Daniel Sanchez",
+        url: siteUrl,
+        image: `${siteUrl}/about-portrait.png`,
+        jobTitle: ["Full-Stack Developer", "Network Engineer"],
+        email: "contact@djsanch.com",
+        address: { "@type": "PostalAddress", addressLocality: "Davao City", addressCountry: "PH" },
+        alumniOf: { "@type": "CollegeOrUniversity", name: "Mapúa Malayan Colleges Mindanao" },
+        knowsAbout: ["Web Development", "Next.js", "React", "TypeScript", "Node.js", "Python", "Supabase", "PostgreSQL", "React Native", "Machine Learning", "Network Engineering"],
+        sameAs: ["https://github.com/djsanch", "https://linkedin.com/in/daniel-sanchez-8110b2252"],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        name: "Daniel Sanchez Portfolio",
+        url: siteUrl,
+        inLanguage: "en",
+        about: { "@id": `${siteUrl}/#person` },
+      },
+    ],
+  }
+
   return (
     <main className="portfolio-shell">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <ScrollReveal />
       <FloatingSideNav />
       <header className="portfolio-nav">
@@ -66,10 +94,11 @@ export default function Home() {
       <section className="about-section" id="about" data-reveal>
         <div className="about-intro"><p className="eyebrow">A little about me</p><h2>Engineering<br />meets <em>empathy.</em></h2></div>
         <div className="about-detail"><p className="about-lead">I work across the stack, from the first sketch to the systems that keep a product running.</p><p>My work brings together software development, network engineering, and a careful eye for how people use technology. I enjoy solving practical problems and making the result feel effortless.</p>
-          <div className="skill-list">{skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
           <a className="resume-link" href="/Daniel_Sanchez_Resume.pdf" target="_blank" rel="noreferrer">View résumé <ArrowUpRight size={15} /></a>
         </div>
       </section>
+
+      <TechStackSection />
 
       <div data-reveal><ServiceSlideshow slides={services} /></div>
 
