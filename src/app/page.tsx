@@ -6,6 +6,7 @@ import { TechStackSection } from "@/components/tech-stack-section"
 import { siteUrl } from "@/lib/site"
 import { ProjectFolderCatalog } from "@/components/ui/project-folder-catalog"
 import { ServiceSlideshow } from "@/components/ui/animated-slideshow"
+import Certifications from "@/components/sections/certifications"
 
 const projects = [
   { name: "Big Bros Hawaiian Grill", type: "Hospitality · Web experience", image: "/projects/big-bros.png", href: "https://big-bros-hawaiian-grill.vercel.app/", number: "01", description: "A welcoming restaurant website that brings the menu and dining experience online." },
@@ -61,7 +62,7 @@ export default function Home() {
       <header className="portfolio-nav">
         <a className="monogram" href="#home" aria-label="Daniel Sanchez home"><Image src="/2.svg" alt="Daniel Sanchez" width={44} height={44} priority /></a>
         <nav aria-label="Main navigation">
-          <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+          <a href="#work">Work</a><a href="#about">About</a><a href="#certifications">Credentials</a><a href="#contact">Contact</a>
           <a className="nav-cta" href="mailto:contact@djsanch.com">Let&apos;s talk <MoveUpRight size={14} /></a>
         </nav>
       </header>
@@ -94,7 +95,7 @@ export default function Home() {
       <section className="about-section" id="about" data-reveal>
         <div className="about-intro"><p className="eyebrow">A little about me</p><h2>Engineering<br />meets <em>empathy.</em></h2></div>
         <div className="about-detail"><p className="about-lead">I work across the stack, from the first sketch to the systems that keep a product running.</p><p>My work brings together software development, network engineering, and a careful eye for how people use technology. I enjoy solving practical problems and making the result feel effortless.</p>
-          <a className="resume-link" href="/Daniel_Sanchez_Resume.pdf" target="_blank" rel="noreferrer">View résumé <ArrowUpRight size={15} /></a>
+          <a className="resume-link" href="/resume">View résumé <ArrowUpRight size={15} /></a>
         </div>
       </section>
 
@@ -107,6 +108,8 @@ export default function Home() {
         <ProjectFolderCatalog projects={projects} />
         <div className="more-work"><a href="https://github.com/djsanch" target="_blank" rel="noreferrer">More on GitHub <ArrowUpRight size={15} /></a><span>Web · Mobile · Machine learning</span></div>
       </section>
+
+      <Certifications />
 
       <section className="experience-strip" data-reveal>
         <p className="eyebrow">Where I&apos;ve contributed</p>

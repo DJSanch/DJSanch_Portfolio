@@ -17,6 +17,7 @@ export function FloatingSideNav() {
     <nav className={`floating-side-nav${visible ? " is-visible" : ""}`} aria-label="Quick navigation" aria-hidden={!visible}>
       <a href="#work" tabIndex={visible ? 0 : -1}>Work</a>
       <a href="#about" tabIndex={visible ? 0 : -1}>About</a>
+      <a href="#certifications" tabIndex={visible ? 0 : -1}>Credentials</a>
       <a href="#contact" tabIndex={visible ? 0 : -1}>Contact</a>
       <a className="floating-side-nav-cta" href="mailto:contact@djsanch.com" aria-label="Let's talk" tabIndex={visible ? 0 : -1}><MoveUpRight size={14} /></a>
     </nav>
