@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import PortfolioLoader from "@/components/portfolio-loader";
+import { CustomCursor } from "@/components/custom-cursor";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -60,6 +61,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#0a1220] text-white antialiased`}
       >
+        <CustomCursor />
         <PortfolioLoader>{children}</PortfolioLoader>
       </body>
     </html>

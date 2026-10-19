@@ -1301,6 +1301,11 @@ body { background: #17181b; color: #f3f0e9; }
 .rice-status-panel { border-color:#a7bc8838;background:radial-gradient(ellipse at 10% 50%,#a7bc8811,transparent 50%),#ffffff04; }
 .rice-status-panel .project-status-dot { background:#a7bc88;box-shadow:0 0 12px #a7bc8877; }
 .portfolio-project-site .portfolio-footer { min-height:80px; }
+.custom-cursor { position:fixed;top:0;left:0;z-index:200;width:34px;height:34px;border:1px solid #f3f0e9a8;border-radius:50%;background:transparent;opacity:0;pointer-events:none;transform:translate(-50%,-50%);transition:width .2s ease,height .2s ease,border-color .2s ease,opacity .2s ease,background-color .2s ease;mix-blend-mode:difference; }
+.custom-cursor.is-visible { opacity:1; }
+.custom-cursor.is-over-interactive { width:48px;height:48px;border-color:#d1a878;background:#d1a87814; }
+@media(hover:hover) and (pointer:fine) { body,body * { cursor:none!important; } input,textarea,[contenteditable="true"] { cursor:text!important; } }
+@media(hover:none),(pointer:coarse) { .custom-cursor { display:none; } }
 @media(max-width:900px) {
   .project-detail-hero { grid-template-columns:1fr;gap:32px; }
   .project-detail-copy { max-width:750px; }
