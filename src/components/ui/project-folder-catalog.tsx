@@ -14,8 +14,8 @@ interface Project {
 }
 
 const collections = [
-  { id: "web", title: "Web & E-commerce", names: ["Big Bros Hawaiian Grill", "JS Aromatoc", "Cards Bros", "Examiner"], description: "Web products, online stores, and customer-facing experiences." },
-  { id: "mobile-ai", title: "Mobile & AI", names: ["RiceProTech", "CrackVision"], description: "Mobile tools and applied machine learning projects." },
+  { id: "web", title: "Web & E-commerce", names: ["Big Bros Hawaiian Grill", "JS Aromatoc", "Cards Bros"], description: "Web products, online stores, and customer-facing experiences." },
+  { id: "mobile-ai", title: "Mobile & AI", names: ["Examiner", "RiceProTech", "CrackVision"], description: "Mobile tools, AI-assisted learning, and applied machine learning projects." },
   { id: "systems", title: "Data & Systems", names: ["Envirotech"], description: "Operational software and data-rich applications." },
 ]
 

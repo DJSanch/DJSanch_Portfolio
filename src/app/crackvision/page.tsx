@@ -1,145 +1,57 @@
-"use client"
-
-import Layout from "@/components/layout"
-import { PageHero } from "@/components/page-hero"
-import { ProjectCard, projectCardClass } from "@/components/project-card"
-import { ProjectPageShell } from "@/components/project-page-shell"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { typography } from "@/lib/typography"
-import { Github, ArrowLeft, Brain, Code, Zap, Layers, Cpu, BarChart, Database, Server, BrainCircuit } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
+import { ArrowLeft, ArrowUpRight, BrainCircuit, ScanSearch } from "lucide-react"
+import { EditorialProjectLayout } from "@/components/editorial-project-layout"
 
-const outlineBtnClass = "border-white/20 bg-transparent text-white hover:bg-white/5"
+const features = [
+  { number: "01", title: "Severity classes", copy: "Sorts concrete crack images into multiple severity levels to help make inspection findings easier to review." },
+  { number: "02", title: "Image analysis", copy: "Uses a deep learning image classification workflow built with TensorFlow and Keras." },
+  { number: "03", title: "Prediction interface", copy: "A web interface gives users a place to submit an image and review the model’s prediction and confidence." },
+]
+
+const technologies = ["Python", "TensorFlow", "Keras", "Computer vision", "Image processing", "Next.js", "TypeScript"]
 
 export default function CrackVisionPage() {
   return (
-    <Layout>
-      <ProjectPageShell>
-        <Link href="/#projects">
-          <Button variant="ghost" className={`mb-8 ${typography.body} hover:bg-white/5 hover:text-white`}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Projects
-          </Button>
-        </Link>
+    <EditorialProjectLayout>
+      <article className="portfolio-project-content">
+        <Link className="project-back-link" href="/#work"><ArrowLeft size={15} /> Back to selected work</Link>
 
-        <PageHero
-          title="CrackVision"
-          description="A Multiclass Image Classification Model for Concrete Crack Severity Detection"
-          icon={<Zap className={`h-8 w-8 ${typography.accentIcon}`} />}
-        >
-          <Button variant="outline" className={outlineBtnClass} asChild>
-            <a href="https://github.com/DJSanch/CrackVision" target="_blank" rel="noopener noreferrer">
-              <Github className="h-4 w-4 mr-2" />
-              View Code
-            </a>
-          </Button>
-        </PageHero>
-
-        <div className="mb-16">
-          <Card className={`overflow-hidden ${projectCardClass}`}>
-            <div className="relative h-96 bg-gradient-to-br from-[#122a52] to-[#0a1220] flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="flex justify-center mb-4">
-                  <Zap className={`h-16 w-16 ${typography.accentIcon}`} />
-                </div>
-                <h3 className={`mb-2 ${typography.subsectionTitle}`}>CrackVision Platform</h3>
-                <p className={`max-w-md mx-auto ${typography.body}`}>
-                  Advanced image analysis for concrete crack detection and classification
-                </p>
-              </div>
+        <section className="project-detail-hero">
+          <div className="project-detail-copy">
+            <p className="eyebrow"><span className="status-dot" /> AI &amp; COMPUTER VISION · CASE STUDY 01</p>
+            <h1>CrackVision<span>.</span></h1>
+            <p className="project-detail-lead">A computer vision project for classifying concrete crack severity from images.</p>
+            <p className="project-detail-summary">Exploring how deep learning can help engineers and inspectors review concrete conditions with a clearer, more consistent workflow.</p>
+            <div className="project-detail-actions">
+              <a className="project-detail-button" href="https://github.com/DJSanch/CrackVision" target="_blank" rel="noopener noreferrer">Explore the code <ArrowUpRight size={15} /></a>
+              <span><BrainCircuit size={14} /> Machine learning research</span>
             </div>
-          </Card>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <ProjectCard
-            title="Project Overview"
-            icon={<BrainCircuit className={`h-5 w-5 ${typography.accentIcon}`} />}
-            headerBorder
-          >
-            <p className={typography.body}>
-              CrackVision is an advanced machine learning project that utilizes deep learning techniques
-              to classify the severity of concrete crack images. The model can accurately identify and
-              categorize cracks into multiple severity levels, helping engineers and inspectors assess
-              the condition of concrete structures more efficiently and accurately.
-            </p>
-          </ProjectCard>
-
-          <ProjectCard title="Key Features" icon={<Zap className={`h-5 w-5 ${typography.accentIcon}`} />}>
-            <ul className={`space-y-2 ${typography.body}`}>
-              {[
-                "Multiclass classification for crack severity levels",
-                "Deep learning model using TensorFlow/Keras",
-                "High accuracy in crack detection and classification",
-                "Web interface for easy image upload and analysis",
-                "Real-time prediction with confidence scores",
-              ].map((feature) => (
-                <li key={feature} className="flex items-start gap-2">
-                  <span className={typography.accentIcon}>•</span>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </ProjectCard>
-        </div>
-
-        <ProjectCard title="Technologies Used" className="mb-16">
-          <p className={`mb-4 ${typography.body}`}>
-            CrackVision is a deep learning-based solution designed to detect and classify cracks in concrete structures.
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            {[
-              { icon: Layers, label: "Deep Learning" },
-              { icon: Cpu, label: "Computer Vision" },
-              { icon: BarChart, label: "TensorFlow" },
-              { icon: Code, label: "Python" },
-              { icon: Brain, label: "Keras" },
-              { icon: Server, label: "Next.js" },
-              { icon: Database, label: "TypeScript" },
-              { icon: Layers, label: "Image Processing" },
-            ].map(({ icon: Icon, label }) => (
-              <Badge key={label} variant="outline" className={typography.badge}>
-                <Icon className="h-3.5 w-3.5 mr-1.5" />
-                {label}
-              </Badge>
-            ))}
           </div>
-        </ProjectCard>
+          <figure className="project-detail-visual crackvision-visual">
+            <Image src="/projects/crackvision.png" alt="CrackVision concrete crack severity classification project" fill priority sizes="(max-width: 760px) 100vw, 55vw" />
+            <figcaption><span>CONCRETE CRACK CLASSIFICATION</span><span>01 / 03</span></figcaption>
+          </figure>
+        </section>
 
-        <ProjectCard
-          title="Project Status"
-          icon={<Code className={`h-5 w-5 ${typography.accentIcon}`} />}
-          headerBorder
-        >
-          <div className="flex items-center gap-2 mb-4">
-            <Badge className="bg-[#1a4480] text-white hover:bg-[#2563eb]">In Development</Badge>
-          </div>
-          <p className={typography.body}>
-            This project is currently under active development. The machine learning model is being
-            trained and fine-tuned to achieve higher accuracy in crack classification.
-          </p>
-        </ProjectCard>
+        <section className="project-detail-overview">
+          <p className="eyebrow">The project</p>
+          <div><h2>Making structural images easier to <em>understand.</em></h2><p>CrackVision applies image classification to concrete crack assessment. The project explores a model and web experience that can sort crack images into severity categories and present a prediction for review.</p></div>
+        </section>
 
-        <div className="text-center mt-16 mb-8">
-          <h3 className={`mb-4 ${typography.subsectionTitle}`}>Interested in this project?</h3>
-          <p className={`mb-6 max-w-2xl mx-auto ${typography.body}`}>
-            Check out the code on GitHub or get in touch to learn more about CrackVision.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Button asChild>
-              <a href="https://github.com/DJSanch/CrackVision" target="_blank" rel="noopener noreferrer">
-                <Github className="h-4 w-4 mr-2" />
-                View on GitHub
-              </a>
-            </Button>
-            <Button variant="outline" className={outlineBtnClass} asChild>
-              <Link href="/#contact">Contact Me</Link>
-            </Button>
+        <section className="project-feature-section">
+          <div className="project-section-heading"><p className="eyebrow">What it does</p><h2>From image to <em>insight.</em></h2></div>
+          <div className="project-feature-grid">
+            {features.map((feature) => <article className="project-feature-card" key={feature.number}><span>{feature.number}</span><ScanSearch aria-hidden="true" /><h3>{feature.title}</h3><p>{feature.copy}</p></article>)}
           </div>
-        </div>
-      </ProjectPageShell>
-    </Layout>
+        </section>
+
+        <section className="project-tech-section"><div><p className="eyebrow">Built with</p><h2>Tools &amp; <em>methods.</em></h2></div><div className="project-tech-list">{technologies.map((technology) => <span key={technology}>{technology}</span>)}</div></section>
+
+        <section className="project-status-panel"><div><p className="eyebrow">Project status</p><h2>In development</h2></div><p>The model and classification workflow are being refined through ongoing training and evaluation.</p><span className="project-status-dot" /></section>
+
+        <section className="project-next-panel"><div><p className="eyebrow">Have a similar challenge?</p><h2>Let&apos;s build something <em>useful.</em></h2></div><div className="project-next-actions"><Link href="/#contact">Start a conversation <ArrowUpRight size={15} /></Link><Link href="/riceprotech">Next project: RiceProTech <ArrowUpRight size={15} /></Link></div></section>
+      </article>
+    </EditorialProjectLayout>
   )
 }
