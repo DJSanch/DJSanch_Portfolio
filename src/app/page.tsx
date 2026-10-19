@@ -18,11 +18,11 @@ const projects = [
 ]
 
 const services = [
-  { title: "Full-stack web development", description: "Responsive web products built from interface through backend, with a focus on real-world usability.", image: "/service-panels/web-development.jpg", alt: "Web application dashboard and source code" },
-  { title: "E-commerce experiences", description: "Product browsing, storefronts, carts, and checkout flows designed to make buying feel simple.", image: "/service-panels/ecommerce.jpg", alt: "Online shopping storefront and checkout experience" },
-  { title: "Backend systems", description: "APIs and data-focused applications that support dependable workflows and clear operations.", image: "/service-panels/backend-systems.jpg", alt: "Backend APIs, servers, and data infrastructure" },
-  { title: "Mobile applications", description: "Mobile experiences that bring practical tools and useful information into people’s hands.", image: "/service-panels/mobile-apps.jpg", alt: "Mobile app interface designs" },
-  { title: "Machine learning", description: "Applied image classification and computer vision for focused problems in agriculture and infrastructure.", image: "/service-panels/machine-learning.jpg", alt: "Computer vision model detecting objects and visual data" },
+  { title: "Full-stack web development", description: "Responsive web products built from interface through backend, with a focus on real-world usability.", image: "/1.png", alt: "Full-stack development project examples" },
+  { title: "E-commerce experiences", description: "Product browsing, storefronts, carts, and checkout flows designed to make buying feel simple.", image: "/2.png", alt: "E-commerce storefront and checkout interface" },
+  { title: "Backend systems", description: "APIs and data-focused applications that support dependable workflows and clear operations.", image: "/3.png", alt: "Backend system dashboard and code" },
+  { title: "Mobile applications", description: "Mobile experiences that bring practical tools and useful information into people’s hands.", image: "/4.png", alt: "RiceProTech mobile application" },
+  { title: "Machine learning", description: "Applied image classification and computer vision for focused problems in agriculture and infrastructure.", image: "/5.png", alt: "Machine learning research and model interface" },
 ]
 
 export default function Home() {
