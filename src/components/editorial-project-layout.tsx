@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { MoveUpRight } from "lucide-react"
 import Chatbot from "@/components/chatbot"
 
@@ -12,9 +13,9 @@ export function EditorialProjectLayout({ children }: EditorialProjectLayoutProps
   return (
     <div className="portfolio-project-site">
       <header className="portfolio-nav">
-        <a className="monogram" href="/" aria-label="Daniel Sanchez home"><Image src="/2.svg" alt="Daniel Sanchez" width={44} height={44} priority /></a>
+        <Link className="monogram" href="/" aria-label="Daniel Sanchez home"><Image src="/2.svg" alt="Daniel Sanchez" width={44} height={44} priority /></Link>
         <nav aria-label="Main navigation">
-          <a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a>
+          <Link href="/#work">Work</Link><Link href="/#about">About</Link><Link href="/#contact">Contact</Link>
           <a className="nav-cta" href="mailto:contact@djsanch.com">Let&apos;s talk <MoveUpRight size={14} /></a>
         </nav>
       </header>
