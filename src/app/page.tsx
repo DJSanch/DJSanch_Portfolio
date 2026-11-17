@@ -65,6 +65,18 @@ export default function Home() {
           <a href="#work">Work</a><a href="#about">About</a><a href="#certifications">Credentials</a><a href="#contact">Contact</a>
           <a className="nav-cta" href="mailto:contact@djsanch.com">Let&apos;s talk <MoveUpRight size={14} /></a>
         </nav>
+        <details className="portfolio-mobile-menu">
+          <summary aria-label="Toggle navigation menu">
+            <span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" />
+          </summary>
+          <div className="portfolio-mobile-menu-panel">
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#certifications">Credentials</a>
+            <a href="#contact">Contact</a>
+            <a href="mailto:contact@djsanch.com">Let&apos;s talk</a>
+          </div>
+        </details>
       </header>
 
       <section className="intro-hero" id="home">
