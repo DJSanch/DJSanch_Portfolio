@@ -164,7 +164,7 @@ const Navigation = () => {
                 aria-label="Open navigation menu"
                 className={`absolute right-0 top-1/2 h-10 w-10 -translate-y-1/2 md:hidden ${navNoHighlight} ${useDarkNavStyle ? "text-white hover:text-white" : ""}`}
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-6 w-6" strokeWidth={2.5} />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[min(100vw-2rem,320px)] sm:w-[360px]">

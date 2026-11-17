@@ -40,6 +40,8 @@ const certifications: CertificationItem[] = [
   { title: "Agile Software Development: Clean Coding Practices", filename: "CertificateOfCompletion_Agile Software Development Clean Coding Practices.pdf", image: "CertificateOfCompletion_Agile Software Development Clean Coding Practices.png", provider: "LinkedIn Learning", category: "Software · Clean code" },
 ]
 
+const featuredCertificationCount = 5
+
 function wrapIndex(index: number) {
   return (index + certifications.length) % certifications.length
 }
@@ -80,6 +82,26 @@ export default function Certifications() {
     setPreviewVisible(true)
     followPointer(event)
   }
+  const renderCertification = (cert: CertificationItem, index: number) => (
+    <a
+      key={cert.filename}
+      role="listitem"
+      className={`credential-row${index === activeIndex ? " is-active" : ""}`}
+      href={`/certifications/${encodeURIComponent(cert.filename)}`}
+      target="_blank"
+      rel="noreferrer"
+      onMouseEnter={(event) => handleRowHover(index, event)}
+      onMouseMove={followPointer}
+      onFocus={(event) => handleRowFocus(index, event)}
+      onClick={() => { moveTo(index); setPreviewVisible(true) }}
+      aria-current={index === activeIndex ? "true" : undefined}
+    >
+      <span className="credential-row-number">{String(index + 1).padStart(2, "0")}</span>
+      <span className="credential-row-title">{cert.title}</span>
+      <span className="credential-row-provider">{cert.provider}</span>
+      <ArrowUpRight className="credential-row-arrow" size={22} aria-hidden="true" />
+    </a>
+  )
 
   return (
     <section className="credentials-section" id="certifications" aria-labelledby="credentials-title">
@@ -93,27 +115,16 @@ export default function Certifications() {
 
       <div className="credentials-roster" aria-label="Professional certificates">
         <div className="credentials-list" role="list" onMouseLeave={() => setPreviewVisible(false)}>
-          {certifications.map((cert, index) => (
-            <a
-              key={cert.filename}
-              role="listitem"
-              className={`credential-row${index === activeIndex ? " is-active" : ""}`}
-              href={`/certifications/${encodeURIComponent(cert.filename)}`}
-              target="_blank"
-              rel="noreferrer"
-              onMouseEnter={(event) => handleRowHover(index, event)}
-              onMouseMove={followPointer}
-              onFocus={(event) => handleRowFocus(index, event)}
-              onClick={() => { moveTo(index); setPreviewVisible(true) }}
-              aria-current={index === activeIndex ? "true" : undefined}
-            >
-              <span className="credential-row-number">{String(index + 1).padStart(2, "0")}</span>
-              <span className="credential-row-title">{cert.title}</span>
-              <span className="credential-row-provider">{cert.provider}</span>
-              <ArrowUpRight className="credential-row-arrow" size={22} aria-hidden="true" />
-            </a>
-          ))}
+          {certifications.slice(0, featuredCertificationCount).map(renderCertification)}
         </div>
+        {certifications.length > featuredCertificationCount && (
+          <details className="credentials-more">
+            <summary>Show {certifications.length - featuredCertificationCount} more credentials</summary>
+            <div className="credentials-list" role="list" onMouseLeave={() => setPreviewVisible(false)}>
+              {certifications.slice(featuredCertificationCount).map((cert, index) => renderCertification(cert, index + featuredCertificationCount))}
+            </div>
+          </details>
+        )}
         <div ref={previewRef} key={active.filename} className={`credential-float-preview${previewVisible ? " is-visible" : ""}`} data-direction={direction} style={{ left: previewPosition.x, top: previewPosition.y }} aria-hidden="true">
           <Image src={`/certifications/${active.image}`} alt={`${active.title} certificate`} fill sizes="(max-width: 760px) 72vw, 30vw" priority={activeIndex === 0} />
           <span className="credential-active-label"><i /> Active</span>
